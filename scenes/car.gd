@@ -21,14 +21,17 @@ func _draw():
 
 func draw_arrow(from: Vector2, to: Vector2):
 	var head_size = 16
-	var head_angle = 0.3 #rad
+	var head_angle = 0.4 #rad
+	var acolor = Color(0.9, 0.1, 0.1)
+	var ocolor = Color(0.2, 0.05, 0.05)
 	# full vector
 	var v = to - from
 	# remove the tip of the full vector by this much
 	var tip = v.normalized() * (head_size - 2)
+	var tip2 = v.normalized() * (head_size - 9)
 	# the final vector to draw with the tip removed
 	var line = v - tip
-	draw_line(from, line, Color.RED, 4)
+	var line2 = v - tip2
 	var h1 = v
 	h1 = - h1.normalized().rotated(head_angle) * head_size
 	var e1 = to + h1
@@ -37,8 +40,11 @@ func draw_arrow(from: Vector2, to: Vector2):
 	h2 = - h2.normalized().rotated(-head_angle) * head_size
 	var e2 = to + h2
 #	draw_line(to, e2, Color.PURPLE, 3)
-	var arrow_head = [to, e1, e2]
-	draw_colored_polygon(arrow_head, Color.RED)
+	var arrow_head = [to, e1, e2, to]
+	draw_colored_polygon(arrow_head, acolor)
+	draw_polyline(arrow_head, ocolor, 0.8, true)
+	draw_line(from, line, ocolor, 5, true)
+	draw_line(from, line2, acolor, 2, true)
 
 func _input(event):
 	if event.is_action("ui_right") and not event.is_pressed():
