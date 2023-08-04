@@ -14,5 +14,6 @@ grow_vertical = 2
 [node name="Grid" parent="." instance=ExtResource("1_pm8pa")]
 layout_mode = 1
 
-[node name="Car" parent="." instance=ExtResource("1_muxmf")]
+[node name="Car" parent="." node_paths=PackedStringArray("grid") instance=ExtResource("1_muxmf")]
 position = Vector2(320, 256)
+grid = NodePath("../Grid")

@@ -1,5 +1,6 @@
 extends Node2D
 
+@export var grid: Grid
 var grid_pos := Vector2(0, 0)
 var cell_size := 16
 var next_move := Vector2(0, 0)
@@ -8,7 +9,10 @@ var svector := Vector2(0, 0)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	if grid:
+		cell_size = grid.cell_size
 	update_grid_from_pos()
+	update_pos_from_grid()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -89,4 +93,4 @@ func grid2pix(g: Vector2):
 	return g * cell_size
 
 func pix2grid(p: Vector2):
-	return p / cell_size
+	return Vector2(floor(p.x / cell_size), floor(p.x / cell_size))
