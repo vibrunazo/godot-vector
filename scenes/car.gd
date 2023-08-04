@@ -16,8 +16,27 @@ func _process(delta):
 	pass
 	
 func _draw():
-	draw_line(Vector2.ZERO, Vector2(200, 0), Color.RED, 8)
-	var arrow_head = [Vector2(220, 0), Vector2(180, 20), Vector2(180, -20)]
+	var to = grid2pix(svector)
+	draw_arrow(Vector2.ZERO, to)
+
+func draw_arrow(from: Vector2, to: Vector2):
+	# full vector
+	var v = to - from
+	# remove the tip of the full vector by this much
+	var tip = v.normalized() * 10
+	# the final vector to draw with the tip removed
+	var line = v - tip
+	draw_line(from, line, Color.RED, 4)
+	var head_angle = 0.3 #rad
+	var h1 = v
+	h1 = - h1.normalized().rotated(head_angle) * 30
+	var e1 = to + h1
+#	draw_line(to, e1, Color.PURPLE, 3)
+	var h2 = v
+	h2 = - h2.normalized().rotated(-head_angle) * 30
+	var e2 = to + h2
+#	draw_line(to, e2, Color.PURPLE, 3)
+	var arrow_head = [to, e1, e2]
 	draw_colored_polygon(arrow_head, Color.RED)
 
 func _input(event):
@@ -33,6 +52,7 @@ func _input(event):
 func input_move(v: Vector2):
 	next_move = v
 	move()
+	queue_redraw()
 
 func move():
 	svector += next_move
