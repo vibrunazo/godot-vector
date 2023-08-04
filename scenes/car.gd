@@ -47,14 +47,27 @@ func draw_arrow(from: Vector2, to: Vector2):
 	draw_line(from, line2, acolor, 2, true)
 
 func _input(event):
-	if event.is_action("ui_right") and not event.is_pressed():
-		input_move(Vector2(1, 0))
-	if event.is_action("ui_up") and not event.is_pressed():
-		input_move(Vector2(0, -1))
-	if event.is_action("ui_left") and not event.is_pressed():
-		input_move(Vector2(-1, 0))
+	if event.is_action("ui_down_left") and not event.is_pressed():
+		input_move(Vector2(-1, 1))
 	if event.is_action("ui_down") and not event.is_pressed():
 		input_move(Vector2(0, 1))
+	if event.is_action("ui_down_right") and not event.is_pressed():
+		input_move(Vector2(1, 1))
+		
+	if event.is_action("ui_left") and not event.is_pressed():
+		input_move(Vector2(-1, 0))
+	if event.is_action("ui_center") and not event.is_pressed():
+		input_move(Vector2(0, 0))
+	if event.is_action("ui_right") and not event.is_pressed():
+		input_move(Vector2(1, 0))
+	
+	if event.is_action("ui_up_left") and not event.is_pressed():
+		input_move(Vector2(-1, -1))
+	if event.is_action("ui_up") and not event.is_pressed():
+		input_move(Vector2(0, -1))
+	if event.is_action("ui_up_right") and not event.is_pressed():
+		input_move(Vector2(1, -1))
+		
 
 func input_move(v: Vector2):
 	next_move = v
