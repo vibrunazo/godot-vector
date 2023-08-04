@@ -3,6 +3,8 @@ extends Node2D
 var grid_pos := Vector2(0, 0)
 var cell_size := 16
 var next_move := Vector2(0, 0)
+## current speed vector
+var svector := Vector2(0, 0)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -20,16 +22,21 @@ func _draw():
 
 func _input(event):
 	if event.is_action("ui_right") and not event.is_pressed():
-		print(event)
-		next_move = Vector2(1, 0)
-		move()
+		input_move(Vector2(1, 0))
 	if event.is_action("ui_up") and not event.is_pressed():
-		print(event)
-		next_move = Vector2(0, -1)
-		move()
+		input_move(Vector2(0, -1))
+	if event.is_action("ui_left") and not event.is_pressed():
+		input_move(Vector2(-1, 0))
+	if event.is_action("ui_down") and not event.is_pressed():
+		input_move(Vector2(0, 1))
+
+func input_move(v: Vector2):
+	next_move = v
+	move()
 
 func move():
-	grid_pos += next_move
+	svector += next_move
+	grid_pos += svector
 	update_pos_from_grid()
 
 func update_pos_from_grid():
