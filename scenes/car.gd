@@ -20,20 +20,21 @@ func _draw():
 	draw_arrow(Vector2.ZERO, to)
 
 func draw_arrow(from: Vector2, to: Vector2):
+	var head_size = 16
+	var head_angle = 0.3 #rad
 	# full vector
 	var v = to - from
 	# remove the tip of the full vector by this much
-	var tip = v.normalized() * 10
+	var tip = v.normalized() * (head_size - 2)
 	# the final vector to draw with the tip removed
 	var line = v - tip
 	draw_line(from, line, Color.RED, 4)
-	var head_angle = 0.3 #rad
 	var h1 = v
-	h1 = - h1.normalized().rotated(head_angle) * 30
+	h1 = - h1.normalized().rotated(head_angle) * head_size
 	var e1 = to + h1
 #	draw_line(to, e1, Color.PURPLE, 3)
 	var h2 = v
-	h2 = - h2.normalized().rotated(-head_angle) * 30
+	h2 = - h2.normalized().rotated(-head_angle) * head_size
 	var e2 = to + h2
 #	draw_line(to, e2, Color.PURPLE, 3)
 	var arrow_head = [to, e1, e2]
