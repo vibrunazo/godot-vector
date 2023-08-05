@@ -23,13 +23,13 @@ func _draw():
 	draw_grid()
 
 func draw_grid():
-	for n in range(1, 160):
+	for n in range(1, 200):
 		draw_row(n, 1)
 		draw_col(n, 1)
-	for n in range(1, 160/primary_every):
+	for n in range(1, 200/primary_every):
 		draw_row(n, primary_every)
 		draw_col(n, primary_every)
-	for n in range(0, 160/double_every):
+	for n in range(0, 200/double_every):
 		draw_row(n, double_every)
 		draw_col(n, double_every)
 

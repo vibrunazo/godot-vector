@@ -25,22 +25,27 @@ func _process(delta):
 func _draw():
 	var to = grid2pix(svector)
 	var p := grid2pix(ini_grid_pos) - global_position
+	var c := Color(0.5, 0.1, 0.1)
+	var size = float(history.size())
+	var i = 0.0
 	for v in history:
 		v = grid2pix(v)
-		draw_arrow(p, p + v)
+		var k = i / size + 0.2
+		draw_arrow(p, p + v, c * k )
 		p += v
-	draw_arrow(Vector2.ZERO, to)
+		i += 1.0
+	draw_arrow(Vector2.ZERO, to, c)
 
-func draw_arrow(from: Vector2, to: Vector2):
-	var head_size = 16
-	var head_angle = 0.4 #rad
-	var acolor = Color(0.9, 0.1, 0.1)
+func draw_arrow(from: Vector2, to: Vector2, c: Color):
+	var head_size = 12
+	var head_angle = 0.5 #rad
+	var acolor = c
 	var ocolor = Color(0.2, 0.05, 0.05)
 	# full vector
 	var v = to - from
 	# remove the tip of the full vector by this much
 	var tip = v.normalized() * (head_size - 2)
-	var tip2 = v.normalized() * (head_size - 9)
+	var tip2 = v.normalized() * (head_size - 3)
 	# the final vector to draw with the tip removed
 #	var line = v - tip
 	var line = from + v - tip# Vector2(20, 20)
@@ -54,10 +59,13 @@ func draw_arrow(from: Vector2, to: Vector2):
 	var e2 = to + h2
 #	draw_line(to, e2, Color.PURPLE, 3)
 	var arrow_head = [to, e1, e2, to]
+	draw_circle(to, 4, ocolor)
+	draw_circle(to, 2, acolor)
 	draw_colored_polygon(arrow_head, acolor)
 	draw_polyline(arrow_head, ocolor, 0.8, true)
-	draw_line(from, line, ocolor, 5, true)
-	draw_line(from, line2, acolor, 2, true)
+	draw_line(from, line, ocolor, 3, true)
+	draw_line(from, line2, acolor, 1, true)
+	
 #	draw_line(from, to, Color.GREEN, 5)
 
 func _input(event):
