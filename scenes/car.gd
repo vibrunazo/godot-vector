@@ -2,10 +2,12 @@ extends Node2D
 
 @export var grid: Grid
 var grid_pos := Vector2(0, 0)
+var ini_grid_pos := Vector2(0, 0)
 var cell_size := 16
 var next_move := Vector2(0, 0)
 ## current speed vector
 var svector := Vector2(0, 0)
+var history: Array[Vector2]
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -13,6 +15,7 @@ func _ready():
 		cell_size = grid.cell_size
 	update_grid_from_pos()
 	update_pos_from_grid()
+	ini_grid_pos = grid_pos
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -21,6 +24,11 @@ func _process(delta):
 	
 func _draw():
 	var to = grid2pix(svector)
+	var p := grid2pix(ini_grid_pos) - global_position
+	for v in history:
+		v = grid2pix(v)
+		draw_arrow(p, p + v)
+		p += v
 	draw_arrow(Vector2.ZERO, to)
 
 func draw_arrow(from: Vector2, to: Vector2):
@@ -34,8 +42,9 @@ func draw_arrow(from: Vector2, to: Vector2):
 	var tip = v.normalized() * (head_size - 2)
 	var tip2 = v.normalized() * (head_size - 9)
 	# the final vector to draw with the tip removed
-	var line = v - tip
-	var line2 = v - tip2
+#	var line = v - tip
+	var line = from + v - tip# Vector2(20, 20)
+	var line2 = from + v - tip2
 	var h1 = v
 	h1 = - h1.normalized().rotated(head_angle) * head_size
 	var e1 = to + h1
@@ -49,6 +58,7 @@ func draw_arrow(from: Vector2, to: Vector2):
 	draw_polyline(arrow_head, ocolor, 0.8, true)
 	draw_line(from, line, ocolor, 5, true)
 	draw_line(from, line2, acolor, 2, true)
+#	draw_line(from, to, Color.GREEN, 5)
 
 func _input(event):
 	if event.is_action("ui_down_left") and not event.is_pressed():
@@ -81,6 +91,7 @@ func input_move(v: Vector2):
 func move():
 	svector += next_move
 	grid_pos += svector
+	history.append(svector)
 	update_pos_from_grid()
 
 func update_pos_from_grid():
@@ -89,8 +100,8 @@ func update_pos_from_grid():
 func update_grid_from_pos():
 	grid_pos = pix2grid(position)
 
-func grid2pix(g: Vector2):
+func grid2pix(g: Vector2) -> Vector2:
 	return g * cell_size
 
-func pix2grid(p: Vector2):
+func pix2grid(p: Vector2) -> Vector2:
 	return Vector2(floor(p.x / cell_size), floor(p.x / cell_size))

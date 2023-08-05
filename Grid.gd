@@ -2,7 +2,7 @@ extends Control
 
 class_name Grid
 
-var cell_size := 12
+var cell_size := 10
 var gcolor := Color(0.25, 0.2, 0.3)
 var pcolor := Color(0.1, 0.1, 0.35)
 var dcolor := Color(0.05, 0.05, 0.2)
