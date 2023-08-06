@@ -28,23 +28,31 @@ func _draw():
 func draw_arrows():
 	var to = grid2pix(svector)
 	var p := grid2pix(ini_grid_pos) - global_position
-	var c := Color(0.8, 0.1, 0.1)
+	var ac := Color(0.8, 0.1, 0.1)
 	var oc := Color(0.2, 0.05, 0.05)
 	var max : = 40
 	var size = float(history.size())
 	var i = 0.0
+	# TODO count backwards to avoid wasting loops on undrew old vectors
 	for v in history:
 		v = grid2pix(v)
-		var k = 1 - (size - i + (max)) / (max * 2)
-		if i == size - 1: k = 1
+		var k = (1 - (size - i) / max) * 0.75
+		var ok = k * 0.8
+		var h = 10
+		if i == size - 1: 
+			k = 1
+			ok = 1
+			h = 12
 		if k > 0:
-			draw_arrow(p, p + v, c * k, oc * k )
+			var c := ac * Color(ac.r, ac.g, ac.b, k)
+			c.s = k + 0.2
+			draw_arrow(p, p + v, c, oc * ok, h)
 		p += v
 		i += 1.0
-	draw_arrow(Vector2.ZERO, to, c * 0.5, oc * 0.5)
+	draw_arrow(Vector2.ZERO, to, ac * 0.5, oc * 0.5, 0)
 
-func draw_arrow(from: Vector2, to: Vector2, c: Color, oc: Color):
-	var head_size = 12
+func draw_arrow(from: Vector2, to: Vector2, c: Color, oc: Color, h: int):
+	var head_size = h
 	var head_angle = 0.5 #rad
 	var acolor = c
 	var ocolor = oc
@@ -57,21 +65,27 @@ func draw_arrow(from: Vector2, to: Vector2, c: Color, oc: Color):
 #	var line = v - tip
 	var line = from + v - tip# Vector2(20, 20)
 	var line2 = from + v - tip2
-	var h1 = v
-	h1 = - h1.normalized().rotated(head_angle) * head_size
-	var e1 = to + h1
-#	draw_line(to, e1, Color.PURPLE, 3)
-	var h2 = v
-	h2 = - h2.normalized().rotated(-head_angle) * head_size
-	var e2 = to + h2
+	
 #	draw_line(to, e2, Color.PURPLE, 3)
-	var arrow_head = [to, e1, e2, to]
+	
+	
 	draw_circle(to, 5, ocolor)
 	draw_circle(to, 3, acolor)
-	draw_colored_polygon(arrow_head, acolor)
-	draw_polyline(arrow_head, ocolor, 0.8, true)
+	if head_size > 0:
+		var h1 = v
+		h1 = - h1.normalized().rotated(head_angle) * head_size
+		var e1 = to + h1
+		var h2 = v
+		h2 = - h2.normalized().rotated(-head_angle) * head_size
+		var e2 = to + h2
+		var arrow_head = [to, e1, e2, to]
+		draw_colored_polygon(arrow_head, acolor)
+		draw_polyline(arrow_head, ocolor, 0.8, true)
 	draw_line(from, line, ocolor, 3, true)
 	draw_line(from, line2, acolor, 1, true)
+	draw_circle(from, 5, ocolor)
+	draw_circle(from, 3, acolor)
+	
 	
 #	draw_line(from, to, Color.GREEN, 5)
 
