@@ -28,7 +28,7 @@ func _draw():
 func draw_arrows():
 	var to = grid2pix(svector)
 	var p := grid2pix(ini_grid_pos) - global_position
-	var ac := Color(0.8, 0.1, 0.1)
+	var ac := Color(0.9, 0.2, 0.2)
 	var oc := Color(0.2, 0.05, 0.05)
 	var max : = 40
 	var size = float(history.size())
@@ -39,19 +39,24 @@ func draw_arrows():
 		var k = (1 - (size - i) / max) * 0.75
 		var ok = k * 0.8
 		var h = 10
+		var d = 3
+		var c := ac * Color(ac.r, ac.g, ac.b, k)
 		if i == size - 1: 
 			k = 1
 			ok = 1
-			h = 12
+			h = 14
+			d = 6
+		else:
+			c.s = c.s * (k + 0.1)
+			c.v = c.v * (k - 0)
 		if k > 0:
-			var c := ac * Color(ac.r, ac.g, ac.b, k)
-			c.s = k + 0.2
-			draw_arrow(p, p + v, c, oc * ok, h)
+			draw_arrow(p, p + v, c, oc * ok, h, d)
 		p += v
 		i += 1.0
-	draw_arrow(Vector2.ZERO, to, ac * 0.5, oc * 0.5, 0)
+#	draw_arrow(Vector2.ZERO, to, ac * 0.5, oc * 0.5, 0)
+	draw_dot(to, 5, ac * 0.7, oc * 0.7)
 
-func draw_arrow(from: Vector2, to: Vector2, c: Color, oc: Color, h: int):
+func draw_arrow(from: Vector2, to: Vector2, c: Color, oc: Color, h: float, d: float = 5):
 	var head_size = h
 	var head_angle = 0.5 #rad
 	var acolor = c
@@ -66,11 +71,7 @@ func draw_arrow(from: Vector2, to: Vector2, c: Color, oc: Color, h: int):
 	var line = from + v - tip# Vector2(20, 20)
 	var line2 = from + v - tip2
 	
-#	draw_line(to, e2, Color.PURPLE, 3)
-	
-	
-	draw_circle(to, 5, ocolor)
-	draw_circle(to, 3, acolor)
+	draw_dot(to, d, acolor, ocolor)
 	if head_size > 0:
 		var h1 = v
 		h1 = - h1.normalized().rotated(head_angle) * head_size
@@ -83,11 +84,11 @@ func draw_arrow(from: Vector2, to: Vector2, c: Color, oc: Color, h: int):
 		draw_polyline(arrow_head, ocolor, 0.8, true)
 	draw_line(from, line, ocolor, 3, true)
 	draw_line(from, line2, acolor, 1, true)
-	draw_circle(from, 5, ocolor)
-	draw_circle(from, 3, acolor)
-	
-	
-#	draw_line(from, to, Color.GREEN, 5)
+	draw_dot(from, d, acolor, ocolor)
+
+func draw_dot(p: Vector2, size: float, acolor: Color, ocolor: Color):
+	draw_circle(p, size, ocolor)
+	draw_circle(p, size - 2, acolor)
 
 func _input(event):
 	if event.is_action("ui_down_left") and not event.is_pressed():
