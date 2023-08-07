@@ -1,5 +1,7 @@
 extends Node2D
 
+class_name Car
+
 @export var grid: Grid
 var grid_pos := Vector2(0, 0)
 var ini_grid_pos := Vector2(0, 0)

@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://dkaofok36yybe"]
+[gd_scene load_steps=4 format=3 uid="uid://dkaofok36yybe"]
 
 [ext_resource type="PackedScene" uid="uid://c1gm6pyvbylwx" path="res://scenes/car.tscn" id="1_muxmf"]
 [ext_resource type="PackedScene" uid="uid://d08o10r7su4q0" path="res://scenes/grid.tscn" id="1_pm8pa"]
+[ext_resource type="PackedScene" uid="uid://62je7a634151" path="res://scenes/race_cam.tscn" id="3_gu565"]
 
 [node name="Map" type="Control"]
 layout_mode = 3
@@ -17,3 +18,8 @@ layout_mode = 1
 [node name="Car" parent="." node_paths=PackedStringArray("grid") instance=ExtResource("1_muxmf")]
 position = Vector2(320, 256)
 grid = NodePath("../Grid")
+
+[node name="RaceCam" parent="." node_paths=PackedStringArray("car") instance=ExtResource("3_gu565")]
+position = Vector2(580, 360)
+zoom = Vector2(2, 2)
+car = NodePath("../Car")
