@@ -36,7 +36,7 @@ func update_draw():
 	queue_redraw()
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 #	if is_moving:
 #		queue_redraw()
 	pass
@@ -46,7 +46,6 @@ func _draw():
 #	draw_arrows()
 	if not is_moving:
 		var to = grid2pix(svector)
-		var p := grid2pix(ini_grid_pos) - global_position
 		var ac := Color(0.9, 0.2, 0.2)
 		var oc := Color(0.2, 0.05, 0.05)
 		draw_dots(to, ac * 0.7, oc * 0.7)

@@ -10,34 +10,28 @@ func _ready():
 	pass # Replace with function body.
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-
 func update_vectors():
 	queue_redraw()
 	
 func _draw():
 	if !car: return
-	var from = car.position
-	var to = Vector2(500, 500)
 	draw_arrows()
 
 func draw_arrows():
-	var svector := car.svector
+#	var svector := car.svector
 	var ini_grid_pos := car.ini_grid_pos
 	var history := car.history
-	var to := grid2pix(svector)
+#	var to := grid2pix(svector)
 	var p := grid2pix(ini_grid_pos) - global_position
 	var ac := Color(0.9, 0.2, 0.2)
 	var oc := Color(0.2, 0.05, 0.05)
-	var max : = 40
+	var maxs : = 40
 	var size = float(history.size())
 	var i = 0.0
 	# TODO count backwards to avoid wasting loops on undrew old vectors
 	for v in history:
 		v = grid2pix(v)
-		var k = (1 - (size - i) / max) * 0.75
+		var k = (1 - (size - i) / maxs) * 0.75
 		var ok = k * 0.8
 		var h = 10
 		var d = 3
