@@ -27,50 +27,26 @@ func register_car_history():
 	car_history.car = self
 	var parent = get_parent()
 	car_history.reparent.call_deferred(parent, false)
-	car_history.update_vectors()
+#	car_history.update_vectors()
 
-
+func update_draw():
+	if car_history: car_history.update_vectors()
+	queue_redraw()
+	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if is_moving:
-		queue_redraw()
+#	if is_moving:
+#		queue_redraw()
 	pass
 	
 func _draw():
 	print('drew')
-	if car_history: car_history.update_vectors()
 #	draw_arrows()
-
-func draw_arrows():
-	var to = grid2pix(svector)
-	var p := grid2pix(ini_grid_pos) - global_position
-	var ac := Color(0.9, 0.2, 0.2)
-	var oc := Color(0.2, 0.05, 0.05)
-	var max : = 40
-	var size = float(history.size())
-	var i = 0.0
-	# TODO count backwards to avoid wasting loops on undrew old vectors
-	for v in history:
-		v = grid2pix(v)
-		var k = (1 - (size - i) / max) * 0.75
-		var ok = k * 0.8
-		var h = 10
-		var d = 3
-		var c := ac * Color(ac.r, ac.g, ac.b, k)
-		if i == size - 1: 
-			k = 1
-			ok = 1
-			h = 14
-			d = 6
-		else:
-			c.s = c.s * (k + 0.1)
-			c.v = c.v * (k - 0)
-		if k > 0:
-			draw_arrow(p, p + v, c, oc * ok, h, d)
-		p += v
-		i += 1.0
-#	draw_arrow(Vector2.ZERO, to, ac * 0.5, oc * 0.5, 0)
 	if not is_moving:
+		var to = grid2pix(svector)
+		var p := grid2pix(ini_grid_pos) - global_position
+		var ac := Color(0.9, 0.2, 0.2)
+		var oc := Color(0.2, 0.05, 0.05)
 		draw_dots(to, ac * 0.7, oc * 0.7)
 
 func draw_arrow(from: Vector2, to: Vector2, c: Color, oc: Color, h: float, d: float = 5):
@@ -141,14 +117,13 @@ func input_move(v: Vector2):
 	next_move = v
 	move()
 #	await get_tree().create_timer(1.0).timeout
-	queue_redraw()
 	
 
 func move():
 	svector += next_move
 	grid_pos += svector
 	update_pos_from_grid()
-	await get_tree().create_timer(1.0).timeout
+#	await get_tree().create_timer(1.0).timeout
 	history.append(svector)
 	queue_redraw()
 
@@ -158,16 +133,17 @@ func update_pos_from_grid():
 	tween.tween_property(self, "position", grid2pix(grid_pos), 1)
 	tween.tween_callback(move_end)
 #	position = grid2pix(grid_pos)
-	car_history.update_vectors()
+#	car_history.update_vectors()
 
 func move_end():
 	is_moving = false
-	car_history.update_vectors()
-	queue_redraw()
+#	car_history.update_vectors()
+	update_draw()
 
 func update_grid_from_pos():
 	grid_pos = pix2grid(position)
 
+#TODO should be a global or something idk
 func grid2pix(g: Vector2) -> Vector2:
 	return g * cell_size
 
