@@ -26,6 +26,8 @@ func register_car_history():
 	car_history = %CarHistory
 	car_history.car = self
 	var parent = get_parent()
+	var vecs = parent.get_node("%Vectors")
+	if vecs: parent = vecs
 	car_history.reparent.call_deferred(parent, false)
 #	car_history.update_vectors()
 
