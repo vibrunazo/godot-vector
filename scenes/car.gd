@@ -10,6 +10,7 @@ var next_move := Vector2(0, 0)
 ## current speed vector
 var svector := Vector2(0, 0)
 var history: Array[Vector2]
+var is_moving: = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -22,9 +23,12 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	if is_moving:
+		queue_redraw()
 	pass
 	
 func _draw():
+	print('drew')
 	draw_arrows()
 
 func draw_arrows():
@@ -56,7 +60,8 @@ func draw_arrows():
 		p += v
 		i += 1.0
 #	draw_arrow(Vector2.ZERO, to, ac * 0.5, oc * 0.5, 0)
-	draw_dots(to, ac * 0.7, oc * 0.7)
+	if not is_moving:
+		draw_dots(to, ac * 0.7, oc * 0.7)
 
 func draw_arrow(from: Vector2, to: Vector2, c: Color, oc: Color, h: float, d: float = 5):
 	var head_size = h
@@ -124,16 +129,28 @@ func _input(event):
 func input_move(v: Vector2):
 	next_move = v
 	move()
+#	await get_tree().create_timer(1.0).timeout
 	queue_redraw()
+	
 
 func move():
 	svector += next_move
 	grid_pos += svector
-	history.append(svector)
 	update_pos_from_grid()
+	await get_tree().create_timer(1.0).timeout
+	history.append(svector)
+	queue_redraw()
 
 func update_pos_from_grid():
-	position = grid2pix(grid_pos)
+	is_moving = true
+	var tween = create_tween()
+	tween.tween_property(self, "position", grid2pix(grid_pos), 1)
+	tween.tween_callback(move_end)
+#	position = grid2pix(grid_pos)
+
+func move_end():
+	is_moving = false
+	queue_redraw()
 
 func update_grid_from_pos():
 	grid_pos = pix2grid(position)
