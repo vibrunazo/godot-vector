@@ -10,6 +10,7 @@ var next_move := Vector2(0, 0)
 ## current speed vector
 var svector := Vector2(0, 0)
 var history: Array[Vector2]
+var car_history: CarHistory
 var is_moving: = false
 
 # Called when the node enters the scene tree for the first time.
@@ -17,8 +18,16 @@ func _ready():
 	if grid:
 		cell_size = grid.cell_size
 	update_grid_from_pos()
-	update_pos_from_grid()
 	ini_grid_pos = grid_pos
+	register_car_history()
+	update_pos_from_grid()
+
+func register_car_history():
+	car_history = %CarHistory
+	car_history.car = self
+	var parent = get_parent()
+	car_history.reparent.call_deferred(parent, false)
+	car_history.update_vectors()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -29,7 +38,8 @@ func _process(delta):
 	
 func _draw():
 	print('drew')
-	draw_arrows()
+	if car_history: car_history.update_vectors()
+#	draw_arrows()
 
 func draw_arrows():
 	var to = grid2pix(svector)
@@ -104,6 +114,7 @@ func draw_dots(p: Vector2, ac, oc):
 		draw_dot(Vector2(p.x + cell_size * dir[0], p.y + cell_size * dir[1]), 3, ac * 0.7, oc * 0.7)
 
 func _input(event):
+	if is_moving: return
 	if event.is_action("ui_down_left") and not event.is_pressed():
 		input_move(Vector2(-1, 1))
 	if event.is_action("ui_down") and not event.is_pressed():
@@ -147,9 +158,11 @@ func update_pos_from_grid():
 	tween.tween_property(self, "position", grid2pix(grid_pos), 1)
 	tween.tween_callback(move_end)
 #	position = grid2pix(grid_pos)
+	car_history.update_vectors()
 
 func move_end():
 	is_moving = false
+	car_history.update_vectors()
 	queue_redraw()
 
 func update_grid_from_pos():

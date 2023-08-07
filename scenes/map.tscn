@@ -21,5 +21,4 @@ grid = NodePath("../Grid")
 
 [node name="RaceCam" parent="." node_paths=PackedStringArray("car") instance=ExtResource("3_gu565")]
 position = Vector2(580, 360)
-zoom = Vector2(2, 2)
 car = NodePath("../Car")

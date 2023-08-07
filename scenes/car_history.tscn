@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c6t7mdi1xsovl"]
+
+[ext_resource type="Script" path="res://scenes/car_history.gd" id="1_5g610"]
+
+[node name="CarHistory" type="Node2D"]
+script = ExtResource("1_5g610")

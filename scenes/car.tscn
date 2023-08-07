@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://c1gm6pyvbylwx"]
+[gd_scene load_steps=4 format=3 uid="uid://c1gm6pyvbylwx"]
 
 [ext_resource type="Texture2D" uid="uid://c1qejx7gxg0pv" path="res://assets/tex/ball.png" id="1_hm1ie"]
 [ext_resource type="Script" path="res://scenes/car.gd" id="1_ohgs5"]
+[ext_resource type="PackedScene" uid="uid://c6t7mdi1xsovl" path="res://scenes/car_history.tscn" id="3_frcae"]
 
 [node name="Car" type="Node2D"]
 script = ExtResource("1_ohgs5")
@@ -9,3 +10,6 @@ script = ExtResource("1_ohgs5")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.1, 0.1)
 texture = ExtResource("1_hm1ie")
+
+[node name="CarHistory" parent="." instance=ExtResource("3_frcae")]
+unique_name_in_owner = true
