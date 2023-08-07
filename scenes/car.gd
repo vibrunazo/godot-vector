@@ -54,7 +54,7 @@ func draw_arrows():
 		p += v
 		i += 1.0
 #	draw_arrow(Vector2.ZERO, to, ac * 0.5, oc * 0.5, 0)
-	draw_dot(to, 5, ac * 0.7, oc * 0.7)
+	draw_dots(to, ac * 0.7, oc * 0.7)
 
 func draw_arrow(from: Vector2, to: Vector2, c: Color, oc: Color, h: float, d: float = 5):
 	var head_size = h
@@ -89,6 +89,12 @@ func draw_arrow(from: Vector2, to: Vector2, c: Color, oc: Color, h: float, d: fl
 func draw_dot(p: Vector2, size: float, acolor: Color, ocolor: Color):
 	draw_circle(p, size, ocolor)
 	draw_circle(p, size - 2, acolor)
+
+func draw_dots(p: Vector2, ac, oc):
+	draw_dot(p, 5, ac * 0.7, oc * 0.7)
+	var dirs = [[-1, -1], [0, -1], [1, -1], [-1, 0], [1, 0], [-1, 1], [0, 1], [1, 1]]
+	for dir in dirs:
+		draw_dot(Vector2(p.x + cell_size * dir[0], p.y + cell_size * dir[1]), 3, ac * 0.7, oc * 0.7)
 
 func _input(event):
 	if event.is_action("ui_down_left") and not event.is_pressed():
