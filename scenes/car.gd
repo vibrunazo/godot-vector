@@ -29,11 +29,14 @@ func register_car_history():
 	var vecs = parent.get_node("%Vectors")
 	if vecs: parent = vecs
 	car_history.reparent.call_deferred(parent, false)
+	car_history.build_dots()
 #	car_history.update_vectors()
 
 func update_draw():
-	if car_history: car_history.update_vectors()
-	queue_redraw()
+	if car_history:
+		car_history.update_vectors()
+		car_history.show_dots_at(grid_pos + svector)
+#	queue_redraw()
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
@@ -123,10 +126,12 @@ func input_move(v: Vector2):
 func move():
 	svector += next_move
 	grid_pos += svector
+	car_history.show_target_at(grid_pos)
+	car_history.hide_dots()
 	update_pos_from_grid()
 #	await get_tree().create_timer(1.0).timeout
 	history.append(svector)
-	queue_redraw()
+#	queue_redraw()
 
 func update_pos_from_grid():
 	is_moving = true

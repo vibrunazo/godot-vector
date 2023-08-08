@@ -1,6 +1,120 @@
-[gd_scene load_steps=2 format=3 uid="uid://c6t7mdi1xsovl"]
+[gd_scene load_steps=10 format=3 uid="uid://c6t7mdi1xsovl"]
 
 [ext_resource type="Script" path="res://scenes/car_history.gd" id="1_5g610"]
+[ext_resource type="Texture2D" uid="uid://c1qejx7gxg0pv" path="res://assets/tex/ball.png" id="2_4jnjc"]
+
+[sub_resource type="Animation" id="Animation_ue78y"]
+resource_name = "hide_dots"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Dots:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.792157, 0.792157, 0.792157, 1), Color(0.792157, 0.792157, 0.792157, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_ccw8e"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Dots:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.792157, 0.792157, 0.792157, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_cu30m"]
+resource_name = "show_dots"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Dots:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.792157, 0.792157, 0.792157, 0), Color(0.792157, 0.792157, 0.792157, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_650ll"]
+_data = {
+"RESET": SubResource("Animation_ccw8e"),
+"hide_dots": SubResource("Animation_ue78y"),
+"show_dots": SubResource("Animation_cu30m")
+}
+
+[sub_resource type="Animation" id="Animation_sppoo"]
+resource_name = "selected"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TargetDot:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.5, 1.5), Vector2(1, 1), Vector2(1.3, 1.3), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_k2lna"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TargetDot:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_cdyw5"]
+_data = {
+"RESET": SubResource("Animation_k2lna"),
+"selected": SubResource("Animation_sppoo")
+}
 
 [node name="CarHistory" type="Node2D"]
 script = ExtResource("1_5g610")
+
+[node name="Dots" type="Node2D" parent="."]
+unique_name_in_owner = true
+modulate = Color(0.792157, 0.792157, 0.792157, 1)
+
+[node name="TargetDot" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="TargetDotSprite" type="Sprite2D" parent="TargetDot"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 0.2, 1)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("2_4jnjc")
+
+[node name="AnimDots" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_650ll")
+}
+
+[node name="AnimTarget" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_cdyw5")
+}

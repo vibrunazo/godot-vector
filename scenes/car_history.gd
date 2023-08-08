@@ -4,10 +4,9 @@ class_name CarHistory
 
 var car: Car
 
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	hide_dots()
 
 
 func update_vectors():
@@ -83,9 +82,40 @@ func draw_arrow(from: Vector2, to: Vector2, c: Color, oc: Color, h: float, d: fl
 	draw_line(from, line2, acolor, 1, true)
 	draw_dot(from, d, acolor, ocolor)
 
+## builds the dots that show possible targets for next move
+## called by register_car_history on parent car
+func build_dots():
+	var cell_size = car.cell_size
+	var dirs = [[-1, -1], [0, -1], [1, -1], [-1, 0], [0, 0], [1, 0], [-1, 1], [0, 1], [1, 1]]
+	for dir in dirs:
+		var dot := %TargetDotSprite.duplicate()
+		%Dots.add_child(dot)
+		dot.position.x += dir[0] * cell_size
+		dot.position.y += dir[1] * cell_size
+		
+func hide_dots():
+#	%Dots.visible = false
+	$AnimDots.play("hide_dots")
+
+func show_dots():
+	$AnimDots.play("show_dots")
+	%Dots.visible = true
+
 func draw_dot(p: Vector2, size: float, acolor: Color, ocolor: Color):
 	draw_circle(p, size, ocolor)
 	draw_circle(p, size - 2, acolor)
+
+## shows target dot animating to highlight to the user where he's going to
+## called when user just moved and car starts moving towards target
+func show_target_at(p: Vector2):
+	%TargetDot.position = grid2pix(p)
+	$AnimTarget.play("selected")
+
+## shows the dots of possible options where the user can go
+## called by the owning car when the car stops moving and reaches its target
+func show_dots_at(p: Vector2):
+	%Dots.position = grid2pix(p)
+	show_dots()
 
 func grid2pix(g: Vector2) -> Vector2:
 	return car.grid2pix(g)
