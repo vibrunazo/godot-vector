@@ -44,14 +44,14 @@ func _process(_delta):
 #		queue_redraw()
 	pass
 	
-func _draw():
-	print('drew')
+#func _draw():
+#	print('drew')
 #	draw_arrows()
-	if not is_moving:
-		var to = grid2pix(svector)
-		var ac := Color(0.9, 0.2, 0.2)
-		var oc := Color(0.2, 0.05, 0.05)
-		draw_dots(to, ac * 0.7, oc * 0.7)
+#	if not is_moving:
+#		var to = grid2pix(svector)
+#		var ac := Color(0.9, 0.2, 0.2)
+#		var oc := Color(0.2, 0.05, 0.05)
+#		draw_dots(to, ac * 0.7, oc * 0.7)
 
 func draw_arrow(from: Vector2, to: Vector2, c: Color, oc: Color, h: float, d: float = 5):
 	var head_size = h
