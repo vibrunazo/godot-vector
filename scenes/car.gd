@@ -147,11 +147,11 @@ func move_end():
 	update_draw()
 
 func update_grid_from_pos():
-	grid_pos = pix2grid(position)
+	grid_pos = pix2grid(global_position)
 
 #TODO should be a global or something idk
 func grid2pix(g: Vector2) -> Vector2:
 	return g * cell_size
 
 func pix2grid(p: Vector2) -> Vector2:
-	return Vector2(floor(p.x / cell_size), floor(p.x / cell_size))
+	return Vector2(floor(p.x / cell_size), floor(p.y / cell_size))
