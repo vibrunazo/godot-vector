@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://d08o10r7su4q0"]
 
-[ext_resource type="Script" path="res://scenes/Grid.gd" id="1_vq0c6"]
+[ext_resource type="Script" path="res://scenes/grid.gd" id="1_qwgko"]
 
 [node name="Grid" type="Control"]
 layout_mode = 3
@@ -9,4 +9,4 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_vq0c6")
+script = ExtResource("1_qwgko")

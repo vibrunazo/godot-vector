@@ -97,6 +97,8 @@ func hide_dots():
 #	%Dots.visible = false
 	$AnimDots.play("hide_dots")
 
+## shows the dots of possible options where the user can go
+## called by the owning car when its turn begins
 func show_dots():
 	$AnimDots.play("show_dots")
 	%Dots.visible = true
@@ -112,11 +114,10 @@ func show_target_at(p: Vector2):
 	%TargetDot.position = grid2pix(p)
 	$AnimTarget.play("selected")
 
-## shows the dots of possible options where the user can go
-## called by the owning car when the car stops moving and reaches its target
-func show_dots_at(p: Vector2):
+## updates the position where the target dots will show up in the future
+## when it's my turn
+func update_dots_at(p: Vector2):
 	%Dots.position = grid2pix(p)
-	show_dots()
 
 func grid2pix(g: Vector2) -> Vector2:
 	return car.grid2pix(g)

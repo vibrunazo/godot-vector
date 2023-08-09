@@ -9,7 +9,14 @@ var turn = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass
+	await get_tree().create_timer(0.6).timeout
+	start_game()
+
+func start_game():
+	var car: Car = get_car_this_turn()
+	if not car.is_registered:
+		await car.registered
+	car.turn_begin()
 
 func _input(event):
 	if event.is_action("ui_down_left") and not event.is_pressed():
@@ -43,7 +50,9 @@ func input_move(v: Vector2):
 
 func next_turn():
 	turn += 1
-	cam.car = get_car_this_turn()
+	var car = get_car_this_turn()
+	cam.car = car
+	car.turn_begin()
 
 ## returns the car who plays in this turn
 func get_car_this_turn() -> Car:

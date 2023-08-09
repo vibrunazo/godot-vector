@@ -1,8 +1,8 @@
 [gd_scene load_steps=2 format=3 uid="uid://62je7a634151"]
 
-[ext_resource type="Script" path="res://scenes/RaceCam.gd" id="1_2xwv3"]
+[ext_resource type="Script" path="res://scenes/race_cam.gd" id="1_ipghs"]
 
 [node name="RaceCam" type="Camera2D"]
 position_smoothing_enabled = true
 editor_draw_limits = true
-script = ExtResource("1_2xwv3")
+script = ExtResource("1_ipghs")

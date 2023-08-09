@@ -3,6 +3,7 @@ extends Node2D
 class_name Car
 
 signal turn_end
+signal registered
 
 @export var grid: Grid
 @export var color: Color = Color(0.9, 0.2, 0.2)
@@ -15,6 +16,8 @@ var svector := Vector2(0, 0)
 var history: Array[Vector2]
 var car_history: CarHistory
 var is_moving: = false
+var is_my_turn: = false
+var is_registered: = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -24,6 +27,9 @@ func _ready():
 	ini_grid_pos = grid_pos
 	register_car_history()
 	update_pos_from_grid()
+	update_draw()
+	is_registered = true
+	registered.emit()
 
 func register_car_history():
 	car_history = %CarHistory
@@ -39,7 +45,14 @@ func register_car_history():
 func update_draw():
 	if car_history:
 		car_history.update_vectors()
-		car_history.show_dots_at(grid_pos + svector)
+		car_history.update_dots_at(grid_pos + svector)
+
+## my turn begins
+## the RaceGame tells the Car when its turn begins, 
+## but the Car tells the Game when the turn ends via turn_end signal
+func turn_begin():
+	is_my_turn = true
+	car_history.show_dots()
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(_delta):
@@ -72,11 +85,10 @@ func _input(event):
 
 func input_move(v: Vector2) -> bool:
 	if is_moving: return false
+	if not is_my_turn: return false
 	next_move = v
 	move()
 	return true
-#	await get_tree().create_timer(1.0).timeout
-	
 
 func move():
 	svector += next_move
@@ -102,6 +114,7 @@ func move_end():
 	is_moving = false
 #	car_history.update_vectors()
 	update_draw()
+	is_my_turn = false
 	turn_end.emit()
 
 func update_grid_from_pos():
