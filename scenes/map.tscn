@@ -14,6 +14,8 @@ grow_vertical = 2
 
 [node name="Grid" parent="." instance=ExtResource("1_pm8pa")]
 layout_mode = 1
+offset_right = 2588.0
+offset_bottom = 1852.0
 
 [node name="RaceCam" parent="." node_paths=PackedStringArray("car") instance=ExtResource("3_gu565")]
 position = Vector2(580, 360)
@@ -33,3 +35,5 @@ offset_bottom = 40.0
 [node name="Car" parent="Cars" node_paths=PackedStringArray("grid") instance=ExtResource("1_muxmf")]
 position = Vector2(320, 256)
 grid = NodePath("../../Grid")
+
+[editable path="Grid"]

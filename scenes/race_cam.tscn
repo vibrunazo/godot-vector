@@ -4,4 +4,5 @@
 
 [node name="RaceCam" type="Camera2D"]
 position_smoothing_enabled = true
+editor_draw_limits = true
 script = ExtResource("1_2xwv3")
