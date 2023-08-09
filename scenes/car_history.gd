@@ -108,6 +108,7 @@ func draw_dot(p: Vector2, size: float, acolor: Color, ocolor: Color):
 ## shows target dot animating to highlight to the user where he's going to
 ## called when user just moved and car starts moving towards target
 func show_target_at(p: Vector2):
+	%TargetDot.visible = true
 	%TargetDot.position = grid2pix(p)
 	$AnimTarget.play("selected")
 

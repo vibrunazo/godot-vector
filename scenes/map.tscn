@@ -18,6 +18,7 @@ offset_right = 2588.0
 offset_bottom = 1852.0
 
 [node name="RaceCam" parent="." node_paths=PackedStringArray("car") instance=ExtResource("3_gu565")]
+visible = false
 position = Vector2(580, 360)
 car = NodePath("../Cars/Car")
 
@@ -33,7 +34,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="Car" parent="Cars" node_paths=PackedStringArray("grid") instance=ExtResource("1_muxmf")]
-position = Vector2(320, 256)
+position = Vector2(280, 140)
 grid = NodePath("../../Grid")
 
 [editable path="Grid"]

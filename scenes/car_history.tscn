@@ -102,6 +102,7 @@ modulate = Color(0.792157, 0.792157, 0.792157, 1)
 
 [node name="TargetDot" type="Node2D" parent="."]
 unique_name_in_owner = true
+visible = false
 
 [node name="TargetDotSprite" type="Sprite2D" parent="TargetDot"]
 unique_name_in_owner = true
