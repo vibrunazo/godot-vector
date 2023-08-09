@@ -98,6 +98,7 @@ script = ExtResource("1_5g610")
 
 [node name="Dots" type="Node2D" parent="."]
 unique_name_in_owner = true
+visible = false
 modulate = Color(0.792157, 0.792157, 0.792157, 1)
 
 [node name="TargetDot" type="Node2D" parent="."]

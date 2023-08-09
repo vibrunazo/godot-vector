@@ -22,7 +22,7 @@ func draw_arrows():
 	var history := car.history
 #	var to := grid2pix(svector)
 	var p := grid2pix(ini_grid_pos) - global_position
-	var ac := Color(0.9, 0.2, 0.2)
+	var ac := car.color
 	var oc := Color(0.2, 0.05, 0.05)
 	var maxs : = 40
 	var size = float(history.size())

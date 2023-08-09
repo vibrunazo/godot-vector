@@ -1,5 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://dkaofok36yybe"]
+[gd_scene load_steps=5 format=3 uid="uid://dkaofok36yybe"]
 
+[ext_resource type="PackedScene" uid="uid://n8vt2c5n8ys6" path="res://scenes/race_game.tscn" id="1_dbwcq"]
 [ext_resource type="PackedScene" uid="uid://c1gm6pyvbylwx" path="res://scenes/car.tscn" id="1_muxmf"]
 [ext_resource type="PackedScene" uid="uid://d08o10r7su4q0" path="res://scenes/grid.tscn" id="1_pm8pa"]
 [ext_resource type="PackedScene" uid="uid://62je7a634151" path="res://scenes/race_cam.tscn" id="3_gu565"]
@@ -12,15 +13,19 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Grid" parent="." instance=ExtResource("1_pm8pa")]
-layout_mode = 1
-offset_right = 2588.0
-offset_bottom = 1852.0
+[node name="RaceGame" parent="." node_paths=PackedStringArray("cars", "cam") instance=ExtResource("1_dbwcq")]
+cars = [NodePath("../Cars/Car"), NodePath("../Cars/Car2"), NodePath("../Cars/Car3")]
+cam = NodePath("../RaceCam")
 
 [node name="RaceCam" parent="." node_paths=PackedStringArray("car") instance=ExtResource("3_gu565")]
 visible = false
 position = Vector2(580, 360)
 car = NodePath("../Cars/Car")
+
+[node name="Grid" parent="." instance=ExtResource("1_pm8pa")]
+layout_mode = 1
+offset_right = 2588.0
+offset_bottom = 1852.0
 
 [node name="Vectors" type="Control" parent="."]
 unique_name_in_owner = true
@@ -36,5 +41,15 @@ offset_bottom = 40.0
 [node name="Car" parent="Cars" node_paths=PackedStringArray("grid") instance=ExtResource("1_muxmf")]
 position = Vector2(280, 140)
 grid = NodePath("../../Grid")
+
+[node name="Car2" parent="Cars" node_paths=PackedStringArray("grid") instance=ExtResource("1_muxmf")]
+position = Vector2(350, 280)
+grid = NodePath("../../Grid")
+color = Color(0.0509804, 0.639216, 0.443137, 1)
+
+[node name="Car3" parent="Cars" node_paths=PackedStringArray("grid") instance=ExtResource("1_muxmf")]
+position = Vector2(350, 350)
+grid = NodePath("../../Grid")
+color = Color(0.588235, 0.0705882, 0.870588, 1)
 
 [editable path="Grid"]
