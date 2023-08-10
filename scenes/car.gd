@@ -21,6 +21,7 @@ var is_registered: = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	%SelectionSprite.modulate = color
 	if grid:
 		cell_size = grid.cell_size
 	update_grid_from_pos()
@@ -53,6 +54,8 @@ func update_draw():
 func turn_begin():
 	is_my_turn = true
 	car_history.show_dots()
+	$Anim.play("selected")
+	%SelectionSprite.visible = true
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(_delta):
@@ -102,6 +105,7 @@ func move():
 
 func move_to_cur_grid():
 	is_moving = true
+	%SelectionSprite.visible = false
 	var tween = create_tween()
 	tween.tween_property(self, "position", grid2pix(grid_pos), 1)
 	tween.tween_callback(move_end)
