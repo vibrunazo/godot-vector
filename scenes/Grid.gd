@@ -25,6 +25,7 @@ func _ready():
 	if Engine.is_editor_hint():
 		dwidth = 4
 		daa = true
+	visible = true
 
 func _draw():
 	print('draw grid here')
