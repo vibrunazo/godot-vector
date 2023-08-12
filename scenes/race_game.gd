@@ -18,7 +18,49 @@ func start_game():
 		await car.registered
 	car.turn_begin()
 
+func clicked():
+	var tilemap: TileMap
+	tilemap = $"../TileMap"
+	var mouse := tilemap.get_local_mouse_position()
+	var clicked_cell = tilemap.local_to_map(mouse)
+	var data := tilemap.get_cell_tile_data(0, clicked_cell)
+	var v := tilemap.map_to_local(clicked_cell)
+	var bt := data.get_terrain_peering_bit(TileSet.CELL_NEIGHBOR_BOTTOM_SIDE)
+
+	var tile := tilemap.get_cell_tile_data(0, Vector2i(0, 0))
+	print("terrain %d at %s v: %s m: %s bt: %s" % [data.terrain, clicked_cell, v, mouse, bt])
+	var p:= get_position_inside_tile(tilemap, clicked_cell, mouse)
+	
+	
+func get_position_inside_tile(tilemap: TileMap, tile_pos: Vector2i, world_pos: Vector2) -> Vector2:
+	var v := tilemap.map_to_local(tile_pos)
+	var data: TileData = tilemap.get_cell_tile_data(0, tile_pos)
+	var tile_size := tilemap.tile_set.tile_size
+	var p: Vector2 = world_pos - v + Vector2(tile_size)/2
+	var x: int = floor(p.x / (tile_size.x / 3.0)) 
+	var y: int = floor(p.y / (tile_size.y / 3.0))
+	var dir: int = get_dir_from_relativepos(x, y)
+	var bit: int = data.get_terrain_peering_bit(dir)
+	data.terrain
+	print("relative pos: %s, size: %s, x: %s, y: %s, dir: %s, bit: %s" % [p, tile_size, x, y, dir, bit])
+	return p
+
+## returns the direction from the TileSet.CELL_NEIGHBOR Enum 
+func get_dir_from_relativepos(x: int, y: int) -> int:
+	match [x, y]:
+		[0, 0]:
+			return TileSet.CELL_NEIGHBOR_TOP_LEFT_CORNER
+		[1, 0]:
+			return TileSet.CELL_NEIGHBOR_TOP_SIDE
+		[2, 0]:
+			return TileSet.CELL_NEIGHBOR_TOP_RIGHT_CORNER
+		[2, 2]:
+			return TileSet.CELL_NEIGHBOR_BOTTOM_RIGHT_CORNER
+	return 0
+
 func _input(event):
+	if event is InputEventMouseButton and event.button_index == 1 and event.pressed:
+		clicked()
 	if event.is_action("ui_down_left") and not event.is_pressed():
 		input_move(Vector2(-1, 1))
 	if event.is_action("ui_down") and not event.is_pressed():
