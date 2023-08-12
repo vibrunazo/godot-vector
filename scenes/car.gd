@@ -7,13 +7,13 @@ signal registered
 
 @export var grid: Grid
 @export var color: Color = Color(0.9, 0.2, 0.2)
-var grid_pos := Vector2(0, 0)
-var ini_grid_pos := Vector2(0, 0)
+var grid_pos := Vector2i(0, 0)
+var ini_grid_pos := Vector2i(0, 0)
 var cell_size := 16
-var next_move := Vector2(0, 0)
+var next_move := Vector2i(0, 0)
 ## current speed vector
-var svector := Vector2(0, 0)
-var history: Array[Vector2]
+var svector := Vector2i(0, 0)
+var history: Array[Vector2i]
 var car_history: CarHistory
 var is_moving: = false
 var is_my_turn: = false
@@ -56,9 +56,15 @@ func turn_begin():
 	car_history.show_dots()
 	$Anim.play("selected")
 	%SelectionSprite.visible = true
-	get_terrain_here()
+#	apply_terrain_mod()
 
-func get_terrain_here():
+func apply_terrain_mod():
+	var terrain = get_terrain_here()
+	if terrain == 1:
+		svector.x = 0
+		svector.y = 0
+
+func get_terrain_here() -> int:
 	var tilemap: TileMap
 	tilemap = $"../../TileMap"
 	var mouse := tilemap.get_local_mouse_position()
@@ -66,6 +72,7 @@ func get_terrain_here():
 	var cell = tilemap.local_to_map(local_pos)
 	var data := tilemap.get_cell_tile_data(0, cell)
 	print('cell: %s terrain: %s' % [cell, data.terrain])
+	return data.terrain
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(_delta):
 #	pass
@@ -126,6 +133,7 @@ func update_pos_from_grid():
 func move_end():
 	is_moving = false
 #	car_history.update_vectors()
+	apply_terrain_mod()
 	update_draw()
 	is_my_turn = false
 	turn_end.emit()

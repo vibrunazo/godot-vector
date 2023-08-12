@@ -28,8 +28,8 @@ func draw_arrows():
 	var size = float(history.size())
 	var i = 0.0
 	# TODO count backwards to avoid wasting loops on undrew old vectors
-	for v in history:
-		v = grid2pix(v)
+	for vector in history:
+		var v: Vector2 = grid2pix(vector)
 		var k = (1 - (size - i) / maxs) * 0.75
 		var ok = k * 0.8
 		var h = 10
