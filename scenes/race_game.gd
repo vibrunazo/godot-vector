@@ -27,9 +27,9 @@ func clicked():
 	var v := tilemap.map_to_local(clicked_cell)
 	var bt := data.get_terrain_peering_bit(TileSet.CELL_NEIGHBOR_BOTTOM_SIDE)
 
-	var tile := tilemap.get_cell_tile_data(0, Vector2i(0, 0))
+#	var tile := tilemap.get_cell_tile_data(0, Vector2i(0, 0))
 	print("terrain %d at %s v: %s m: %s bt: %s" % [data.terrain, clicked_cell, v, mouse, bt])
-	var p:= get_position_inside_tile(tilemap, clicked_cell, mouse)
+#	var p:= get_position_inside_tile(tilemap, clicked_cell, mouse)
 	
 	
 func get_position_inside_tile(tilemap: TileMap, tile_pos: Vector2i, world_pos: Vector2) -> Vector2:

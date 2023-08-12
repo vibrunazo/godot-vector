@@ -56,7 +56,16 @@ func turn_begin():
 	car_history.show_dots()
 	$Anim.play("selected")
 	%SelectionSprite.visible = true
-	
+	get_terrain_here()
+
+func get_terrain_here():
+	var tilemap: TileMap
+	tilemap = $"../../TileMap"
+	var mouse := tilemap.get_local_mouse_position()
+	var local_pos := global_position - tilemap.global_position
+	var cell = tilemap.local_to_map(local_pos)
+	var data := tilemap.get_cell_tile_data(0, cell)
+	print('cell: %s terrain: %s' % [cell, data.terrain])
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(_delta):
 #	pass
