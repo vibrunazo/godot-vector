@@ -1,9 +1,12 @@
-[gd_scene load_steps=8 format=3 uid="uid://c1gm6pyvbylwx"]
+[gd_scene load_steps=9 format=3 uid="uid://c1gm6pyvbylwx"]
 
 [ext_resource type="Texture2D" uid="uid://c1qejx7gxg0pv" path="res://assets/tex/ball.png" id="1_hm1ie"]
 [ext_resource type="Script" path="res://scenes/car.gd" id="1_ohgs5"]
 [ext_resource type="Texture2D" uid="uid://dt27xp2201fpp" path="res://assets/tex/glow.png" id="2_iwf7x"]
 [ext_resource type="PackedScene" uid="uid://c6t7mdi1xsovl" path="res://scenes/car_history.tscn" id="3_frcae"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l0p7b"]
+size = Vector2(4, 4)
 
 [sub_resource type="Animation" id="Animation_m1vha"]
 length = 0.001
@@ -57,7 +60,15 @@ texture = ExtResource("1_hm1ie")
 [node name="CarHistory" parent="." instance=ExtResource("3_frcae")]
 unique_name_in_owner = true
 
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_l0p7b")
+
 [node name="Anim" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_mspr8")
 }
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

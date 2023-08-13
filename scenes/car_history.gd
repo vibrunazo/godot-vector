@@ -92,6 +92,8 @@ func build_dots():
 		%Dots.add_child(dot)
 		dot.position.x += dir[0] * cell_size
 		dot.position.y += dir[1] * cell_size
+		if dir == [0, 0]:
+			dot.transform = dot.transform.scaled(Vector2(1.5, 1.5))
 		
 func hide_dots():
 #	%Dots.visible = false
@@ -113,6 +115,11 @@ func show_target_at(p: Vector2):
 	%TargetDot.visible = true
 	%TargetDot.position = grid2pix(p)
 	$AnimTarget.play("selected")
+
+## hides the selected target dot
+## called by the car when the move ends
+func hide_target():
+	%TargetDot.visible = false
 
 ## updates the position where the target dots will show up in the future
 ## when it's my turn

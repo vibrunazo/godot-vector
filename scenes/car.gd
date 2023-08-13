@@ -19,6 +19,8 @@ var car_history: CarHistory
 var is_moving: = false
 var is_my_turn: = false
 var is_registered: = false
+var is_crashed: = false
+var tween_move: Tween
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -112,21 +114,24 @@ func input_move(v: Vector2) -> bool:
 
 func move():
 	svector += next_move
-	grid_pos += svector
-	car_history.show_target_at(grid_pos)
+	move_to(grid_pos + svector)
+#	move_to(Vector2i(20,10))
+	car_history.show_target_at(grid_pos + svector)
 	car_history.hide_dots()
-	move_to_cur_grid()
+	await turn_end
+	if is_crashed: return
+	grid_pos += svector
 #	await get_tree().create_timer(1.0).timeout
 	history.append(svector)
-	started_move.emit()
 #	queue_redraw()
 
-func move_to_cur_grid():
+func move_to(new_pos: Vector2i):
 	is_moving = true
+	started_move.emit()
 	%SelectionSprite.visible = false
-	var tween = create_tween()
-	tween.tween_property(self, "position", grid2pix(grid_pos), 1)
-	tween.tween_callback(move_end)
+	tween_move = create_tween()
+	tween_move.tween_property(self, "position", grid2pix(new_pos), 1)
+	tween_move.tween_callback(move_end)
 
 func update_pos_from_grid():
 	position = grid2pix(grid_pos)
@@ -135,13 +140,23 @@ func update_pos_from_grid():
 func move_end():
 	is_moving = false
 #	car_history.update_vectors()
+	turn_end.emit()
 	apply_terrain_mod()
 	update_draw()
+	car_history.hide_target()
+	is_crashed = false
 	is_my_turn = false
-	turn_end.emit()
 
 func update_grid_from_pos():
 	grid_pos = pix2grid(global_position)
+
+func crash():
+	is_crashed = true
+	tween_move.stop()
+	svector = Vector2i(0, 0)
+	## TODO play crash anim here
+	update_pos_from_grid()
+	move_end()
 
 #TODO should be a global or something idk
 func grid2pix(g: Vector2) -> Vector2:
@@ -149,3 +164,13 @@ func grid2pix(g: Vector2) -> Vector2:
 
 func pix2grid(p: Vector2) -> Vector2:
 	return Vector2(floor(p.x / cell_size), floor(p.y / cell_size))
+
+
+func _on_area_2d_body_entered(body):
+	print('kaboom?')
+	crash()
+
+func _on_area_2d_area_entered(area):
+	print('area entered')
+	if is_my_turn: crash()
+

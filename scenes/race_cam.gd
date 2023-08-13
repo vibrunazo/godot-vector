@@ -20,6 +20,7 @@ func follow():
 func change_car(newcar: Car):
 	car = newcar
 	await get_tree().create_timer(1.0).timeout
+	if car.is_moving: return
 	var tween = create_tween()
 	tween.tween_property(self, "zoom", Vector2(2, 2), 0.3)
 
