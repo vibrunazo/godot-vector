@@ -3,6 +3,21 @@
 [ext_resource type="Script" path="res://scenes/car_history.gd" id="1_5g610"]
 [ext_resource type="Texture2D" uid="uid://c1qejx7gxg0pv" path="res://assets/tex/ball.png" id="2_4jnjc"]
 
+[sub_resource type="Animation" id="Animation_ccw8e"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Dots:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.792157, 0.792157, 0.792157, 1)]
+}
+
 [sub_resource type="Animation" id="Animation_ue78y"]
 resource_name = "hide_dots"
 length = 0.3
@@ -17,21 +32,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Color(0.792157, 0.792157, 0.792157, 1), Color(0.792157, 0.792157, 0.792157, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_ccw8e"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Dots:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(0.792157, 0.792157, 0.792157, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_cu30m"]
@@ -57,21 +57,6 @@ _data = {
 "show_dots": SubResource("Animation_cu30m")
 }
 
-[sub_resource type="Animation" id="Animation_sppoo"]
-resource_name = "selected"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("TargetDot:scale")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 0,
-"values": [Vector2(1, 1), Vector2(1.5, 1.5), Vector2(1, 1), Vector2(1.3, 1.3), Vector2(1, 1)]
-}
-
 [sub_resource type="Animation" id="Animation_k2lna"]
 length = 0.001
 tracks/0/type = "value"
@@ -85,6 +70,21 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_sppoo"]
+resource_name = "selected"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TargetDot:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.5, 1.5), Vector2(1, 1), Vector2(1.3, 1.3), Vector2(1, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_cdyw5"]

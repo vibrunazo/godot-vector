@@ -16,3 +16,13 @@ func _process(_delta):
 func follow():
 	if !car: return
 	position = car.position
+
+func change_car(newcar: Car):
+	car = newcar
+	await get_tree().create_timer(1.0).timeout
+	var tween = create_tween()
+	tween.tween_property(self, "zoom", Vector2(2, 2), 0.3)
+
+func on_car_started_move():
+	var tween = create_tween()
+	tween.tween_property(self, "zoom", Vector2(1, 1), 0.3)

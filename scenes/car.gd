@@ -2,6 +2,7 @@ extends Node2D
 
 class_name Car
 
+signal started_move
 signal turn_end
 signal registered
 
@@ -117,6 +118,7 @@ func move():
 	move_to_cur_grid()
 #	await get_tree().create_timer(1.0).timeout
 	history.append(svector)
+	started_move.emit()
 #	queue_redraw()
 
 func move_to_cur_grid():

@@ -86,6 +86,7 @@ func input_move(v: Vector2):
 	var car: Car = get_car_this_turn()
 	var r = car.input_move(v)
 	if r:
+		cam.on_car_started_move()
 		await car.turn_end 
 		next_turn()
 #	await get_tree().create_timer(1.0).timeout
@@ -93,7 +94,7 @@ func input_move(v: Vector2):
 func next_turn():
 	turn += 1
 	var car = get_car_this_turn()
-	cam.car = car
+	cam.change_car(car)
 	car.turn_begin()
 
 ## returns the car who plays in this turn
