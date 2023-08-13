@@ -151,6 +151,7 @@ func update_grid_from_pos():
 	grid_pos = pix2grid(global_position)
 
 func crash():
+	print('crashed %s' % name)
 	is_crashed = true
 	tween_move.stop()
 	svector = Vector2i(0, 0)
@@ -167,10 +168,9 @@ func pix2grid(p: Vector2) -> Vector2:
 
 
 func _on_area_2d_body_entered(body):
-	print('kaboom?')
 	crash()
 
 func _on_area_2d_area_entered(area):
 	print('area entered')
-	if is_my_turn: crash()
+	if is_my_turn and is_moving: crash()
 
