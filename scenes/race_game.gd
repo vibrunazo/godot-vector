@@ -2,9 +2,10 @@ extends Node
 
 class_name RaceGame
 
+signal update_ui
+
 @export var cars: Array[Car]
 @export var cam: RaceCam
-@export var finish: FinishLine
 var turn = 0
 
 
@@ -15,8 +16,9 @@ func _ready():
 	start_game()
 
 func register_signals():
-	if finish:
-		pass
+	for car in cars:
+		if car:
+			car.finished.connect(on_car_finished)
 
 func start_game():
 	var car: Car = get_car_this_turn()
@@ -109,3 +111,9 @@ func next_turn():
 ## returns the car who plays in this turn
 func get_car_this_turn() -> Car:
 	return cars[turn % cars.size()]
+
+func on_car_finished():
+	request_update_ui()
+	
+func request_update_ui():
+	update_ui.emit()
