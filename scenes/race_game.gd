@@ -4,8 +4,10 @@ class_name RaceGame
 
 signal update_ui
 
-@export var cars: Array[Car]
 @export var cam: RaceCam
+@export var track: Track
+@export var grid: Grid
+@export var cars: Array[Car]
 var turn = 0
 
 
@@ -19,6 +21,9 @@ func register_signals():
 	for car in cars:
 		if car:
 			car.finished.connect(on_car_finished)
+			car.game = self
+			car.track = track
+			car.grid = grid
 
 func start_game():
 	var car: Car = get_car_this_turn()
@@ -95,14 +100,17 @@ func next_turn():
 		next_turn()
 		return
 	cam.change_car(car)
+	request_update_ui()
 	car.turn_begin()
 
 ## returns the car who plays in this turn
 func get_car_this_turn() -> Car:
 	return cars[turn % cars.size()]
 
+# some car crossed the finish line
 func on_car_finished():
-	request_update_ui()
+#	request_update_ui()
+	pass
 	
 func request_update_ui():
 	update_ui.emit()

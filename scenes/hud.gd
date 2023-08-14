@@ -22,11 +22,11 @@ func build_score_labels():
 		var new_label: Label = label.duplicate()
 		score_labels.append(new_label)
 		$Score/VBox.add_child(new_label)
-		new_label.text = '%s: 0' % [car.name]
 		# LabelSettings needs to be duplicated else they all share same color
 		var settings: LabelSettings = new_label.label_settings.duplicate()
 		new_label.label_settings = settings
 		settings.font_color = car.color
+		update_car_score(i)
 	label.queue_free()
 
 func on_ui_update_requested():
@@ -34,8 +34,12 @@ func on_ui_update_requested():
 	for i in game.cars.size():
 		var car: Car = game.cars[i]
 		if not car: continue
-		var label: Label = score_labels[i]
-		label.text = '%s: %d' % [car.name, max(car.laps, 0)]
+		update_car_score(i)
+
+func update_car_score(i: int):
+	var label: Label = score_labels[i]
+	var car: Car = game.cars[i]
+	label.text = '%s %s: %d' % [car.name, car.svector, max(car.laps, 0)]
 
 func _on_button_zp_pressed():
 	if not cam: return

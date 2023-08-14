@@ -7,8 +7,10 @@ signal turn_end
 signal registered
 signal finished
 
-@export var grid: Grid
 @export var color: Color = Color(0.9, 0.2, 0.2)
+var game: RaceGame
+var track: Track
+var grid: Grid
 var grid_pos := Vector2i(0, 0)
 var ini_grid_pos := Vector2i(0, 0)
 var cell_size := 16
@@ -71,7 +73,7 @@ func apply_terrain_mod():
 
 func get_terrain_here() -> int:
 	var tilemap: TileMap
-	tilemap = $"../../TileMap"
+	tilemap = $"../../Track/TileMap"
 #	var mouse := tilemap.get_local_mouse_position()
 	var local_pos := global_position - tilemap.global_position
 	var cell = tilemap.local_to_map(local_pos)
@@ -95,12 +97,6 @@ func move():
 #	move_to(Vector2i(20,10))
 	car_history.show_target_at(grid_pos + svector)
 	car_history.hide_dots()
-	await turn_end
-	if is_crashed: return
-	grid_pos += svector
-#	await get_tree().create_timer(1.0).timeout
-	history.append(svector)
-#	queue_redraw()
 
 func move_to(new_pos: Vector2i):
 	is_moving = true
@@ -108,17 +104,20 @@ func move_to(new_pos: Vector2i):
 	%SelectionSprite.visible = false
 	tween_move = create_tween()
 	tween_move.tween_property(self, "position", grid2pix(new_pos), 1)
-	tween_move.tween_callback(move_end)
+	tween_move.tween_callback(on_move_end)
 
 func update_pos_from_grid():
 	position = grid2pix(grid_pos)
 #	car_history.update_vectors()
 
-func move_end():
+func on_move_end():
 	is_moving = false
 #	car_history.update_vectors()
-	turn_end.emit()
+	if is_crashed: return
+	grid_pos += svector
+	history.append(svector)
 	apply_terrain_mod()
+	turn_end.emit()
 	update_draw()
 	car_history.hide_target()
 	is_crashed = false
@@ -134,7 +133,7 @@ func crash():
 	svector = Vector2i(0, 0)
 	## TODO play crash anim here
 	update_pos_from_grid()
-	move_end()
+	on_move_end()
 
 ## enters the finish line
 func finish_enter():

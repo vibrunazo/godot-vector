@@ -6,7 +6,7 @@
 resource_local_to_scene = true
 font_size = 32
 font_color = Color(0.952941, 0.211765, 0.235294, 1)
-outline_size = 2
+outline_size = 4
 outline_color = Color(0.00392157, 0.00392157, 0.00392157, 1)
 
 [node name="HUD" type="Control"]
