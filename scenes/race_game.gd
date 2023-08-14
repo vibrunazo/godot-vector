@@ -4,13 +4,19 @@ class_name RaceGame
 
 @export var cars: Array[Car]
 @export var cam: RaceCam
+@export var finish: FinishLine
 var turn = 0
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	register_signals()
 	await get_tree().create_timer(0.6).timeout
 	start_game()
+
+func register_signals():
+	if finish:
+		pass
 
 func start_game():
 	var car: Car = get_car_this_turn()
@@ -94,6 +100,9 @@ func input_move(v: Vector2):
 func next_turn():
 	turn += 1
 	var car = get_car_this_turn()
+	if not car:
+		next_turn()
+		return
 	cam.change_car(car)
 	car.turn_begin()
 

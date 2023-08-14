@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://cmx8l0cwr0xd5"]
+
+[ext_resource type="Texture2D" uid="uid://c0ddaq3qvrn3w" path="res://assets/tex/finishline.png" id="1_rtyn1"]
+[ext_resource type="Script" path="res://scenes/finish_line.gd" id="1_xyi7d"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ct3hn"]
+size = Vector2(32, 320)
+
+[node name="FinishLine" type="Node2D"]
+script = ExtResource("1_xyi7d")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_rtyn1")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_ct3hn")

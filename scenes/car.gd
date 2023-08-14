@@ -5,6 +5,7 @@ class_name Car
 signal started_move
 signal turn_end
 signal registered
+signal finished
 
 @export var grid: Grid
 @export var color: Color = Color(0.9, 0.2, 0.2)
@@ -21,6 +22,7 @@ var is_my_turn: = false
 var is_registered: = false
 var is_crashed: = false
 var tween_move: Tween
+var laps: int = -1
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -70,7 +72,7 @@ func apply_terrain_mod():
 func get_terrain_here() -> int:
 	var tilemap: TileMap
 	tilemap = $"../../TileMap"
-	var mouse := tilemap.get_local_mouse_position()
+#	var mouse := tilemap.get_local_mouse_position()
 	var local_pos := global_position - tilemap.global_position
 	var cell = tilemap.local_to_map(local_pos)
 	var data := tilemap.get_cell_tile_data(0, cell)
@@ -80,31 +82,6 @@ func get_terrain_here() -> int:
 #func _process(_delta):
 #	pass
 	
-func _input(event):
-	return
-	if is_moving: return
-	if event.is_action("ui_down_left") and not event.is_pressed():
-		input_move(Vector2(-1, 1))
-	if event.is_action("ui_down") and not event.is_pressed():
-		input_move(Vector2(0, 1))
-	if event.is_action("ui_down_right") and not event.is_pressed():
-		input_move(Vector2(1, 1))
-		
-	if event.is_action("ui_left") and not event.is_pressed():
-		input_move(Vector2(-1, 0))
-	if event.is_action("ui_center") and not event.is_pressed():
-		input_move(Vector2(0, 0))
-	if event.is_action("ui_right") and not event.is_pressed():
-		input_move(Vector2(1, 0))
-	
-	if event.is_action("ui_up_left") and not event.is_pressed():
-		input_move(Vector2(-1, -1))
-	if event.is_action("ui_up") and not event.is_pressed():
-		input_move(Vector2(0, -1))
-	if event.is_action("ui_up_right") and not event.is_pressed():
-		input_move(Vector2(1, -1))
-		
-
 func input_move(v: Vector2) -> bool:
 	if is_moving: return false
 	if not is_my_turn: return false
@@ -159,6 +136,24 @@ func crash():
 	update_pos_from_grid()
 	move_end()
 
+## enters the finish line
+func finish_enter():
+	if svector.x > 0:
+		laps += 1
+	else:
+		pass
+	print('%s finished, laps: %d' % [name, laps])
+	finished.emit()
+
+## exits finish line
+func finish_exit():
+	if svector.x > 0:
+		pass
+	else:
+		laps -= 1
+	print('%s finish exited, laps: %d' % [name, laps])
+	finished.emit()
+
 #TODO should be a global or something idk
 func grid2pix(g: Vector2) -> Vector2:
 	return g * cell_size
@@ -167,10 +162,14 @@ func pix2grid(p: Vector2) -> Vector2:
 	return Vector2(floor(p.x / cell_size), floor(p.y / cell_size))
 
 
-func _on_area_2d_body_entered(body):
+func _on_area_2d_body_entered(_body):
 	crash()
 
 func _on_area_2d_area_entered(area):
-	print('area entered')
-	if is_my_turn and is_moving: crash()
+	print('area entered %s' % area.get_parent())
+	if area.get_parent() is FinishLine: finish_enter()
+	elif is_my_turn and is_moving and area.get_parent() is Car: crash()
 
+func _on_area_2d_area_exited(area):
+	print('area exited %s' % area.get_parent())
+	if area.get_parent() is FinishLine: finish_exit()
