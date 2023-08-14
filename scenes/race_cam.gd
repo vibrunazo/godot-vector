@@ -4,6 +4,10 @@ class_name RaceCam
 
 @export var car: Car
 
+var zoom_target: float = 1.0
+var zoom_modified: bool = false
+var zoom_tween: Tween
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -19,11 +23,25 @@ func follow():
 
 func change_car(newcar: Car):
 	car = newcar
+	if zoom_modified: return
 	await get_tree().create_timer(1.0).timeout
-	if car.is_moving: return
-	var tween = create_tween()
-	tween.tween_property(self, "zoom", Vector2(2, 2), 0.3)
+	if car.is_moving or zoom_modified: return
+	zoom_tween = create_tween()
+	zoom_tween.tween_property(self, "zoom", Vector2(2, 2), 0.3)
 
 func on_car_started_move():
-	var tween = create_tween()
-	tween.tween_property(self, "zoom", Vector2(1, 1), 0.3)
+	if zoom_modified: return
+	zoom_tween = create_tween()
+	zoom_tween.tween_property(self, "zoom", Vector2(1, 1), 0.3)
+
+func zoom_in():
+	zoom_modified = true
+	zoom += Vector2(0.1, 0.1)
+
+func zoom_out():
+	zoom_modified = true
+	zoom -= Vector2(0.1, 0.1)
+
+func zoom_reset():
+	zoom_modified = false
+	zoom = Vector2(1, 1)

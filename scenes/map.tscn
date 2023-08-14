@@ -74,7 +74,8 @@ color = Color(0.541176, 0.172549, 0.960784, 1)
 
 [node name="UILayer" type="CanvasLayer" parent="."]
 
-[node name="HUD" parent="UILayer" node_paths=PackedStringArray("game") instance=ExtResource("7_tcvel")]
+[node name="HUD" parent="UILayer" node_paths=PackedStringArray("game", "cam") instance=ExtResource("7_tcvel")]
 game = NodePath("../../RaceGame")
+cam = NodePath("../../RaceCam")
 
 [editable path="Grid"]

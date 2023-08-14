@@ -1,6 +1,7 @@
 extends Control
 
 @export var game: RaceGame
+@export var cam: RaceCam
 var score_labels: Array[Label]
 
 
@@ -35,3 +36,16 @@ func on_ui_update_requested():
 		if not car: continue
 		var label: Label = score_labels[i]
 		label.text = '%s: %d' % [car.name, max(car.laps, 0)]
+
+func _on_button_zp_pressed():
+	if not cam: return
+	cam.zoom_in()
+
+func _on_button_zm_pressed():
+	if not cam: return
+	cam.zoom_out()
+
+
+func _on_button_center_pressed():
+	if not cam: return
+	cam.zoom_reset()
