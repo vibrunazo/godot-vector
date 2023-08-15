@@ -10,7 +10,6 @@ signal update_ui
 @export var cars: Array[Car]
 var turn = 0
 
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	register_signals()
@@ -29,6 +28,8 @@ func start_game():
 	var car: Car = get_car_this_turn()
 	if not car.is_registered:
 		await car.registered
+	calculate_car_positions()
+	request_update_ui()
 	car.turn_begin()
 
 func clicked():
@@ -100,12 +101,25 @@ func next_turn():
 		next_turn()
 		return
 	cam.change_car(car)
+	calculate_car_positions()
 	request_update_ui()
 	car.turn_begin()
 
 ## returns the car who plays in this turn
 func get_car_this_turn() -> Car:
 	return cars[turn % cars.size()]
+	
+func calculate_car_positions():
+	var sorted_cars: Array[Car] = cars.duplicate()
+	sorted_cars.sort_custom(func(a, b): return a.distance_score > b.distance_score)
+	var i = 1
+	for car in sorted_cars:
+		car.race_pos = i
+		i += 1
+
+## returns which position this car is in the race
+func find_car_position(car: Car) -> int:
+	return car.race_pos
 
 # some car crossed the finish line
 func on_car_finished():

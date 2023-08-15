@@ -39,7 +39,9 @@ func on_ui_update_requested():
 func update_car_score(i: int):
 	var label: Label = score_labels[i]
 	var car: Car = game.cars[i]
-	label.text = '%s %s: %d' % [car.name, car.svector, max(car.laps, 0)]
+	var pos: int = game.find_car_position(car)
+#	var d = game.track.calculate_car_distance_left(car)
+	label.text = '%d. %s %s: %d' % [pos, car.name, car.svector, max(car.laps, 0)]
 
 func _on_button_zp_pressed():
 	if not cam: return

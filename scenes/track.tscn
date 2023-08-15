@@ -1,9 +1,15 @@
-[gd_scene load_steps=5 format=3 uid="uid://w6iwx5e6l5ba"]
+[gd_scene load_steps=6 format=3 uid="uid://w6iwx5e6l5ba"]
 
 [ext_resource type="TileSet" uid="uid://bjd4w5ylxppff" path="res://res/tileset.tres" id="1_8l6on"]
 [ext_resource type="Script" path="res://scenes/track.gd" id="1_jkb2p"]
 [ext_resource type="PackedScene" uid="uid://cmx8l0cwr0xd5" path="res://scenes/finish_line.tscn" id="2_7indv"]
 [ext_resource type="PackedScene" uid="uid://dkoyua62nkeqr" path="res://scenes/ai_hint.tscn" id="3_pksdt"]
+
+[sub_resource type="Curve2D" id="Curve2D_uc50c"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 16, 0, 0, 0, 0, 0, 480, 0, 0, 0, 0, 0, 480, 320, 0, 0, 0, 0, 800, 320, 0, 0, 0, 0, 800, 0, 0, 0, 0, 0, 1280, 0, 0, 0, 0, 0, 1280, -160, 0, 0, 0, 0, 1760, -160, 0, 0, 0, 0, 1760, 160, 0, 0, 0, 0, 1440, 160, 0, 0, 0, 0, 1440, 480, 0, 0, 0, 0, 1760, 480, 0, 0, 0, 0, 1760, 800, 0, 0, 0, 0, -320, 800, 0, 0, 0, 0, -320, 0, 0, 0, 0, 0, 0, 0)
+}
+point_count = 16
 
 [node name="Track" type="Node2D"]
 script = ExtResource("1_jkb2p")
@@ -69,3 +75,7 @@ position = Vector2(240, 1200)
 
 [node name="AIHint14" parent="AIHints" instance=ExtResource("3_pksdt")]
 position = Vector2(240, 400)
+
+[node name="Path2D" type="Path2D" parent="."]
+position = Vector2(560, 400)
+curve = SubResource("Curve2D_uc50c")

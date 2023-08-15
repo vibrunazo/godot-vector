@@ -36,11 +36,11 @@ func on_car_started_move():
 
 func zoom_in():
 	zoom_modified = true
-	zoom += Vector2(0.1, 0.1)
+	zoom += Vector2(0.2, 0.2)
 
 func zoom_out():
 	zoom_modified = true
-	zoom -= Vector2(0.1, 0.1)
+	zoom -= Vector2(0.2, 0.2)
 
 func zoom_reset():
 	zoom_modified = false

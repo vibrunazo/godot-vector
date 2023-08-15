@@ -15,8 +15,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="RaceGame" parent="." node_paths=PackedStringArray("cam", "cars") instance=ExtResource("1_dbwcq")]
+[node name="RaceGame" parent="." node_paths=PackedStringArray("cam", "track", "grid", "cars") instance=ExtResource("1_dbwcq")]
 cam = NodePath("../RaceCam")
+track = NodePath("../Track")
+grid = NodePath("../Grid")
 cars = [NodePath("../Cars/Car"), NodePath("../Cars/Car2"), NodePath("../Cars/Car3")]
 
 [node name="RaceCam" parent="." node_paths=PackedStringArray("car") instance=ExtResource("3_gu565")]

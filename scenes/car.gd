@@ -25,6 +25,10 @@ var is_registered: = false
 var is_crashed: = false
 var tween_move: Tween
 var laps: int = -1
+# how far I've travelled, to calculate who is ahead
+var distance_score: float = 0
+# my position in the race, set by the RaceGame each turn
+var race_pos: int = 1
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -36,6 +40,7 @@ func _ready():
 	register_car_history()
 	update_pos_from_grid()
 	update_draw()
+	calculate_distance_score()
 	is_registered = true
 	registered.emit()
 
@@ -110,11 +115,15 @@ func update_pos_from_grid():
 	position = grid2pix(grid_pos)
 #	car_history.update_vectors()
 
+func calculate_distance_score():
+	distance_score = track.calculate_car_score(self)
+
 func on_move_end():
 	is_moving = false
 #	car_history.update_vectors()
-	if is_crashed: return
+#	if is_crashed: return
 	grid_pos += svector
+	calculate_distance_score()
 	history.append(svector)
 	apply_terrain_mod()
 	turn_end.emit()
