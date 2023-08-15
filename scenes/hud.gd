@@ -30,7 +30,6 @@ func build_score_labels():
 	label.queue_free()
 
 func on_ui_update_requested():
-	print('update ui')
 	for i in game.cars.size():
 		var car: Car = game.cars[i]
 		if not car: continue

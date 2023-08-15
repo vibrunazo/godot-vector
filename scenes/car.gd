@@ -62,6 +62,8 @@ func register_car_history():
 func setup_ai():
 	if control_type == Controller.AI:
 		ai = $AIDriver
+		ai.car = self
+		ai.track = track
 
 ## updates history vectors and target dots
 func update_draw():
@@ -92,7 +94,7 @@ func get_terrain_here() -> int:
 	var local_pos := global_position - tilemap.global_position
 	var cell = tilemap.local_to_map(local_pos)
 	var data := tilemap.get_cell_tile_data(0, cell)
-	print('cell: %s terrain: %s' % [cell, data.terrain])
+#	print('cell: %s terrain: %s' % [cell, data.terrain])
 	return data.terrain
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(_delta):
@@ -145,7 +147,6 @@ func update_grid_from_pos():
 	grid_pos = pix2grid(global_position)
 
 func crash():
-	print('crashed %s' % name)
 	is_crashed = true
 	tween_move.stop()
 	svector = Vector2i(0, 0)
@@ -159,7 +160,7 @@ func finish_enter():
 		laps += 1
 	else:
 		pass
-	print('%s finished, laps: %d' % [name, laps])
+#	print('%s finished, laps: %d' % [name, laps])
 	finished.emit()
 
 ## exits finish line
@@ -168,14 +169,14 @@ func finish_exit():
 		pass
 	else:
 		laps -= 1
-	print('%s finish exited, laps: %d' % [name, laps])
+#	print('%s finish exited, laps: %d' % [name, laps])
 	finished.emit()
 
 #TODO should be a global or something idk
 func grid2pix(g: Vector2) -> Vector2:
 	return g * cell_size
 
-func pix2grid(p: Vector2) -> Vector2:
+func pix2grid(p: Vector2) -> Vector2i:
 	return Vector2(floor(p.x / cell_size), floor(p.y / cell_size))
 
 
@@ -183,10 +184,8 @@ func _on_area_2d_body_entered(_body):
 	crash()
 
 func _on_area_2d_area_entered(area):
-	print('area entered %s' % area.get_parent())
 	if area.get_parent() is FinishLine: finish_enter()
 	elif is_my_turn and is_moving and area.get_parent() is Car: crash()
 
 func _on_area_2d_area_exited(area):
-	print('area exited %s' % area.get_parent())
 	if area.get_parent() is FinishLine: finish_exit()

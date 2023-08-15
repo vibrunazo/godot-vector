@@ -29,6 +29,22 @@ func find_closest_hint_index_to_car(car: Car) -> int:
 			best = i
 	return best
 
+func find_next_hint(car: Car) -> Vector2:
+	var lap_offset: = path.curve.get_closest_offset(car.global_position - path.global_position)
+	var v = path.curve.get_point_position(1) + path.global_position
+	var next_i = 0
+	var next = path.curve.get_point_position(0)
+	for i in path.curve.get_point_count():
+		var point = path.curve.get_point_position(i)
+		var off = path.curve.get_closest_offset(point)
+		print('i: %d, point: %s, off: %s' % [i, point, off])
+		if off > lap_offset:
+			next_i = i
+			next = point
+			break
+	print('%s offset: %s, next: %d' % [car.name, lap_offset, next_i])
+	return next + path.global_position
+
 func calculate_car_score(car: Car) -> float:
 	var lap_offset: = path.curve.get_closest_offset(car.global_position - path.global_position)
 	return lap_offset + car.laps * length
