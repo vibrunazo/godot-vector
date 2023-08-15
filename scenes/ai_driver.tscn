@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://8whg6qnilsac"]
+
+[ext_resource type="Script" path="res://scenes/ai_driver.gd" id="1_ffuqk"]
+
+[node name="AIDriver" type="Node"]
+script = ExtResource("1_ffuqk")

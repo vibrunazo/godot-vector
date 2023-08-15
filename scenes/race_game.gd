@@ -25,12 +25,7 @@ func register_signals():
 			car.grid = grid
 
 func start_game():
-	var car: Car = get_car_this_turn()
-	if not car.is_registered:
-		await car.registered
-	calculate_car_positions()
-	request_update_ui()
-	car.turn_begin()
+	new_turn()
 
 func clicked():
 	print('clicked')
@@ -65,26 +60,34 @@ func _input(event):
 	if event is InputEventMouseButton and event.button_index == 1 and event.pressed:
 		clicked()
 	if event.is_action("ui_down_left") and not event.is_pressed():
-		input_move(Vector2(-1, 1))
+		local_input(Vector2(-1, 1))
 	if event.is_action("ui_down") and not event.is_pressed():
-		input_move(Vector2(0, 1))
+		local_input(Vector2(0, 1))
 	if event.is_action("ui_down_right") and not event.is_pressed():
-		input_move(Vector2(1, 1))
+		local_input(Vector2(1, 1))
 		
 	if event.is_action("ui_left") and not event.is_pressed():
-		input_move(Vector2(-1, 0))
+		local_input(Vector2(-1, 0))
 	if event.is_action("ui_center") and not event.is_pressed():
-		input_move(Vector2(0, 0))
+		local_input(Vector2(0, 0))
 	if event.is_action("ui_right") and not event.is_pressed():
-		input_move(Vector2(1, 0))
+		local_input(Vector2(1, 0))
 	
 	if event.is_action("ui_up_left") and not event.is_pressed():
-		input_move(Vector2(-1, -1))
+		local_input(Vector2(-1, -1))
 	if event.is_action("ui_up") and not event.is_pressed():
-		input_move(Vector2(0, -1))
+		local_input(Vector2(0, -1))
 	if event.is_action("ui_up_right") and not event.is_pressed():
-		input_move(Vector2(1, -1))
+		local_input(Vector2(1, -1))
 
+## received an input from a local player
+func local_input(v: Vector2):
+	var car: Car = get_car_this_turn()
+	if not car.control_type == Car.Controller.LOCAL:
+		return
+	input_move(v)
+
+## inputs a move on current car
 func input_move(v: Vector2):
 	var car: Car = get_car_this_turn()
 	var r = car.input_move(v)
@@ -96,14 +99,22 @@ func input_move(v: Vector2):
 
 func next_turn():
 	turn += 1
+	new_turn()
+
+func new_turn():
 	var car = get_car_this_turn()
 	if not car:
 		next_turn()
 		return
+	if not car.is_registered:
+		await car.registered
 	cam.change_car(car)
 	calculate_car_positions()
 	request_update_ui()
 	car.turn_begin()
+	if car.control_type == car.Controller.AI:
+		var input = car.ai.play_turn()
+		input_move(input)
 
 ## returns the car who plays in this turn
 func get_car_this_turn() -> Car:

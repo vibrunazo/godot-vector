@@ -7,7 +7,10 @@ signal turn_end
 signal registered
 signal finished
 
+enum Controller {LOCAL, AI}
+
 @export var color: Color = Color(0.9, 0.2, 0.2)
+@export var control_type: Controller = Controller.LOCAL
 var game: RaceGame
 var track: Track
 var grid: Grid
@@ -29,6 +32,7 @@ var laps: int = -1
 var distance_score: float = 0
 # my position in the race, set by the RaceGame each turn
 var race_pos: int = 1
+var ai: AIDriver
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -41,6 +45,7 @@ func _ready():
 	update_pos_from_grid()
 	update_draw()
 	calculate_distance_score()
+	setup_ai()
 	is_registered = true
 	registered.emit()
 
@@ -53,6 +58,10 @@ func register_car_history():
 	car_history.reparent.call_deferred(parent, false)
 	car_history.build_dots()
 #	car_history.update_vectors()
+
+func setup_ai():
+	if control_type == Controller.AI:
+		ai = $AIDriver
 
 ## updates history vectors and target dots
 func update_draw():
