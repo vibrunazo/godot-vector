@@ -66,7 +66,7 @@ func register_car_history():
 func setup_ai():
 	if control_type == Controller.AI:
 		if not ai:
-			ai = load("res://res/bot_driver.tres")
+			ai = load("res://res/bot_driver.tres").duplicate()
 		ai.setup(self)
 
 ## updates history vectors and target dots
@@ -123,7 +123,7 @@ func move_to(new_pos: Vector2i):
 	started_move.emit()
 	%SelectionSprite.visible = false
 	tween_move = create_tween()
-	tween_move.tween_property(self, "position", grid2pix(new_pos), 1)
+	tween_move.tween_property(self, "position", grid2pix(new_pos), 0.5)
 	tween_move.tween_callback(on_move_end)
 
 func update_pos_from_grid():
@@ -149,6 +149,14 @@ func on_move_end():
 
 func update_grid_from_pos():
 	grid_pos = pix2grid(global_position)
+
+## Returns whether this Car is placed first in the race
+func is_first() -> bool:
+	return race_pos == 1
+
+## Returns whether this Car is placed last in the race
+func is_last() -> bool:
+	return race_pos == game.cars.size()
 
 ## Returns true if using given input this turn would crash.
 ## false otherwise

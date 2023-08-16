@@ -19,11 +19,15 @@ func setup(car_ref: Car):
 
 func play_turn() -> Vector2i:
 	await car.get_tree().create_timer(0.15).timeout
-	var ahead = 120.0 
-	if max(car.svector.x, car.svector.y) >= 4: ahead += 30.0
-	if max(car.svector.x, car.svector.y) >= 5: ahead += 80.0
-	if max(car.svector.x, car.svector.y) >= 6: ahead += 100.0
-	ahead *= float(difficulty) / 10
+	var effective_difficulty := difficulty
+	if car.is_last():
+		effective_difficulty += 5
+	var ahead = 4 * 16
+	if max(abs(car.svector.x), abs(car.svector.y)) >= 3: ahead += 2 * 16
+	if max(abs(car.svector.x), abs(car.svector.y)) >= 4: ahead += 2 * 16
+	if max(abs(car.svector.x), abs(car.svector.y)) >= 5: ahead += 4 * 16
+	if max(abs(car.svector.x), abs(car.svector.y)) >= 6: ahead += 4 * 16
+	ahead *= float(effective_difficulty) / 10
 	var v := track.find_next_hint(car, ahead)
 	var car_cell := car.grid_pos
 	var next_cell := car.pix2grid(v)
@@ -31,7 +35,7 @@ func play_turn() -> Vector2i:
 	var max_distance := calc_break_distance()
 	var input: = distance - max_distance
 	input = input.clamp(Vector2i(-1, -1), Vector2i(1, 1))
-	print('%s pos: %s, next: %s, d: %s, md: %s, svector: %s, input: %s' % [car.name, car_cell, next_cell, distance, max_distance, car.svector, input])
+	print('%s pos: %s, next: %s, d: %s, md: %s, svector: %s, input: %s, ahead: %d' % [car.name, car_cell, next_cell, distance, max_distance, car.svector, input, round(ahead / 16)])
 	var will_crash := car.predict_crash(input)
 	if will_crash:
 		input = -car.svector
