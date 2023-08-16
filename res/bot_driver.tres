@@ -1,0 +1,6 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://otofoo52ecrn"]
+
+[ext_resource type="Script" path="res://res/bot_driver.gd" id="1_k17y4"]
+
+[resource]
+script = ExtResource("1_k17y4")

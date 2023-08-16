@@ -1,14 +1,13 @@
-extends Node
+extends Resource
 
-class_name AIDriver
+class_name BotDriver
 
 var car: Car
 var track: Track
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
-	print('ini AIDriver')
+	print('ini BotDriver')
 
 
 func play_turn() -> Vector2i:

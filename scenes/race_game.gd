@@ -114,7 +114,7 @@ func new_turn():
 	calculate_car_positions()
 	request_update_ui()
 	car.turn_begin()
-	if car.control_type == car.Controller.AI:
+	if car.control_type == car.Controller.AI and car.ai:
 		var input = car.ai.play_turn()
 		input_move(input)
 

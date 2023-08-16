@@ -1,10 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://c1gm6pyvbylwx"]
+[gd_scene load_steps=9 format=3 uid="uid://c1gm6pyvbylwx"]
 
 [ext_resource type="Texture2D" uid="uid://c1qejx7gxg0pv" path="res://assets/tex/ball.png" id="1_hm1ie"]
 [ext_resource type="Script" path="res://scenes/car.gd" id="1_ohgs5"]
 [ext_resource type="Texture2D" uid="uid://dt27xp2201fpp" path="res://assets/tex/glow.png" id="2_iwf7x"]
 [ext_resource type="PackedScene" uid="uid://c6t7mdi1xsovl" path="res://scenes/car_history.tscn" id="3_frcae"]
-[ext_resource type="Script" path="res://scenes/ai_driver.gd" id="5_goqvo"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l0p7b"]
 size = Vector2(4, 4)
@@ -70,9 +69,6 @@ shape = SubResource("RectangleShape2D_l0p7b")
 libraries = {
 "": SubResource("AnimationLibrary_mspr8")
 }
-
-[node name="AIDriver" type="Node" parent="."]
-script = ExtResource("5_goqvo")
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
 [connection signal="area_exited" from="Area2D" to="." method="_on_area_2d_area_exited"]

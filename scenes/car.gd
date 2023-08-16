@@ -11,6 +11,7 @@ enum Controller {LOCAL, AI}
 
 @export var color: Color = Color(0.9, 0.2, 0.2)
 @export var control_type: Controller = Controller.LOCAL
+@export var ai: BotDriver
 var game: RaceGame
 var track: Track
 var grid: Grid
@@ -32,7 +33,6 @@ var laps: int = -1
 var distance_score: float = 0
 # my position in the race, set by the RaceGame each turn
 var race_pos: int = 1
-var ai: AIDriver
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -61,7 +61,8 @@ func register_car_history():
 
 func setup_ai():
 	if control_type == Controller.AI:
-		ai = $AIDriver
+		if not ai:
+			ai = load("res://res/bot_driver.tres")
 		ai.car = self
 		ai.track = track
 
@@ -119,7 +120,7 @@ func move_to(new_pos: Vector2i):
 	started_move.emit()
 	%SelectionSprite.visible = false
 	tween_move = create_tween()
-	tween_move.tween_property(self, "position", grid2pix(new_pos), 0.5)
+	tween_move.tween_property(self, "position", grid2pix(new_pos), 0.8)
 	tween_move.tween_callback(on_move_end)
 
 func update_pos_from_grid():

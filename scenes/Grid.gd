@@ -76,3 +76,4 @@ func grid2pix(g: Vector2) -> Vector2:
 
 func pix2grid(p: Vector2) -> Vector2i:
 	return Vector2(round(p.x / cell_size), round(p.y / cell_size))
+	
