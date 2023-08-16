@@ -42,6 +42,12 @@ layout_mode = 1
 offset_right = 2588.0
 offset_bottom = 1852.0
 
+[node name="VectorsShadows" type="Control" parent="."]
+unique_name_in_owner = true
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
 [node name="Vectors" type="Control" parent="."]
 unique_name_in_owner = true
 anchors_preset = 0
@@ -65,7 +71,7 @@ ai = SubResource("Resource_hoqvc")
 
 [node name="Car3" parent="Cars" instance=ExtResource("1_muxmf")]
 position = Vector2(496, 368)
-color = Color(0.45098, 0.301961, 0.407843, 1)
+color = Color(0.85098, 0.568627, 0.768627, 1)
 control_type = 1
 ai = SubResource("Resource_h4ex0")
 

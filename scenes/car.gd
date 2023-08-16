@@ -14,6 +14,7 @@ enum Controller {LOCAL, AI}
 @export var ai: BotDriver
 @onready var car_sprite: Sprite2D = %CarSprite
 @onready var selection_sprite: Sprite2D = %SelectionSprite
+var anim_speed = 0.5
 var game: RaceGame
 var track: Track
 var grid: Grid
@@ -25,6 +26,7 @@ var next_move := Vector2i(0, 0)
 var svector := Vector2i(0, 0)
 var history: Array[Vector2i]
 var car_history: CarHistory
+var car_shadows: CarHistory
 var is_moving: = false
 var is_my_turn: = false
 var is_registered: = false
@@ -56,12 +58,17 @@ func _ready():
 func register_car_history():
 	car_history = %CarHistory
 	car_history.car = self
+	car_history.is_shadow = false
 	var parent = get_parent()
 	var vecs = parent.get_node("%Vectors")
 	if vecs: parent = vecs
 	car_history.reparent.call_deferred(parent, false)
 	car_history.build_dots()
-#	car_history.update_vectors()
+	
+	car_shadows = %CarShadows
+	car_shadows.car = self
+	parent = get_parent().get_node("%VectorsShadows")
+	car_shadows.reparent.call_deferred(parent, false)
 
 func setup_ai():
 	if control_type == Controller.AI:
@@ -74,6 +81,8 @@ func update_draw():
 	if car_history:
 		car_history.update_vectors()
 		car_history.update_dots_at(grid_pos + svector)
+	if car_shadows:
+		car_shadows.update_vectors()
 
 ## my turn begins
 ## the RaceGame tells the Car when its turn begins, 
@@ -123,7 +132,7 @@ func move_to(new_pos: Vector2i):
 	started_move.emit()
 	%SelectionSprite.visible = false
 	tween_move = create_tween()
-	tween_move.tween_property(self, "position", grid2pix(new_pos), 0.1)
+	tween_move.tween_property(self, "position", grid2pix(new_pos), anim_speed)
 	tween_move.tween_callback(on_move_end)
 
 func update_pos_from_grid():

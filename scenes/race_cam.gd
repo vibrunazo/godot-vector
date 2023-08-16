@@ -7,6 +7,7 @@ class_name RaceCam
 var zoom_target: float = 1.0
 var zoom_modified: bool = false
 var zoom_tween: Tween
+var pos_tween: Tween
 
 
 # Called when the node enters the scene tree for the first time.
@@ -19,7 +20,9 @@ func _process(_delta):
 
 func follow():
 	if !car: return
-	position = car.position
+#	position = car.position
+	pos_tween = create_tween()
+	pos_tween.tween_property(self, "position", car.position, 0.5)
 
 func change_car(newcar: Car):
 	car = newcar

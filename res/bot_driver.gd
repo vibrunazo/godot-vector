@@ -23,8 +23,8 @@ func play_turn() -> Vector2i:
 	var effective_difficulty := difficulty
 	if car.is_first():
 		turns_ahead += 1
-		if turns_ahead >= 6:
-			effective_difficulty -= min((turns_ahead - 6) * 0.15, 4)
+		if turns_ahead >= 8:
+			effective_difficulty -= min((turns_ahead - 8) * 0.12, 4)
 	else:
 		turns_ahead = 0
 		effective_difficulty += 1

@@ -61,6 +61,9 @@ unique_name_in_owner = true
 scale = Vector2(0.1, 0.1)
 texture = ExtResource("1_hm1ie")
 
+[node name="CarShadows" parent="." instance=ExtResource("3_frcae")]
+unique_name_in_owner = true
+
 [node name="CarHistory" parent="." instance=ExtResource("3_frcae")]
 unique_name_in_owner = true
 

@@ -3,6 +3,7 @@ extends Node2D
 class_name CarHistory
 
 var car: Car
+var is_shadow := true
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -31,18 +32,26 @@ func draw_arrows():
 	for vector in history:
 		var v: Vector2 = grid2pix(vector)
 		var k = (1 - (size - i) / maxs) * 0.75
-		var ok = k * 0.8
+		var ok = k * 0.6
 		var h = 10
 		var d = 3
 		var c := ac * Color(ac.r, ac.g, ac.b, k)
+		if is_shadow:
+			c.a = c.a * 0.8
+#			oc.a = oc.a * 0.9
 		if i == size - 1: 
+			if is_shadow:
+				break
 			k = 1
 			ok = 1
 			h = 14
 			d = 6
 		else:
-			c.s = c.s * (k + 0.1)
-			c.v = c.v * (k - 0)
+			if not is_shadow: k = 0
+			else:
+				c.s = c.s * (k + 0.1)
+				c.v = c.v * (k - 0)
+				
 		if k > 0:
 			draw_arrow(p, p + v, c, oc * ok, h, d)
 		p += v
