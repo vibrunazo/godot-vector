@@ -123,7 +123,7 @@ func move_to(new_pos: Vector2i):
 	started_move.emit()
 	%SelectionSprite.visible = false
 	tween_move = create_tween()
-	tween_move.tween_property(self, "position", grid2pix(new_pos), 0.5)
+	tween_move.tween_property(self, "position", grid2pix(new_pos), 0.1)
 	tween_move.tween_callback(on_move_end)
 
 func update_pos_from_grid():

@@ -5,6 +5,7 @@ class_name BotDriver
 @export var difficulty: int = 5
 var car: Car
 var track: Track
+var turns_ahead := 0
 
 # Called when the node enters the scene tree for the first time.
 func _init():
@@ -20,13 +21,21 @@ func setup(car_ref: Car):
 func play_turn() -> Vector2i:
 	await car.get_tree().create_timer(0.15).timeout
 	var effective_difficulty := difficulty
+	if car.is_first():
+		turns_ahead += 1
+		if turns_ahead >= 6:
+			effective_difficulty -= min((turns_ahead - 6) * 0.15, 4)
+	else:
+		turns_ahead = 0
+		effective_difficulty += 1
 	if car.is_last():
 		effective_difficulty += 5
+	effective_difficulty = clamp(effective_difficulty, 1, 10)
 	var ahead = 4 * 16
 	if max(abs(car.svector.x), abs(car.svector.y)) >= 3: ahead += 2 * 16
 	if max(abs(car.svector.x), abs(car.svector.y)) >= 4: ahead += 2 * 16
-	if max(abs(car.svector.x), abs(car.svector.y)) >= 5: ahead += 4 * 16
-	if max(abs(car.svector.x), abs(car.svector.y)) >= 6: ahead += 4 * 16
+	if max(abs(car.svector.x), abs(car.svector.y)) >= 5: ahead += 3 * 16
+	if max(abs(car.svector.x), abs(car.svector.y)) >= 6: ahead += 3 * 16
 	ahead *= float(effective_difficulty) / 10
 	var v := track.find_next_hint(car, ahead)
 	var car_cell := car.grid_pos
