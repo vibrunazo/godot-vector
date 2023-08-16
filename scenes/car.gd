@@ -89,7 +89,7 @@ func apply_terrain_mod():
 
 func get_terrain_here() -> int:
 	var tilemap: TileMap
-	tilemap = $"../../Track/TileMap"
+	tilemap = track.tilemap
 #	var mouse := tilemap.get_local_mouse_position()
 	var local_pos := global_position - tilemap.global_position
 	var cell = tilemap.local_to_map(local_pos)
@@ -119,7 +119,7 @@ func move_to(new_pos: Vector2i):
 	started_move.emit()
 	%SelectionSprite.visible = false
 	tween_move = create_tween()
-	tween_move.tween_property(self, "position", grid2pix(new_pos), 1)
+	tween_move.tween_property(self, "position", grid2pix(new_pos), 0.5)
 	tween_move.tween_callback(on_move_end)
 
 func update_pos_from_grid():
@@ -177,7 +177,7 @@ func grid2pix(g: Vector2) -> Vector2:
 	return g * cell_size
 
 func pix2grid(p: Vector2) -> Vector2i:
-	return Vector2(floor(p.x / cell_size), floor(p.y / cell_size))
+	return Vector2(round(p.x / cell_size), round(p.y / cell_size))
 
 
 func _on_area_2d_body_entered(_body):

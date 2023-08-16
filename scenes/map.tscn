@@ -45,11 +45,11 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="Car" parent="Cars" instance=ExtResource("1_muxmf")]
-position = Vector2(560, 352)
+position = Vector2(1152, 688)
 control_type = 1
 
 [node name="Car2" parent="Cars" instance=ExtResource("1_muxmf")]
-position = Vector2(560, 400)
+position = Vector2(224, 576)
 color = Color(0.0509804, 0.639216, 0.443137, 1)
 control_type = 1
 

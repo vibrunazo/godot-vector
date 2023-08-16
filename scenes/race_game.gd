@@ -28,7 +28,9 @@ func start_game():
 	new_turn()
 
 func clicked():
-	print('clicked')
+	var mouse = grid.get_global_mouse_position()
+	var cell := grid.pix2grid(mouse)
+	print('clicked %s' % [cell])
 	
 func get_position_inside_tile(tilemap: TileMap, tile_pos: Vector2i, world_pos: Vector2) -> Vector2:
 	var v := tilemap.map_to_local(tile_pos)

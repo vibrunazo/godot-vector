@@ -26,13 +26,13 @@ func change_car(newcar: Car):
 	if zoom_modified: return
 	await get_tree().create_timer(1.0).timeout
 	if car.is_moving or zoom_modified: return
-	zoom_tween = create_tween()
-	zoom_tween.tween_property(self, "zoom", Vector2(2, 2), 0.3)
+#	zoom_tween = create_tween()
+#	zoom_tween.tween_property(self, "zoom", Vector2(2, 2), 0.3)
 
 func on_car_started_move():
 	if zoom_modified: return
-	zoom_tween = create_tween()
-	zoom_tween.tween_property(self, "zoom", Vector2(1, 1), 0.3)
+#	zoom_tween = create_tween()
+#	zoom_tween.tween_property(self, "zoom", Vector2(1, 1), 0.3)
 
 func zoom_in():
 	zoom_modified = true

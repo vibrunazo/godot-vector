@@ -16,7 +16,7 @@ script = ExtResource("1_jkb2p")
 
 [node name="TileMap" type="TileMap" parent="."]
 unique_name_in_owner = true
-position = Vector2(9, 8)
+position = Vector2(8, 8)
 tile_set = ExtResource("1_8l6on")
 format = 2
 layer_0/name = "terrain"

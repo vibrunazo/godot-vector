@@ -69,3 +69,10 @@ func draw_segment(from, to, e, n):
 #		draw_line(from, to, pcolor, 1)
 #	else:
 #		draw_line(from, to, gcolor, 1)
+
+#TODO should be a global or something idk
+func grid2pix(g: Vector2) -> Vector2:
+	return g * cell_size
+
+func pix2grid(p: Vector2) -> Vector2i:
+	return Vector2(round(p.x / cell_size), round(p.y / cell_size))
