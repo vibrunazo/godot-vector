@@ -12,7 +12,7 @@ func _ready():
 
 
 func play_turn() -> Vector2i:
-	var v := track.find_next_hint(car)
+	var v := track.find_next_hint(car, 120.0)
 	var car_cell := car.grid_pos
 	var next_cell := car.pix2grid(v)
 	var distance: = next_cell - car_cell

@@ -29,8 +29,12 @@ func find_closest_hint_index_to_car(car: Car) -> int:
 			best = i
 	return best
 
-func find_next_hint(car: Car) -> Vector2:
+## returns the global position of the next point in the path curve after where
+## the car is. Used by AI to know where to aim next.
+## ahead: how far ahead from where I actually am should I find the next point from
+func find_next_hint(car: Car, ahead: float = 0.0) -> Vector2:
 	var lap_offset: = path.curve.get_closest_offset(car.global_position - path.global_position)
+	lap_offset += ahead
 	var v = path.curve.get_point_position(1) + path.global_position
 	var next_i = 1
 	var next = path.curve.get_point_position(1)
