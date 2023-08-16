@@ -57,9 +57,11 @@ func draw_col(n: int, e: int):
 	draw_segment(from, to, e, n)
 
 func draw_segment(from, to, e, n):
+	@warning_ignore("integer_division")
+	var is_double = (n % (double_every / primary_every) == 0)
 	if e == 1 and not (n % primary_every == 0):
 		draw_line(from, to, gcolor, gwidth)
-	elif e == primary_every and not (n % (double_every / primary_every) == 0):
+	elif e == primary_every and not is_double:
 		draw_line(from, to, pcolor, pwidth)
 	elif e == double_every:
 		draw_line(from, to, dcolor, dwidth, daa)

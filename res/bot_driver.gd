@@ -18,10 +18,11 @@ func setup(car_ref: Car):
 
 
 func play_turn() -> Vector2i:
+	await car.get_tree().create_timer(0.15).timeout
 	var ahead = 120.0 
-	if max(car.svector.x, car.svector.y) >= 4: ahead += 20.0
-	if max(car.svector.x, car.svector.y) >= 5: ahead += 60.0
-	if max(car.svector.x, car.svector.y) >= 6: ahead += 40.0
+	if max(car.svector.x, car.svector.y) >= 4: ahead += 30.0
+	if max(car.svector.x, car.svector.y) >= 5: ahead += 80.0
+	if max(car.svector.x, car.svector.y) >= 6: ahead += 100.0
 	ahead *= float(difficulty) / 10
 	var v := track.find_next_hint(car, ahead)
 	var car_cell := car.grid_pos
@@ -31,6 +32,11 @@ func play_turn() -> Vector2i:
 	var input: = distance - max_distance
 	input = input.clamp(Vector2i(-1, -1), Vector2i(1, 1))
 	print('%s pos: %s, next: %s, d: %s, md: %s, svector: %s, input: %s' % [car.name, car_cell, next_cell, distance, max_distance, car.svector, input])
+	var will_crash := car.predict_crash(input)
+	if will_crash:
+		input = -car.svector
+		input = input.clamp(Vector2i(-1, -1), Vector2i(1, 1))
+		print('will crash: %s, breaking with %s' % [will_crash, input])
 	return input
 
 ## calculate how far ahead the car can fully brake to zero
@@ -45,8 +51,9 @@ func calc_break_distance() -> Vector2i:
 func sum_to_one(n: int) -> int:
 	if n < 0: 
 		n *= -1
-		print('n: %d, sum: %d, psum: %d' % [n, -(n * (n + 1) / 2), (n * (n + 1) / 2)])
+		@warning_ignore("integer_division")
 		return -(n * (n + 1) / 2)
+	@warning_ignore("integer_division")
 	return n * (n + 1) / 2
 # 1 -> 1
 # 2 -> 3

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://c1gm6pyvbylwx"]
+[gd_scene load_steps=10 format=3 uid="uid://c1gm6pyvbylwx"]
 
 [ext_resource type="Texture2D" uid="uid://c1qejx7gxg0pv" path="res://assets/tex/ball.png" id="1_hm1ie"]
 [ext_resource type="Script" path="res://scenes/car.gd" id="1_ohgs5"]
@@ -45,6 +45,9 @@ _data = {
 "selected": SubResource("Animation_wgurj")
 }
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hernn"]
+size = Vector2(4, 4)
+
 [node name="Car" type="Node2D"]
 script = ExtResource("1_ohgs5")
 
@@ -62,6 +65,8 @@ texture = ExtResource("1_hm1ie")
 unique_name_in_owner = true
 
 [node name="Area2D" type="Area2D" parent="."]
+collision_layer = 3
+collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("RectangleShape2D_l0p7b")
@@ -70,6 +75,13 @@ shape = SubResource("RectangleShape2D_l0p7b")
 libraries = {
 "": SubResource("AnimationLibrary_mspr8")
 }
+
+[node name="ShapeCast2D" type="ShapeCast2D" parent="."]
+visible = false
+enabled = false
+shape = SubResource("RectangleShape2D_hernn")
+target_position = Vector2(50, 0)
+collide_with_areas = true
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
 [connection signal="area_exited" from="Area2D" to="." method="_on_area_2d_area_exited"]

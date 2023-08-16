@@ -41,7 +41,6 @@ func get_position_inside_tile(tilemap: TileMap, tile_pos: Vector2i, world_pos: V
 	var y: int = floor(p.y / (tile_size.y / 3.0))
 	var dir: int = get_dir_from_relativepos(x, y)
 	var bit: int = data.get_terrain_peering_bit(dir)
-	data.terrain
 	print("relative pos: %s, size: %s, x: %s, y: %s, dir: %s, bit: %s" % [p, tile_size, x, y, dir, bit])
 	return p
 
@@ -115,7 +114,7 @@ func new_turn():
 	request_update_ui()
 	car.turn_begin()
 	if car.control_type == car.Controller.AI and car.ai:
-		var input = car.ai.play_turn()
+		var input = await car.ai.play_turn()
 		input_move(input)
 
 ## returns the car who plays in this turn

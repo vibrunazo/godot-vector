@@ -49,6 +49,7 @@ func _ready():
 	update_draw()
 	calculate_distance_score()
 	setup_ai()
+	$ShapeCast2D.add_exception($Area2D)
 	is_registered = true
 	registered.emit()
 
@@ -122,7 +123,7 @@ func move_to(new_pos: Vector2i):
 	started_move.emit()
 	%SelectionSprite.visible = false
 	tween_move = create_tween()
-	tween_move.tween_property(self, "position", grid2pix(new_pos), 0.8)
+	tween_move.tween_property(self, "position", grid2pix(new_pos), 1)
 	tween_move.tween_callback(on_move_end)
 
 func update_pos_from_grid():
@@ -149,7 +150,19 @@ func on_move_end():
 func update_grid_from_pos():
 	grid_pos = pix2grid(global_position)
 
+## Returns true if using given input this turn would crash.
+## false otherwise
+func predict_crash(input: Vector2i) -> bool:
+	var next := svector + input
+	$ShapeCast2D.target_position = grid2pix(next)
+	$ShapeCast2D.force_shapecast_update()
+	if $ShapeCast2D.is_colliding():
+		var col = $ShapeCast2D.get_collider(0)
+		print('col: %s' % [col.get_parent()])
+	return $ShapeCast2D.is_colliding()
+
 func crash():
+	print('%s crashed' % [name])
 	is_crashed = true
 	tween_move.stop()
 	svector = Vector2i(0, 0)
