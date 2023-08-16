@@ -53,7 +53,8 @@ unique_name_in_owner = true
 visible = false
 texture = ExtResource("2_iwf7x")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="CarSprite" type="Sprite2D" parent="."]
+unique_name_in_owner = true
 scale = Vector2(0.1, 0.1)
 texture = ExtResource("1_hm1ie")
 

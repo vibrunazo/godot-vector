@@ -2,16 +2,28 @@ extends Resource
 
 class_name BotDriver
 
+@export var difficulty: int = 5
 var car: Car
 var track: Track
 
 # Called when the node enters the scene tree for the first time.
-func _ready():
-	print('ini BotDriver')
+func _init():
+	print('ini BotDriver level %d' % [difficulty])
+
+func setup(car_ref: Car):
+	car = car_ref
+	track = car.track
+	difficulty = clamp(difficulty, 0, 10)
+	print('%s setup BotDriver level %d' % [car.name, difficulty])
 
 
 func play_turn() -> Vector2i:
-	var v := track.find_next_hint(car, 120.0)
+	var ahead = 120.0 
+	if max(car.svector.x, car.svector.y) >= 4: ahead += 20.0
+	if max(car.svector.x, car.svector.y) >= 5: ahead += 60.0
+	if max(car.svector.x, car.svector.y) >= 6: ahead += 40.0
+	ahead *= float(difficulty) / 10
+	var v := track.find_next_hint(car, ahead)
 	var car_cell := car.grid_pos
 	var next_cell := car.pix2grid(v)
 	var distance: = next_cell - car_cell

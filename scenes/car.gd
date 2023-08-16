@@ -12,6 +12,8 @@ enum Controller {LOCAL, AI}
 @export var color: Color = Color(0.9, 0.2, 0.2)
 @export var control_type: Controller = Controller.LOCAL
 @export var ai: BotDriver
+@onready var car_sprite: Sprite2D = %CarSprite
+@onready var selection_sprite: Sprite2D = %SelectionSprite
 var game: RaceGame
 var track: Track
 var grid: Grid
@@ -36,7 +38,8 @@ var race_pos: int = 1
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	%SelectionSprite.modulate = color
+	selection_sprite.modulate = color
+	car_sprite.modulate = (color * 2 + Color(0.9, 0.9, 0.9)) / 3
 	if grid:
 		cell_size = grid.cell_size
 	update_grid_from_pos()
@@ -63,8 +66,7 @@ func setup_ai():
 	if control_type == Controller.AI:
 		if not ai:
 			ai = load("res://res/bot_driver.tres")
-		ai.car = self
-		ai.track = track
+		ai.setup(self)
 
 ## updates history vectors and target dots
 func update_draw():
