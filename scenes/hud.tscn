@@ -96,8 +96,7 @@ text = "🡄"
 unique_name_in_owner = true
 custom_minimum_size = Vector2(36, 36)
 layout_mode = 2
-text = "0
-"
+text = "🎥"
 
 [node name="ButtonRight" type="Button" parent="CamControl/GridContainer"]
 unique_name_in_owner = true
