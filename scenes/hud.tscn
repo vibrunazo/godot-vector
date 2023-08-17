@@ -60,26 +60,37 @@ columns = 3
 unique_name_in_owner = true
 custom_minimum_size = Vector2(36, 36)
 layout_mode = 2
-text = "z+"
+text = "🔍"
+
+[node name="Label" type="Label" parent="CamControl/GridContainer/ButtonZp"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "+"
 
 [node name="ButtonUp" type="Button" parent="CamControl/GridContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(36, 36)
 layout_mode = 2
-text = "↑"
+text = "🡅"
 
 [node name="ButtonZm" type="Button" parent="CamControl/GridContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(36, 36)
 layout_mode = 2
-text = "z-
-"
+text = "🔎︎"
+
+[node name="Label" type="Label" parent="CamControl/GridContainer/ButtonZm"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = " -"
 
 [node name="ButtonLeft" type="Button" parent="CamControl/GridContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(36, 36)
 layout_mode = 2
-text = "←"
+text = "🡄"
 
 [node name="ButtonCenter" type="Button" parent="CamControl/GridContainer"]
 unique_name_in_owner = true
@@ -92,7 +103,7 @@ text = "0
 unique_name_in_owner = true
 custom_minimum_size = Vector2(36, 36)
 layout_mode = 2
-text = "→"
+text = "🡆"
 
 [node name="Control" type="Control" parent="CamControl/GridContainer"]
 custom_minimum_size = Vector2(36, 36)
@@ -102,7 +113,7 @@ layout_mode = 2
 unique_name_in_owner = true
 custom_minimum_size = Vector2(36, 36)
 layout_mode = 2
-text = "↓"
+text = "🡇"
 
 [connection signal="pressed" from="CamControl/GridContainer/ButtonZp" to="." method="_on_button_zp_pressed"]
 [connection signal="pressed" from="CamControl/GridContainer/ButtonUp" to="." method="_on_button_up_pressed"]
