@@ -2,8 +2,8 @@ extends Resource
 
 class_name BotDriver
 
-@export var difficulty: float = 5
-var effective_difficulty: float = 5
+@export var difficulty: float = 3
+var effective_difficulty: float = 3
 var car: Car
 var track: Track
 var turns_ahead := 0
@@ -35,19 +35,21 @@ func play_turn() -> Vector2i:
 	var dist_sec := sec_cell - next_cell
 	var dir_sec := dist_sec / dist_sec.length()
 	var target := next_cell
-	if dist_next.length() >= 35:
+	if dist_next.length() >= rand_range_diff(70, 35):
 		target -= Vector2i(dir_sec * 2)
 #	elif dist_next.length() >= 30:
 #		target -= Vector2i(dir_sec * 2)
-	if dist_next.length() <= 9:
-		target += Vector2i(dir_sec * 4)
-	elif dist_next.length() <= 20:
-		target += Vector2i(dir_sec * 2)
+	if dist_next.length() <= rand_range_diff(0, 9):
+		target += Vector2i(dir_sec * rand_range_diff(0, 4))
+	elif dist_next.length() <= rand_range_diff(0, 20):
+		target += Vector2i(dir_sec * rand_range_diff(0, 2))
+	var mistake = Vector2(randf_range(-4, 4), randf_range(-4, 4)) * rand_range_diff(1, 0)
+	target += Vector2i(mistake)
 	var distance: = target - car_cell
 	var max_distance := calc_break_distance()
 	var input: = distance - max_distance
-	if abs(input.x) <= 2: input.x = 0
-	if abs(input.y) <= 2: input.y = 0
+	if abs(input.x) <= rand_range_diff(0, 2): input.x = 0
+	if abs(input.y) <= rand_range_diff(0, 2): input.y = 0
 #	input = round(Vector2(input) / max(abs(input.x), abs(input.y)))
 	input = input.clamp(Vector2i(-1, -1), Vector2i(1, 1))
 	print('%s pos: %s, next: %s, target: %s, d: %s, md: %s, svector: %s, input: %s, ahead: %d' % [car.name, car_cell, next_cell, target, distance, max_distance, car.svector, input, round(ahead / 16)])
@@ -68,19 +70,17 @@ func calc_e_difficulty():
 	else:
 		turns_ahead = 0
 		turns_behind += 1
-		if turns_behind >= 10:
-			effective_difficulty += 1
-		if turns_behind >= 10:
-			effective_difficulty += 1
 		if turns_behind >= 20:
 			effective_difficulty += 1
+		if turns_behind >= 30:
+			effective_difficulty += 1
 	if car.is_last():
-		effective_difficulty += 5
+		effective_difficulty += 3
 	effective_difficulty = clamp(effective_difficulty, 1, 10)
 
 ## calculate how far ahead
 func calc_ahead() -> float:
-	var ahead := 4 * 16
+	var ahead: float = 4 * 16
 	if max(abs(car.svector.x), abs(car.svector.y)) >= 3: ahead += 2 * 16
 	if max(abs(car.svector.x), abs(car.svector.y)) >= 4: ahead += 2 * 16
 	if max(abs(car.svector.x), abs(car.svector.y)) >= 5: ahead += 3 * 16
@@ -93,6 +93,17 @@ func calc_break_distance() -> Vector2i:
 	var x = sum_to_one(car.svector.x)
 	var y = sum_to_one(car.svector.y)
 	return Vector2i(x, y)
+
+## returns a random value from best to worst depending on ai difficulty
+## max difficulty will always return best, min ai will randomly return any value between best and worst
+## mid difficulty returns best half the time
+func rand_range_diff(worst, best):
+	var rand = randf_range(0, 20)
+	rand += effective_difficulty 
+	rand /= 10
+	# ed: 5
+	# returns: 5 - 25
+	return lerp(worst, best, min(rand, 1))
 
 # sum of all integers down to 1. 
 # example, n=5, 5+4+3+2+1 = 15
