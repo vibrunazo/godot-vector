@@ -4,7 +4,6 @@ extends Control
 @export var cam: RaceCam
 var score_labels: Array[Label]
 
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	register_signals()
@@ -53,7 +52,18 @@ func _on_button_zm_pressed():
 	if not cam: return
 	cam.zoom_out()
 
-
 func _on_button_center_pressed():
 	if not cam: return
 	cam.zoom_reset()
+
+func _on_button_right_pressed():
+	cam.pan(Vector2(16 * 5, 0))
+
+func _on_button_left_pressed():
+	cam.pan(Vector2(-16 * 5, 0))
+
+func _on_button_up_pressed():
+	cam.pan(Vector2(0, -16 * 5))
+
+func _on_button_down_pressed():
+	cam.pan(Vector2(0, 16 * 5))

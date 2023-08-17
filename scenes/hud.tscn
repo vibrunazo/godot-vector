@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://ct5sd0l3k7rws"]
+[gd_scene load_steps=4 format=3 uid="uid://ct5sd0l3k7rws"]
 
 [ext_resource type="Script" path="res://scenes/hud.gd" id="1_3cqiv"]
+[ext_resource type="Theme" uid="uid://cjawlepta8ffg" path="res://res/theme/my_theme.tres" id="2_hjswm"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_fs0k2"]
 resource_local_to_scene = true
@@ -47,6 +48,7 @@ horizontal_alignment = 2
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
+theme = ExtResource("2_hjswm")
 theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 16
 
@@ -56,21 +58,56 @@ columns = 3
 
 [node name="ButtonZp" type="Button" parent="CamControl/GridContainer"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(36, 36)
 layout_mode = 2
 text = "z+"
 
-[node name="ButtonCenter" type="Button" parent="CamControl/GridContainer"]
+[node name="ButtonUp" type="Button" parent="CamControl/GridContainer"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(36, 36)
 layout_mode = 2
-text = "0
-"
+text = "↑"
 
 [node name="ButtonZm" type="Button" parent="CamControl/GridContainer"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(36, 36)
 layout_mode = 2
 text = "z-
 "
 
+[node name="ButtonLeft" type="Button" parent="CamControl/GridContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+text = "←"
+
+[node name="ButtonCenter" type="Button" parent="CamControl/GridContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+text = "0
+"
+
+[node name="ButtonRight" type="Button" parent="CamControl/GridContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+text = "→"
+
+[node name="Control" type="Control" parent="CamControl/GridContainer"]
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+
+[node name="ButtonDown" type="Button" parent="CamControl/GridContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+text = "↓"
+
 [connection signal="pressed" from="CamControl/GridContainer/ButtonZp" to="." method="_on_button_zp_pressed"]
-[connection signal="pressed" from="CamControl/GridContainer/ButtonCenter" to="." method="_on_button_center_pressed"]
+[connection signal="pressed" from="CamControl/GridContainer/ButtonUp" to="." method="_on_button_up_pressed"]
 [connection signal="pressed" from="CamControl/GridContainer/ButtonZm" to="." method="_on_button_zm_pressed"]
+[connection signal="pressed" from="CamControl/GridContainer/ButtonLeft" to="." method="_on_button_left_pressed"]
+[connection signal="pressed" from="CamControl/GridContainer/ButtonCenter" to="." method="_on_button_center_pressed"]
+[connection signal="pressed" from="CamControl/GridContainer/ButtonRight" to="." method="_on_button_right_pressed"]
+[connection signal="pressed" from="CamControl/GridContainer/ButtonDown" to="." method="_on_button_down_pressed"]

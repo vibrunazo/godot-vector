@@ -8,6 +8,7 @@ var zoom_target: float = 1.0
 var zoom_modified: bool = false
 var zoom_tween: Tween
 var pos_tween: Tween
+var is_following: bool = true
 
 
 # Called when the node enters the scene tree for the first time.
@@ -19,7 +20,7 @@ func _process(_delta):
 	follow()
 
 func follow():
-	if !car: return
+	if !car or not is_following: return
 #	position = car.position
 	pos_tween = create_tween()
 	pos_tween.tween_property(self, "position", car.position, 0.5)
@@ -46,5 +47,10 @@ func zoom_out():
 	zoom -= Vector2(0.2, 0.2)
 
 func zoom_reset():
+	is_following = true
 	zoom_modified = false
 	zoom = Vector2(1, 1)
+
+func pan(v: Vector2):
+	is_following = false
+	position += v
