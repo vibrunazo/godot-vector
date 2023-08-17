@@ -7,6 +7,7 @@ var effective_difficulty: float = 5
 var car: Car
 var track: Track
 var turns_ahead := 0
+var turns_behind := 0
 
 # Called when the node enters the scene tree for the first time.
 func _init():
@@ -22,17 +23,7 @@ func setup(car_ref: Car):
 
 func play_turn() -> Vector2i:
 	await car.get_tree().create_timer(0.15).timeout
-	effective_difficulty = difficulty
-	if car.is_first():
-		turns_ahead += 1
-		if turns_ahead >= 8:
-			effective_difficulty -= min((turns_ahead - 8) * 0.12, 4)
-	else:
-		turns_ahead = 0
-		effective_difficulty += 1
-	if car.is_last():
-		effective_difficulty += 5
-	effective_difficulty = clamp(effective_difficulty, 1, 10)
+	calc_e_difficulty()
 	var ahead: float = calc_ahead()
 	var next_i: int = track.find_next_hint(car, ahead)
 	var next_pos: = track.get_loc_of_hint(next_i)
@@ -44,15 +35,20 @@ func play_turn() -> Vector2i:
 	var dist_sec := sec_cell - next_cell
 	var dir_sec := dist_sec / dist_sec.length()
 	var target := next_cell
-	if dist_next.length() >= 25:
+	if dist_next.length() >= 35:
 		target -= Vector2i(dir_sec * 2)
 #	elif dist_next.length() >= 30:
 #		target -= Vector2i(dir_sec * 2)
 	if dist_next.length() <= 9:
 		target += Vector2i(dir_sec * 4)
+	elif dist_next.length() <= 20:
+		target += Vector2i(dir_sec * 2)
 	var distance: = target - car_cell
 	var max_distance := calc_break_distance()
 	var input: = distance - max_distance
+	if abs(input.x) <= 2: input.x = 0
+	if abs(input.y) <= 2: input.y = 0
+#	input = round(Vector2(input) / max(abs(input.x), abs(input.y)))
 	input = input.clamp(Vector2i(-1, -1), Vector2i(1, 1))
 	print('%s pos: %s, next: %s, target: %s, d: %s, md: %s, svector: %s, input: %s, ahead: %d' % [car.name, car_cell, next_cell, target, distance, max_distance, car.svector, input, round(ahead / 16)])
 	var will_crash := car.predict_crash(input)
@@ -62,6 +58,26 @@ func play_turn() -> Vector2i:
 		print('will crash: %s, breaking with %s' % [will_crash, input])
 	return input
 
+func calc_e_difficulty():
+	effective_difficulty = difficulty
+	if car.is_first():
+		turns_ahead += 1
+		turns_behind = 0
+		if turns_ahead >= 8:
+			effective_difficulty -= min((turns_ahead - 8) * 0.12, 5)
+	else:
+		turns_ahead = 0
+		turns_behind += 1
+		if turns_behind >= 10:
+			effective_difficulty += 1
+		if turns_behind >= 10:
+			effective_difficulty += 1
+		if turns_behind >= 20:
+			effective_difficulty += 1
+	if car.is_last():
+		effective_difficulty += 5
+	effective_difficulty = clamp(effective_difficulty, 1, 10)
+
 ## calculate how far ahead
 func calc_ahead() -> float:
 	var ahead := 4 * 16
@@ -69,7 +85,7 @@ func calc_ahead() -> float:
 	if max(abs(car.svector.x), abs(car.svector.y)) >= 4: ahead += 2 * 16
 	if max(abs(car.svector.x), abs(car.svector.y)) >= 5: ahead += 3 * 16
 	if max(abs(car.svector.x), abs(car.svector.y)) >= 6: ahead += 3 * 16
-	ahead *= float(effective_difficulty) / 10
+	ahead *= effective_difficulty / 10
 	return ahead
 
 ## calculate how far ahead the car can fully brake to zero

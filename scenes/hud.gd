@@ -40,7 +40,9 @@ func update_car_score(i: int):
 	var car: Car = game.cars[i]
 	var pos: int = game.find_car_position(car)
 #	var d = game.track.calculate_car_distance_left(car)
-	label.text = '%d. %s %s: %d e%d' % [pos, car.name, car.svector, max(car.laps, 0), round(car.ai.effective_difficulty)]
+	var e = ''
+	if car.ai: e = ' e%d' % round(car.ai.effective_difficulty)
+	label.text = '%d. %s %s: %d%s' % [pos, car.name, car.svector, max(car.laps, 0), e]
 	label.get_parent().move_child(label, car.race_pos - 1)
 
 func _on_button_zp_pressed():

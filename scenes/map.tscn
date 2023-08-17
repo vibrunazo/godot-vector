@@ -78,7 +78,6 @@ ai = SubResource("Resource_h4ex0")
 [node name="Car4" parent="Cars" instance=ExtResource("1_muxmf")]
 position = Vector2(464, 400)
 color = Color(0.541176, 0.172549, 0.960784, 1)
-control_type = 1
 
 [node name="UILayer" type="CanvasLayer" parent="."]
 
