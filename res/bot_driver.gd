@@ -62,7 +62,7 @@ func play_turn() -> Vector2i:
 
 func calc_e_difficulty():
 	effective_difficulty = difficulty
-	if car.is_first():
+	if car.is_ahead_of_player() || car.is_first():
 		turns_ahead += 1
 		turns_behind = 0
 		if turns_ahead >= 8:
@@ -98,11 +98,11 @@ func calc_break_distance() -> Vector2i:
 ## max difficulty will always return best, min ai will randomly return any value between best and worst
 ## mid difficulty returns best half the time
 func rand_range_diff(worst, best):
-	var rand = randf_range(0, 20)
+	var rand = randf_range(0, 12)
 	rand += effective_difficulty 
 	rand /= 10
 	# ed: 5
-	# returns: 5 - 25
+	# returns: 5 - 20
 	return lerp(worst, best, min(rand, 1))
 
 # sum of all integers down to 1. 

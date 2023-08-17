@@ -159,6 +159,9 @@ func on_move_end():
 func update_grid_from_pos():
 	grid_pos = pix2grid(global_position)
 
+func is_ahead_of_player() -> bool:
+	return game.is_car_ahead_of_player(self)
+
 ## Returns whether this Car is placed first in the race
 func is_first() -> bool:
 	return race_pos == 1
