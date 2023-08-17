@@ -22,7 +22,7 @@ func setup(car_ref: Car):
 
 
 func play_turn() -> Vector2i:
-	await car.get_tree().create_timer(0.15).timeout
+	await car.get_tree().create_timer(0.25).timeout
 	calc_e_difficulty()
 	var ahead: float = calc_ahead()
 	var next_i: int = track.find_next_hint(car, ahead)
@@ -98,7 +98,7 @@ func calc_break_distance() -> Vector2i:
 ## max difficulty will always return best, min ai will randomly return any value between best and worst
 ## mid difficulty returns best half the time
 func rand_range_diff(worst, best):
-	var rand = randf_range(0, 12)
+	var rand = randf_range(0, 13)
 	rand += effective_difficulty 
 	rand /= 10
 	# ed: 5

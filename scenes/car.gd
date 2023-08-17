@@ -41,7 +41,8 @@ var race_pos: int = 1
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	selection_sprite.modulate = color
-	car_sprite.modulate = (color * 2 + Color(0.9, 0.9, 0.9)) / 3
+	car_sprite.modulate = color
+	car_sprite.modulate.v += 0.2
 	if grid:
 		cell_size = grid.cell_size
 	update_grid_from_pos()
