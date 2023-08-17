@@ -2,7 +2,8 @@ extends Resource
 
 class_name BotDriver
 
-@export var difficulty: int = 5
+@export var difficulty: float = 5
+var effective_difficulty: float = 5
 var car: Car
 var track: Track
 var turns_ahead := 0
@@ -15,12 +16,13 @@ func setup(car_ref: Car):
 	car = car_ref
 	track = car.track
 	difficulty = clamp(difficulty, 0, 10)
+	effective_difficulty = difficulty
 	print('%s setup BotDriver level %d' % [car.name, difficulty])
 
 
 func play_turn() -> Vector2i:
 	await car.get_tree().create_timer(0.15).timeout
-	var effective_difficulty := difficulty
+	effective_difficulty = difficulty
 	if car.is_first():
 		turns_ahead += 1
 		if turns_ahead >= 8:
@@ -31,26 +33,44 @@ func play_turn() -> Vector2i:
 	if car.is_last():
 		effective_difficulty += 5
 	effective_difficulty = clamp(effective_difficulty, 1, 10)
-	var ahead = 4 * 16
-	if max(abs(car.svector.x), abs(car.svector.y)) >= 3: ahead += 2 * 16
-	if max(abs(car.svector.x), abs(car.svector.y)) >= 4: ahead += 2 * 16
-	if max(abs(car.svector.x), abs(car.svector.y)) >= 5: ahead += 3 * 16
-	if max(abs(car.svector.x), abs(car.svector.y)) >= 6: ahead += 3 * 16
-	ahead *= float(effective_difficulty) / 10
-	var v := track.find_next_hint(car, ahead)
+	var ahead: float = calc_ahead()
+	var next_i: int = track.find_next_hint(car, ahead)
+	var next_pos: = track.get_loc_of_hint(next_i)
 	var car_cell := car.grid_pos
-	var next_cell := car.pix2grid(v)
-	var distance: = next_cell - car_cell
+	var next_cell := car.pix2grid(next_pos)
+	var dist_next := next_cell - car_cell
+	var second_next := track.sample_point_ahead(next_i, 1.0)
+	var sec_cell := car.pix2grid(second_next)
+	var dist_sec := sec_cell - next_cell
+	var dir_sec := dist_sec / dist_sec.length()
+	var target := next_cell
+	if dist_next.length() >= 25:
+		target -= Vector2i(dir_sec * 2)
+#	elif dist_next.length() >= 30:
+#		target -= Vector2i(dir_sec * 2)
+	if dist_next.length() <= 9:
+		target += Vector2i(dir_sec * 4)
+	var distance: = target - car_cell
 	var max_distance := calc_break_distance()
 	var input: = distance - max_distance
 	input = input.clamp(Vector2i(-1, -1), Vector2i(1, 1))
-	print('%s pos: %s, next: %s, d: %s, md: %s, svector: %s, input: %s, ahead: %d' % [car.name, car_cell, next_cell, distance, max_distance, car.svector, input, round(ahead / 16)])
+	print('%s pos: %s, next: %s, target: %s, d: %s, md: %s, svector: %s, input: %s, ahead: %d' % [car.name, car_cell, next_cell, target, distance, max_distance, car.svector, input, round(ahead / 16)])
 	var will_crash := car.predict_crash(input)
 	if will_crash:
 		input = -car.svector
 		input = input.clamp(Vector2i(-1, -1), Vector2i(1, 1))
 		print('will crash: %s, breaking with %s' % [will_crash, input])
 	return input
+
+## calculate how far ahead
+func calc_ahead() -> float:
+	var ahead := 4 * 16
+	if max(abs(car.svector.x), abs(car.svector.y)) >= 3: ahead += 2 * 16
+	if max(abs(car.svector.x), abs(car.svector.y)) >= 4: ahead += 2 * 16
+	if max(abs(car.svector.x), abs(car.svector.y)) >= 5: ahead += 3 * 16
+	if max(abs(car.svector.x), abs(car.svector.y)) >= 6: ahead += 3 * 16
+	ahead *= float(effective_difficulty) / 10
+	return ahead
 
 ## calculate how far ahead the car can fully brake to zero
 func calc_break_distance() -> Vector2i:

@@ -29,15 +29,15 @@ func find_closest_hint_index_to_car(car: Car) -> int:
 			best = i
 	return best
 
-## returns the global position of the next point in the path curve after where
+## returns the index of the next point in the path curve after where
 ## the car is. Used by AI to know where to aim next.
 ## ahead: how far ahead from where I actually am should I find the next point from
-func find_next_hint(car: Car, ahead: float = 0.0) -> Vector2:
+func find_next_hint(car: Car, ahead: float = 0.0) -> int:
 	var lap_offset: = path.curve.get_closest_offset(car.global_position - path.global_position)
 	lap_offset += ahead
 #	var v = path.curve.get_point_position(1) + path.global_position
-	var next_i = 1
-	var next = path.curve.get_point_position(1)
+	var next_i: int = 1
+#	var next = path.curve.get_point_position(1)
 	for i in path.curve.get_point_count():
 		if i == 0: continue
 		if i == path.curve.get_point_count() - 1: break
@@ -46,10 +46,21 @@ func find_next_hint(car: Car, ahead: float = 0.0) -> Vector2:
 #		print('i: %d, point: %s, off: %s' % [i, point, off])
 		if off > lap_offset:
 			next_i = i
-			next = point
+#			next = point
 			break
 	print('%s offset: %s, next: %d' % [car.name, lap_offset, next_i])
-	return next + path.global_position
+#	return next + path.global_position
+	return next_i
+
+## returns the global position of the hint with given index
+func get_loc_of_hint(i: int) -> Vector2:
+	return path.curve.get_point_position(i) + path.global_position
+
+## returns the global position of the point ahead of given index by this percentage
+## if ahead = 1, returns the next control point
+func sample_point_ahead(i: int, ahead: float) -> Vector2:
+	return path.curve.sample(i, ahead) + path.global_position
+	
 
 func calculate_car_score(car: Car) -> float:
 	var lap_offset: = path.curve.get_closest_offset(car.global_position - path.global_position)

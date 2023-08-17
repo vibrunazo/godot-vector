@@ -10,11 +10,11 @@
 
 [sub_resource type="Resource" id="Resource_hoqvc"]
 script = ExtResource("6_rcnfp")
-difficulty = 10
+difficulty = 7.0
 
 [sub_resource type="Resource" id="Resource_h4ex0"]
 script = ExtResource("6_rcnfp")
-difficulty = 8
+difficulty = 10.0
 
 [node name="Map" type="Control"]
 layout_mode = 3
