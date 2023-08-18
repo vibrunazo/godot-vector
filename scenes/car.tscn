@@ -51,6 +51,12 @@ size = Vector2(4, 4)
 [node name="Car" type="Node2D"]
 script = ExtResource("1_ohgs5")
 
+[node name="ShadowSprite" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+modulate = Color(0.00392157, 0.00784314, 0.101961, 0.14902)
+position = Vector2(0, 1)
+texture = ExtResource("2_iwf7x")
+
 [node name="SelectionSprite" type="Sprite2D" parent="."]
 unique_name_in_owner = true
 visible = false
@@ -58,7 +64,7 @@ texture = ExtResource("2_iwf7x")
 
 [node name="CarSprite" type="Sprite2D" parent="."]
 unique_name_in_owner = true
-scale = Vector2(0.1, 0.1)
+scale = Vector2(0.15, 0.15)
 texture = ExtResource("1_hm1ie")
 
 [node name="CarShadows" parent="." instance=ExtResource("3_frcae")]

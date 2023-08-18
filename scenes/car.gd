@@ -14,7 +14,7 @@ enum Controller {LOCAL, AI}
 @export var ai: BotDriver
 @onready var car_sprite: Sprite2D = %CarSprite
 @onready var selection_sprite: Sprite2D = %SelectionSprite
-var anim_speed = 0.5
+var anim_speed = 0.8
 var game: RaceGame
 var track: Track
 var grid: Grid
@@ -42,7 +42,7 @@ var race_pos: int = 1
 func _ready():
 	selection_sprite.modulate = color
 	car_sprite.modulate = color
-	car_sprite.modulate.v += 0.2
+	car_sprite.modulate.v -= 0.05
 	if grid:
 		cell_size = grid.cell_size
 	update_grid_from_pos()

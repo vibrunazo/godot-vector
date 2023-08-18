@@ -3,6 +3,9 @@ extends Node2D
 class_name CarHistory
 
 var car: Car
+## the very first arrow from the player is not shadow and is drawn highlighted
+## the others are shadows, are drawn in a lower layer so all main arrows from
+## all cars are on top of the shadows for better visibility
 var is_shadow := true
 
 # Called when the node enters the scene tree for the first time.
@@ -21,47 +24,48 @@ func draw_arrows():
 #	var svector := car.svector
 	var ini_grid_pos := car.ini_grid_pos
 	var history := car.history
+	var size = float(history.size())
+	if size == 0: return
 #	var to := grid2pix(svector)
 	var p := grid2pix(ini_grid_pos) - global_position
+	p = grid2pix(car.grid_pos) + global_position
 	var ac := car.color
 	var oc := Color(0.2, 0.05, 0.05)
-	var maxs : = 40
-	var size = float(history.size())
-	var i = 0.0
-	# TODO count backwards to avoid wasting loops on undrew old vectors
-	for vector in history:
+	var maxs : = 30
+	if car.name == 'Car4':
+		print('%s drawing vectors s:%s' % [car.name, is_shadow])
+	for i in range(history.size() - 1, -1, -1):
+		var vector := history[i]
 		var v: Vector2 = grid2pix(vector)
-		var k = (1 - (size - i) / maxs) * 0.75
+		var k = (1 - (size - i) / (maxs + 1)) * 0.75
 		var ok = k * 0.6
+		var w = 1
 		var h = 10
 		var d = 3
-		var c := ac * Color(ac.r, ac.g, ac.b, k)
+		var c := ac 
+		p -= v
 		if is_shadow:
-			c.a = c.a * 0.8
+			c *= Color(ac.r, ac.g, ac.b, k)
+			c.a = c.a * 0.8 
 #			oc.a = oc.a * 0.9
 		if i == size - 1: 
 			if is_shadow:
-				break
+				continue
 			k = 1
 			ok = 1
+			w = 3
 			h = 14
-			d = 6
+			d = 5
 		else:
-			if not is_shadow: k = 0
-			else:
-				c.s = c.s * (k + 0.1)
-				c.v = c.v * (k - 0)
-				
+			c.s = c.s * (k + 0.1)
+			c.v = c.v * (k - 0)
 		if k > 0:
-			draw_arrow(p, p + v, c, oc * ok, h, d)
-		p += v
-		i += 1.0
-#	draw_arrow(Vector2.ZERO, to, ac * 0.5, oc * 0.5, 0)
-#	if not is_moving:
-#		draw_dots(to, ac * 0.7, oc * 0.7)
+			if car.name == 'Car4':
+				print('%s size: %s, i: %s, v: %s' % [car.name, size, i, v])
+			draw_arrow(p, p + v, c, oc * ok, w, h, d)
+			if not is_shadow or size - i > maxs: break
 
-
-func draw_arrow(from: Vector2, to: Vector2, c: Color, oc: Color, h: float, d: float = 5):
+func draw_arrow(from: Vector2, to: Vector2, c: Color, oc: Color, width: float, h: float, d: float = 5):
 	var head_size = h
 	var head_angle = 0.5 #rad
 	var acolor = c
@@ -76,7 +80,7 @@ func draw_arrow(from: Vector2, to: Vector2, c: Color, oc: Color, h: float, d: fl
 	var line = from + v - tip# Vector2(20, 20)
 	var line2 = from + v - tip2
 	
-	draw_dot(to, d, acolor, ocolor)
+	draw_dot(to, d + 2, acolor * 0.6, ocolor)
 	if head_size > 0:
 		var h1 = v
 		h1 = - h1.normalized().rotated(head_angle) * head_size
@@ -87,8 +91,10 @@ func draw_arrow(from: Vector2, to: Vector2, c: Color, oc: Color, h: float, d: fl
 		var arrow_head = [to, e1, e2, to]
 		draw_colored_polygon(arrow_head, acolor)
 		draw_polyline(arrow_head, ocolor, 0.8, true)
-	draw_line(from, line, ocolor, 3, true)
-	draw_line(from, line2, acolor, 1, true)
+	draw_line(Vector2(from.x, from.y + 1), Vector2(line.x, line.y + 1), ocolor * 0.1, width + 6, true)
+	draw_line(Vector2(from.x, from.y + 1), Vector2(line.x, line.y + 1), ocolor * 0.1, width + 8, true)
+	draw_line(from, line, ocolor, width + 2, true)
+	draw_line(from, line2, acolor, width, true)
 	draw_dot(from, d, acolor, ocolor)
 
 ## builds the dots that show possible targets for next move

@@ -48,7 +48,7 @@ func find_next_hint(car: Car, ahead: float = 0.0) -> int:
 			next_i = i
 #			next = point
 			break
-	print('%s offset: %s, next: %d' % [car.name, lap_offset, next_i])
+#	print('%s offset: %s, next: %d' % [car.name, lap_offset, next_i])
 #	return next + path.global_position
 	return next_i
 

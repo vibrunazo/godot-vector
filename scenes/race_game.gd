@@ -114,12 +114,18 @@ func new_turn():
 	request_update_ui()
 	car.turn_begin()
 	if car.control_type == car.Controller.AI and car.ai:
+		if get_car_for_turn(turn - 1).control_type == car.Controller.LOCAL:
+			await await get_tree().create_timer(0.3).timeout
 		var input = await car.ai.play_turn()
 		input_move(input)
 
 ## returns the car who plays in this turn
 func get_car_this_turn() -> Car:
-	return cars[turn % cars.size()]
+	return get_car_for_turn(turn)
+
+## returns the car who plays on givern turn t
+func get_car_for_turn(t: int) -> Car:
+	return cars[t % cars.size()]
 	
 func calculate_car_positions():
 	var sorted_cars: Array[Car] = cars.duplicate()
