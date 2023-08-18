@@ -5,7 +5,8 @@ extends Control
 class_name Grid
 
 
-@export var cell_size := 16
+@export var cell_size := 32
+
 ## width in number of cells
 @export var width := 200
 ## height in number of cells
@@ -13,9 +14,9 @@ class_name Grid
 var gcolor := Color(0.25, 0.2, 0.3, 0.3)
 var pcolor := Color(0.1, 0.1, 0.35, 0.6)
 var dcolor := Color(0.05, 0.05, 0.2, 0.6)
-var gwidth := 1
-var pwidth := 1
-var dwidth := 2
+var gwidth := 2
+var pwidth := 2
+var dwidth := 4
 var daa := false
 var primary_every := 5
 var double_every := 10

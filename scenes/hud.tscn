@@ -1,16 +1,22 @@
-[gd_scene load_steps=4 format=3 uid="uid://ct5sd0l3k7rws"]
+[gd_scene load_steps=5 format=3 uid="uid://ct5sd0l3k7rws"]
 
 [ext_resource type="Script" path="res://scenes/hud.gd" id="1_3cqiv"]
 [ext_resource type="Theme" uid="uid://cjawlepta8ffg" path="res://res/theme/my_theme.tres" id="2_hjswm"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_fs0k2"]
 resource_local_to_scene = true
-font_size = 32
+font_size = 42
 font_color = Color(0.952941, 0.211765, 0.235294, 1)
-outline_size = 4
-outline_color = Color(0.00392157, 0.00392157, 0.00392157, 1)
+outline_color = Color(0, 0, 0, 0.913725)
+shadow_size = 12
+shadow_color = Color(0, 0, 0.168627, 0.776471)
+shadow_offset = Vector2(0, 0)
+
+[sub_resource type="LabelSettings" id="LabelSettings_pfhio"]
+font_size = 32
 
 [node name="HUD" type="Control"]
+texture_filter = 2
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -35,6 +41,7 @@ theme_override_constants/margin_right = 16
 
 [node name="VBox" type="VBoxContainer" parent="Score"]
 layout_mode = 2
+theme_override_constants/separation = 0
 alignment = 1
 
 [node name="Label" type="Label" parent="Score/VBox"]
@@ -54,11 +61,13 @@ theme_override_constants/margin_top = 32
 
 [node name="GridContainer" type="GridContainer" parent="CamControl"]
 layout_mode = 2
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 8
 columns = 3
 
 [node name="ButtonZp" type="Button" parent="CamControl/GridContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(36, 36)
+custom_minimum_size = Vector2(72, 72)
 layout_mode = 2
 text = "🔍"
 
@@ -67,16 +76,17 @@ layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
 text = "+"
+label_settings = SubResource("LabelSettings_pfhio")
 
 [node name="ButtonUp" type="Button" parent="CamControl/GridContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(36, 36)
+custom_minimum_size = Vector2(72, 72)
 layout_mode = 2
-text = "🡅"
+text = "⇑"
 
 [node name="ButtonZm" type="Button" parent="CamControl/GridContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(36, 36)
+custom_minimum_size = Vector2(72, 72)
 layout_mode = 2
 text = "🔎︎"
 
@@ -85,24 +95,25 @@ layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
 text = " -"
+label_settings = SubResource("LabelSettings_pfhio")
 
 [node name="ButtonLeft" type="Button" parent="CamControl/GridContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(36, 36)
+custom_minimum_size = Vector2(72, 72)
 layout_mode = 2
-text = "🡄"
+text = "⇐"
 
 [node name="ButtonCenter" type="Button" parent="CamControl/GridContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(36, 36)
+custom_minimum_size = Vector2(72, 72)
 layout_mode = 2
 text = "🎥"
 
 [node name="ButtonRight" type="Button" parent="CamControl/GridContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(36, 36)
+custom_minimum_size = Vector2(72, 72)
 layout_mode = 2
-text = "🡆"
+text = "⇒"
 
 [node name="Control" type="Control" parent="CamControl/GridContainer"]
 custom_minimum_size = Vector2(36, 36)
@@ -110,9 +121,9 @@ layout_mode = 2
 
 [node name="ButtonDown" type="Button" parent="CamControl/GridContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(36, 36)
+custom_minimum_size = Vector2(72, 72)
 layout_mode = 2
-text = "🡇"
+text = "⇓"
 
 [connection signal="pressed" from="CamControl/GridContainer/ButtonZp" to="." method="_on_button_zp_pressed"]
 [connection signal="pressed" from="CamControl/GridContainer/ButtonUp" to="." method="_on_button_up_pressed"]

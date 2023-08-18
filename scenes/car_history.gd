@@ -12,7 +12,6 @@ var is_shadow := true
 func _ready():
 	hide_dots()
 
-
 func update_vectors():
 	queue_redraw()
 	
@@ -39,9 +38,9 @@ func draw_arrows():
 		var v: Vector2 = grid2pix(vector)
 		var k = (1 - (size - i) / (maxs + 1)) * 0.75
 		var ok = k * 0.6
-		var w = 1
-		var h = 10
-		var d = 3
+		var w = 2
+		var h = 20
+		var d = 6
 		var c := ac 
 		p -= v
 		if is_shadow:
@@ -53,9 +52,9 @@ func draw_arrows():
 				continue
 			k = 1
 			ok = 1
-			w = 3
-			h = 14
-			d = 5
+			w = 6
+			h = 28
+			d = 10
 		else:
 			c.s = c.s * (k + 0.1)
 			c.v = c.v * (k - 0)
@@ -73,14 +72,14 @@ func draw_arrow(from: Vector2, to: Vector2, c: Color, oc: Color, width: float, h
 	# full vector
 	var v = to - from
 	# remove the tip of the full vector by this much
-	var tip = v.normalized() * (head_size - 2)
-	var tip2 = v.normalized() * (head_size - 3)
+	var tip = v.normalized() * (head_size - 4)
+	var tip2 = v.normalized() * (head_size - 6)
 	# the final vector to draw with the tip removed
 #	var line = v - tip
 	var line = from + v - tip# Vector2(20, 20)
 	var line2 = from + v - tip2
 	
-	draw_dot(to, d + 2, acolor * 0.6, ocolor)
+	draw_dot(to, d + 4, acolor * 0.6, ocolor)
 	if head_size > 0:
 		var h1 = v
 		h1 = - h1.normalized().rotated(head_angle) * head_size
@@ -91,9 +90,9 @@ func draw_arrow(from: Vector2, to: Vector2, c: Color, oc: Color, width: float, h
 		var arrow_head = [to, e1, e2, to]
 		draw_colored_polygon(arrow_head, acolor)
 		draw_polyline(arrow_head, ocolor, 0.8, true)
-	draw_line(Vector2(from.x, from.y + 1), Vector2(line.x, line.y + 1), ocolor * 0.1, width + 6, true)
-	draw_line(Vector2(from.x, from.y + 1), Vector2(line.x, line.y + 1), ocolor * 0.1, width + 8, true)
-	draw_line(from, line, ocolor, width + 2, true)
+	draw_line(Vector2(from.x, from.y + 2), Vector2(line.x, line.y + 2), ocolor * 0.1, width + 8, true)
+	draw_line(Vector2(from.x, from.y + 2), Vector2(line.x, line.y + 2), ocolor * 0.1, width + 14, true)
+	draw_line(from, line, ocolor, width + 4, true)
 	draw_line(from, line2, acolor, width, true)
 	draw_dot(from, d, acolor, ocolor)
 

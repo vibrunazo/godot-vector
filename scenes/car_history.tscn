@@ -107,7 +107,7 @@ visible = false
 [node name="TargetDotSprite" type="Sprite2D" parent="TargetDot"]
 unique_name_in_owner = true
 modulate = Color(1, 1, 0.2, 1)
-scale = Vector2(0.08, 0.08)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("2_4jnjc")
 
 [node name="AnimDots" type="AnimationPlayer" parent="."]

@@ -23,6 +23,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+metadata/_edit_lock_ = true
 
 [node name="RaceGame" parent="." node_paths=PackedStringArray("cam", "track", "grid", "cars") instance=ExtResource("1_dbwcq")]
 cam = NodePath("../RaceCam")
@@ -41,6 +42,7 @@ car = NodePath("../Cars/Car")
 layout_mode = 1
 offset_right = 2588.0
 offset_bottom = 1852.0
+metadata/_edit_lock_ = true
 
 [node name="VectorsShadows" type="Control" parent="."]
 unique_name_in_owner = true
@@ -60,23 +62,23 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="Car" parent="Cars" instance=ExtResource("1_muxmf")]
-position = Vector2(560, 368)
+position = Vector2(1088, 768)
 control_type = 1
 
 [node name="Car2" parent="Cars" instance=ExtResource("1_muxmf")]
-position = Vector2(528, 400)
+position = Vector2(1056, 832)
 color = Color(0.0509804, 0.639216, 0.443137, 1)
 control_type = 1
 ai = SubResource("Resource_hoqvc")
 
 [node name="Car3" parent="Cars" instance=ExtResource("1_muxmf")]
-position = Vector2(496, 368)
+position = Vector2(992, 768)
 color = Color(0.75, 0.5025, 0.67575, 1)
 control_type = 1
 ai = SubResource("Resource_h4ex0")
 
 [node name="Car4" parent="Cars" instance=ExtResource("1_muxmf")]
-position = Vector2(464, 400)
+position = Vector2(960, 832)
 color = Color(0.541176, 0.172549, 0.960784, 1)
 
 [node name="UILayer" type="CanvasLayer" parent="."]
@@ -84,5 +86,6 @@ color = Color(0.541176, 0.172549, 0.960784, 1)
 [node name="HUD" parent="UILayer" node_paths=PackedStringArray("game", "cam") instance=ExtResource("7_tcvel")]
 game = NodePath("../../RaceGame")
 cam = NodePath("../../RaceCam")
+metadata/_edit_lock_ = true
 
 [editable path="Grid"]

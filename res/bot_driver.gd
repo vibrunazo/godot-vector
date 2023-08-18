@@ -53,7 +53,7 @@ func play_turn() -> Vector2i:
 	if abs(input.y) <= rand_range_diff(0, 2): input.y = 0
 #	input = round(Vector2(input) / max(abs(input.x), abs(input.y)))
 	input = input.clamp(Vector2i(-1, -1), Vector2i(1, 1))
-#	print('%s pos: %s, next: %s, target: %s, d: %s, md: %s, svector: %s, input: %s, ahead: %d' % [car.name, car_cell, next_cell, target, distance, max_distance, car.svector, input, round(ahead / 16)])
+	print('%s pos: %s, next: %s, target: %s, d: %s, md: %s, svector: %s, input: %s, ahead: %d' % [car.name, car_cell, next_cell, target, distance, max_distance, car.svector, input, round(ahead / 32)])
 	var will_crash := car.predict_crash(input)
 	if will_crash:
 		input = -car.svector
@@ -81,11 +81,11 @@ func calc_e_difficulty():
 
 ## calculate how far ahead
 func calc_ahead() -> float:
-	var ahead: float = 4 * 16
-	if max(abs(car.svector.x), abs(car.svector.y)) >= 3: ahead += 2 * 16
-	if max(abs(car.svector.x), abs(car.svector.y)) >= 4: ahead += 2 * 16
-	if max(abs(car.svector.x), abs(car.svector.y)) >= 5: ahead += 3 * 16
-	if max(abs(car.svector.x), abs(car.svector.y)) >= 6: ahead += 3 * 16
+	var ahead: float = 4 * 32
+	if max(abs(car.svector.x), abs(car.svector.y)) >= 3: ahead += 2 * 32
+	if max(abs(car.svector.x), abs(car.svector.y)) >= 4: ahead += 2 * 32
+	if max(abs(car.svector.x), abs(car.svector.y)) >= 5: ahead += 3 * 32
+	if max(abs(car.svector.x), abs(car.svector.y)) >= 6: ahead += 3 * 32
 	ahead *= effective_difficulty / 10
 	return ahead
 

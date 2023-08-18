@@ -20,7 +20,7 @@ var track: Track
 var grid: Grid
 var grid_pos := Vector2i(0, 0)
 var ini_grid_pos := Vector2i(0, 0)
-var cell_size := 16
+var cell_size := 32
 var next_move := Vector2i(0, 0)
 ## current speed vector
 var svector := Vector2i(0, 0)
