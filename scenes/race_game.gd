@@ -31,6 +31,34 @@ func clicked():
 	var mouse = grid.get_global_mouse_position()
 	var cell := grid.pix2grid(mouse)
 	print('clicked %s' % [cell])
+	handle_click_input(cell)
+
+## checks if click was on attempt to input move on the current car
+## if so, focus on clicked car and input its move
+func handle_click_input(cell: Vector2i):
+	var car: Car = get_car_this_turn()
+	if car.control_type != Car.Controller.LOCAL: return
+	var target: Vector2i = car.grid_pos + car.svector
+	var is_click_on_target: bool = is_cell_near(cell, target)
+	if is_cell_near(cell, car.grid_pos) or is_click_on_target:
+		if cam.is_focused and is_click_on_target:
+			var input := cell - target 
+			print('clicked focused input %s' % input)
+			input = input.clamp(Vector2i(-1, -1), Vector2i(1, 1))
+			input_move(input)
+		else:
+			cam.focus_player()
+
+## returns whether the given grid coordinate is near the given target coord
+## used by the UI to know if a mouse click was near an object
+func is_cell_near(cell: Vector2i, target: Vector2i, tolerance: int = 2) -> bool:
+	return abs(cell.x - target.x) <= tolerance and abs(cell.y - target.y) <= tolerance
+
+## returns wheter the given grid coordinate is near given car target vector
+## used by UI to know if a mouse click is on the car target
+func is_point_near_car_target(cell: Vector2i, car: Car) -> bool:
+	var target: Vector2i = car.grid_pos + car.svector
+	return abs(cell.x - target.x) <= 2 and abs(cell.y - target.y) <= 2
 	
 func get_position_inside_tile(tilemap: TileMap, tile_pos: Vector2i, world_pos: Vector2) -> Vector2:
 	var v := tilemap.map_to_local(tile_pos)
@@ -89,7 +117,7 @@ func local_input(v: Vector2):
 	input_move(v)
 
 ## inputs a move on current car
-func input_move(v: Vector2):
+func input_move(v: Vector2i):
 	var car: Car = get_car_this_turn()
 	var r = car.input_move(v)
 	if r:
@@ -118,6 +146,10 @@ func new_turn():
 			await await get_tree().create_timer(0.3).timeout
 		var input = await car.ai.play_turn()
 		input_move(input)
+	elif car.control_type == car.Controller.LOCAL:
+		if cam.is_following:
+			await cam.finished_pos_tween
+		cam.focus_player()
 
 ## returns the car who plays in this turn
 func get_car_this_turn() -> Car:

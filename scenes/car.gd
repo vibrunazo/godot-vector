@@ -114,7 +114,7 @@ func get_terrain_here() -> int:
 #func _process(_delta):
 #	pass
 	
-func input_move(v: Vector2) -> bool:
+func input_move(v: Vector2i) -> bool:
 	if is_moving: return false
 	if not is_my_turn: return false
 	next_move = v

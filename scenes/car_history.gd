@@ -32,8 +32,8 @@ func draw_arrows():
 	var ac := car.color
 	var oc := Color(0.2, 0.05, 0.05)
 	var maxs : = 30
-	if car.name == 'Car4':
-		print('%s drawing vectors s:%s' % [car.name, is_shadow])
+#	if car.name == 'Car4':
+#		print('%s drawing vectors s:%s' % [car.name, is_shadow])
 	for i in range(history.size() - 1, -1, -1):
 		var vector := history[i]
 		var v: Vector2 = grid2pix(vector)
@@ -60,8 +60,8 @@ func draw_arrows():
 			c.s = c.s * (k + 0.1)
 			c.v = c.v * (k - 0)
 		if k > 0:
-			if car.name == 'Car4':
-				print('%s size: %s, i: %s, v: %s' % [car.name, size, i, v])
+#			if car.name == 'Car4':
+#				print('%s size: %s, i: %s, v: %s' % [car.name, size, i, v])
 			draw_arrow(p, p + v, c, oc * ok, w, h, d)
 			if not is_shadow or size - i > maxs: break
 
