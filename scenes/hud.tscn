@@ -49,8 +49,8 @@ layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 theme = ExtResource("2_hjswm")
-theme_override_constants/margin_left = 16
-theme_override_constants/margin_top = 16
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
 
 [node name="GridContainer" type="GridContainer" parent="CamControl"]
 layout_mode = 2
