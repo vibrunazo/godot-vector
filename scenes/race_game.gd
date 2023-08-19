@@ -85,7 +85,7 @@ func get_dir_from_relativepos(x: int, y: int) -> int:
 			return TileSet.CELL_NEIGHBOR_BOTTOM_RIGHT_CORNER
 	return 0
 	
-func swap_fullscreen_mode():
+func toggle_fullscreen():
 	if DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 	else:
@@ -93,7 +93,7 @@ func swap_fullscreen_mode():
 		
 func _input(event):
 	if event.is_action_pressed("ui_toggle_fullscreen"):
-		swap_fullscreen_mode()
+		toggle_fullscreen()
 	if event is InputEventMouseButton and event.button_index == 1 and event.pressed:
 		clicked()
 	if event.is_action("ui_down_left") and not event.is_pressed():

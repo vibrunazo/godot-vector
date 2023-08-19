@@ -11,7 +11,7 @@ class_name Grid
 @export var width := 200
 ## height in number of cells
 @export var height := 100
-var gcolor := Color(0.25, 0.2, 0.3, 0.3)
+var gcolor := Color.from_ok_hsl(250, 0.3, 0.1, 0.2)
 var pcolor := Color(0.1, 0.1, 0.35, 0.6)
 var dcolor := Color(0.05, 0.05, 0.2, 0.6)
 var gwidth := 2
