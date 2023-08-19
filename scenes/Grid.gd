@@ -11,7 +11,7 @@ class_name Grid
 @export var width := 200
 ## height in number of cells
 @export var height := 100
-var gcolor := Color.from_ok_hsl(250, 0.3, 0.1, 0.2)
+var gcolor := Color.from_ok_hsl(250, 0.3, 0.1, 0.1)
 var pcolor := Color(0.1, 0.1, 0.35, 0.6)
 var dcolor := Color(0.05, 0.05, 0.2, 0.6)
 var gwidth := 2
@@ -61,7 +61,8 @@ func draw_segment(from, to, e, n):
 	@warning_ignore("integer_division")
 	var is_double = (n % (double_every / primary_every) == 0)
 	if e == 1 and not (n % primary_every == 0):
-		draw_line(from, to, gcolor, gwidth)
+		pass
+#		draw_line(from, to, gcolor, gwidth)
 	elif e == primary_every and not is_double:
 		draw_line(from, to, pcolor, pwidth)
 	elif e == double_every:

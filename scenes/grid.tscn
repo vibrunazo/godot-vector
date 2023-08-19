@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://d08o10r7su4q0"]
+[gd_scene load_steps=3 format=3 uid="uid://d08o10r7su4q0"]
 
 [ext_resource type="Script" path="res://scenes/grid.gd" id="1_qwgko"]
+[ext_resource type="Texture2D" uid="uid://ldrtka304dyk" path="res://assets/tex/checkerboard.png" id="2_iven8"]
 
 [node name="Grid" type="Control"]
 layout_mode = 3
@@ -10,3 +11,15 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_qwgko")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+modulate = Color(1, 1, 1, 0.392157)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_iven8")
+expand_mode = 1
+stretch_mode = 1
