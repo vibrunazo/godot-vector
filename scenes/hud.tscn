@@ -5,7 +5,7 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_fs0k2"]
 resource_local_to_scene = true
-font_size = 42
+font_size = 50
 font_color = Color(0.952941, 0.211765, 0.235294, 1)
 outline_color = Color(0, 0, 0, 0.913725)
 shadow_size = 12
@@ -23,6 +23,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("2_hjswm")
 script = ExtResource("1_3cqiv")
 
 [node name="Score" type="MarginContainer" parent="."]

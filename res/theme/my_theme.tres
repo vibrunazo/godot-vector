@@ -1,4 +1,8 @@
-[gd_resource type="Theme" format=3 uid="uid://cjawlepta8ffg"]
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://cjawlepta8ffg"]
+
+[ext_resource type="FontFile" uid="uid://dxfl7poulrhy4" path="res://assets/fonts/Iceland-Regular.ttf" id="1_tyjfg"]
 
 [resource]
-Button/font_sizes/font_size = 40
+default_font = ExtResource("1_tyjfg")
+Button/font_sizes/font_size = 46
+Label/fonts/font = ExtResource("1_tyjfg")
