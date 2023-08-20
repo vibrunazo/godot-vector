@@ -42,6 +42,7 @@ car = NodePath("../Cars/Car")
 layout_mode = 1
 offset_right = 2588.0
 offset_bottom = 1852.0
+width = 180
 metadata/_edit_lock_ = true
 
 [node name="VectorsShadows" type="Control" parent="."]

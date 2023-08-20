@@ -14,7 +14,7 @@ enum Controller {LOCAL, AI}
 @export var ai: BotDriver
 @onready var car_sprite: Sprite2D = %CarSprite
 @onready var selection_sprite: Sprite2D = %SelectionSprite
-var anim_speed = 0.8
+var anim_speed = 0.5
 var game: RaceGame
 var track: Track
 var grid: Grid
@@ -123,6 +123,8 @@ func input_move(v: Vector2i) -> bool:
 
 func move():
 	svector += next_move
+	$AudioVroom.pitch_scale = 0.8 + svector.length() * 0.05
+	$AudioVroom.play()
 	move_to(grid_pos + svector)
 #	move_to(Vector2i(20,10))
 	car_history.show_target_at(grid_pos + svector)
