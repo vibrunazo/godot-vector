@@ -190,6 +190,8 @@ func crash():
 	tween_move.stop()
 	svector = Vector2i(0, 0)
 	## TODO play crash anim here
+	$AudioVroom.stop()
+	$AudioBoom.play()
 	update_pos_from_grid()
 	on_move_end()
 
