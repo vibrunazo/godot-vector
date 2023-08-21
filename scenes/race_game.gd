@@ -136,7 +136,8 @@ func input_move(v: Vector2i):
 
 func next_turn():
 	turn += 1
-	new_turn()
+#	await get_tree().create_timer(0.1).timeout
+	new_turn.call_deferred()
 
 func new_turn():
 	var car = get_car_this_turn()
@@ -150,8 +151,8 @@ func new_turn():
 	request_update_ui()
 	car.turn_begin()
 	if car.control_type == car.Controller.AI and car.ai:
-		if get_car_for_turn(turn - 1).control_type == car.Controller.LOCAL:
-			await await get_tree().create_timer(0.3).timeout
+#		if get_car_for_turn(turn - 1).control_type == car.Controller.LOCAL:
+#			await await get_tree().create_timer(0.3).timeout
 		var input = await car.ai.play_turn()
 		input_move(input)
 	elif car.control_type == car.Controller.LOCAL:

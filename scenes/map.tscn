@@ -73,7 +73,7 @@ control_type = 1
 ai = SubResource("Resource_hoqvc")
 
 [node name="Car3" parent="Cars" instance=ExtResource("1_muxmf")]
-position = Vector2(992, 768)
+position = Vector2(960, 768)
 color = Color(0.75, 0.5025, 0.67575, 1)
 control_type = 1
 ai = SubResource("Resource_h4ex0")

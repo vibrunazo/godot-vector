@@ -23,7 +23,7 @@ func setup(car_ref: Car):
 
 
 func play_turn() -> Vector2i:
-	await car.get_tree().create_timer(0.35).timeout
+	await car.get_tree().create_timer(0.25).timeout
 	calc_e_difficulty()
 	var ahead: float = calc_ahead()
 	var next_i: int = track.find_next_hint(car, ahead)
@@ -53,7 +53,7 @@ func play_turn() -> Vector2i:
 	if abs(input.y) <= rand_range_diff(0, 2): input.y = 0
 #	input = round(Vector2(input) / max(abs(input.x), abs(input.y)))
 	input = input.clamp(Vector2i(-1, -1), Vector2i(1, 1))
-	print('%s pos: %s, next: %s, target: %s, d: %s, md: %s, svector: %s, input: %s, ahead: %d' % [car.name, car_cell, next_cell, target, distance, max_distance, car.svector, input, round(ahead / 32)])
+#	print('%s pos: %s, next: %s, target: %s, d: %s, md: %s, svector: %s, input: %s, ahead: %d' % [car.name, car_cell, next_cell, target, distance, max_distance, car.svector, input, round(ahead / 32)])
 	var will_crash := car.predict_crash(input)
 	if will_crash:
 		input = -car.svector

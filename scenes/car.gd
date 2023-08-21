@@ -89,6 +89,8 @@ func update_draw():
 ## the RaceGame tells the Car when its turn begins, 
 ## but the Car tells the Game when the turn ends via turn_end signal
 func turn_begin():
+	if name == "Car4":
+		print('%s begin turn' % [name])
 	is_my_turn = true
 	car_history.show_dots()
 	$Anim.play("selected")
@@ -148,16 +150,25 @@ func calculate_distance_score():
 	distance_score = track.calculate_car_score(self)
 
 func on_move_end():
-	is_moving = false
+	await get_tree().create_timer(0.05).timeout
 #	car_history.update_vectors()
-#	if is_crashed: return
+	if is_crashed:
+		return
 	grid_pos += svector
 	calculate_distance_score()
 	history.append(svector)
 	apply_terrain_mod()
-	turn_end.emit()
+	
+	end_turn()
+	
+
+func end_turn():
+	if name == "Car4":
+		print('%s end turn' % [name])
 	update_draw()
 	car_history.hide_target()
+	turn_end.emit()
+	is_moving = false
 	is_crashed = false
 	is_my_turn = false
 
@@ -194,8 +205,9 @@ func crash():
 	## TODO play crash anim here
 	$AudioVroom.stop()
 	$AudioBoom.play()
+	await get_tree().create_timer(0.3).timeout
 	update_pos_from_grid()
-	on_move_end()
+	end_turn()
 
 ## enters the finish line
 func finish_enter():
@@ -227,6 +239,7 @@ func _on_area_2d_body_entered(_body):
 	crash()
 
 func _on_area_2d_area_entered(area):
+	print('%s area entered: %s, ismyturn: %s, ismoving: %s' % [name, area.get_parent().name, is_my_turn, is_moving])
 	if area.get_parent() is FinishLine: finish_enter()
 	elif is_my_turn and is_moving and area.get_parent() is Car: crash()
 

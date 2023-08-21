@@ -41,7 +41,7 @@ func change_car(newcar: Car):
 func start_pos_tween():
 	if pos_tween: pos_tween.stop()
 	pos_tween = create_tween().set_trans(Tween.TRANS_LINEAR)
-	await pos_tween.tween_property(self, "position", car.position, 0.5).finished
+	await pos_tween.tween_property(self, "position", car.position, 0.4).finished
 	finished_pos_tween.emit()
 
 func on_car_started_move():
@@ -55,7 +55,7 @@ func focus_player():
 	cam_modified = false
 	zoom_tween = create_tween().set_trans(Tween.TRANS_CUBIC)
 	start_pos_tween()
-	await zoom_tween.tween_property(self, "zoom", Vector2(value, value), 0.6).finished
+	await zoom_tween.tween_property(self, "zoom", Vector2(value, value), 0.5).finished
 	if cam_modified == false:
 		is_focused = true
 #	zoom = Vector2(value, value)
@@ -63,7 +63,7 @@ func focus_player():
 func focus_out():
 	is_focused = false
 	zoom_tween = create_tween().set_trans(Tween.TRANS_CUBIC)
-	zoom_tween.tween_property(self, "zoom", Vector2(1.0, 1.0), 0.6)
+	zoom_tween.tween_property(self, "zoom", Vector2(1.0, 1.0), 0.5)
 	
 func zoom_in():
 	cam_modified = true
