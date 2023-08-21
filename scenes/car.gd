@@ -125,6 +125,8 @@ func move():
 	svector += next_move
 	$AudioVroom.pitch_scale = 0.8 + svector.length() * 0.05
 	$AudioVroom.play()
+	$AudioVroom2.pitch_scale = 0.8 + (game.turn % 2) * 0.6
+	$AudioVroom2.play()
 	move_to(grid_pos + svector)
 #	move_to(Vector2i(20,10))
 	car_history.show_target_at(grid_pos + svector)
