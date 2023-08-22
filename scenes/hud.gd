@@ -57,13 +57,17 @@ func _on_button_center_pressed():
 	cam.zoom_reset()
 
 func _on_button_right_pressed():
-	cam.pan(Vector2(32 * 5, 0))
+	var cell_size := game.grid.cell_size
+	cam.pan(Vector2(cell_size * 5, 0))
 
 func _on_button_left_pressed():
-	cam.pan(Vector2(-32 * 5, 0))
+	var cell_size := game.grid.cell_size
+	cam.pan(Vector2(-cell_size * 5, 0))
 
 func _on_button_up_pressed():
-	cam.pan(Vector2(0, -32 * 5))
+	var cell_size := game.grid.cell_size
+	cam.pan(Vector2(0, -cell_size * 5))
 
 func _on_button_down_pressed():
-	cam.pan(Vector2(0, 32 * 5))
+	var cell_size := game.grid.cell_size
+	cam.pan(Vector2(0, cell_size * 5))

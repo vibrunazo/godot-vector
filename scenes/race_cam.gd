@@ -18,11 +18,6 @@ var is_focused: bool = false
 func _ready():
 	pass # Replace with function body.
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta):
-	pass
-#	follow()
-
 #func follow():
 #	if !car or not is_following: return
 #	position = car.position
@@ -51,7 +46,7 @@ func on_car_started_move():
 #	zoom_tween.tween_property(self, "zoom", Vector2(1, 1), 0.3)
 
 func focus_player():
-	var value = 2.0
+	var value = 1.0
 	cam_modified = false
 	zoom_tween = create_tween().set_trans(Tween.TRANS_CUBIC)
 	start_pos_tween()
@@ -63,7 +58,7 @@ func focus_player():
 func focus_out():
 	is_focused = false
 	zoom_tween = create_tween().set_trans(Tween.TRANS_CUBIC)
-	zoom_tween.tween_property(self, "zoom", Vector2(1.0, 1.0), 0.5)
+	zoom_tween.tween_property(self, "zoom", Vector2(0.5, 0.5), 0.5)
 	
 func zoom_in():
 	cam_modified = true
@@ -80,7 +75,7 @@ func zoom_reset():
 	is_focused = false
 	start_pos_tween()
 	cam_modified = false
-	zoom = Vector2(1, 1)
+	zoom = Vector2(0.5, 0.5)
 
 func pan(v: Vector2):
 	is_following = false

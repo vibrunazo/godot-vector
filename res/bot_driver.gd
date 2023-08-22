@@ -53,7 +53,25 @@ func play_turn() -> Vector2i:
 	if abs(input.y) <= rand_range_diff(0, 2): input.y = 0
 #	input = round(Vector2(input) / max(abs(input.x), abs(input.y)))
 	input = input.clamp(Vector2i(-1, -1), Vector2i(1, 1))
-#	print('%s pos: %s, next: %s, target: %s, d: %s, md: %s, svector: %s, input: %s, ahead: %d' % [car.name, car_cell, next_cell, target, distance, max_distance, car.svector, input, round(ahead / 32)])
+	if target.length() > 10000:
+		breakpoint
+		var a = track.path.curve.sample(next_i, 1.0)
+		var b = car.pix2grid(a)
+		a = track.path.curve.sample(0, 1.0)
+		b = car.pix2grid(a)
+		a = track.path.curve.sample(1, 1.0)
+		b = car.pix2grid(a)
+		a = track.path.curve.sample(2, 1.0)
+		b = car.pix2grid(a)
+		a = track.path.curve.sample(3, 1.0)
+		b = car.pix2grid(a)
+		a = track.path.curve.sample(4, 1.0)
+		b = car.pix2grid(a)
+		a = track.path.curve.sample(5, 1.0)
+		b = car.pix2grid(a)
+		a = track.path.curve.sample(6, 1.0)
+		b = car.pix2grid(a)
+	print('%s pos: %s, next: %s, target: %s, d: %s, md: %s, svector: %s, input: %s, ahead: %d' % [car.name, car_cell, next_cell, target, distance, max_distance, car.svector, input, round(ahead / 32)])
 	var will_crash := car.predict_crash(input)
 	if will_crash:
 		input = -car.svector
@@ -81,11 +99,12 @@ func calc_e_difficulty():
 
 ## calculate how far ahead
 func calc_ahead() -> float:
-	var ahead: float = 4 * 32
-	if max(abs(car.svector.x), abs(car.svector.y)) >= 3: ahead += 2 * 32
-	if max(abs(car.svector.x), abs(car.svector.y)) >= 4: ahead += 2 * 32
-	if max(abs(car.svector.x), abs(car.svector.y)) >= 5: ahead += 3 * 32
-	if max(abs(car.svector.x), abs(car.svector.y)) >= 6: ahead += 3 * 32
+	var cell_size = car.cell_size
+	var ahead: float = 4 * cell_size
+	if max(abs(car.svector.x), abs(car.svector.y)) >= 3: ahead += 2 * cell_size
+	if max(abs(car.svector.x), abs(car.svector.y)) >= 4: ahead += 2 * cell_size
+	if max(abs(car.svector.x), abs(car.svector.y)) >= 5: ahead += 3 * cell_size
+	if max(abs(car.svector.x), abs(car.svector.y)) >= 6: ahead += 3 * cell_size
 	ahead *= effective_difficulty / 10
 	return ahead
 

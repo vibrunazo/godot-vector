@@ -20,7 +20,7 @@ var track: Track
 var grid: Grid
 var grid_pos := Vector2i(0, 0)
 var ini_grid_pos := Vector2i(0, 0)
-var cell_size := 32
+var cell_size := 64
 var next_move := Vector2i(0, 0)
 ## current speed vector
 var svector := Vector2i(0, 0)
@@ -89,8 +89,6 @@ func update_draw():
 ## the RaceGame tells the Car when its turn begins, 
 ## but the Car tells the Game when the turn ends via turn_end signal
 func turn_begin():
-	if name == "Car4":
-		print('%s begin turn' % [name])
 	is_my_turn = true
 	car_history.show_dots()
 	$Anim.play("selected")
@@ -163,8 +161,6 @@ func on_move_end():
 	
 
 func end_turn():
-	if name == "Car4":
-		print('%s end turn' % [name])
 	update_draw()
 	car_history.hide_target()
 	turn_end.emit()
@@ -239,7 +235,7 @@ func _on_area_2d_body_entered(_body):
 	crash()
 
 func _on_area_2d_area_entered(area):
-	print('%s area entered: %s, ismyturn: %s, ismoving: %s' % [name, area.get_parent().name, is_my_turn, is_moving])
+#	print('%s area entered: %s, ismyturn: %s, ismoving: %s' % [name, area.get_parent().name, is_my_turn, is_moving])
 	if area.get_parent() is FinishLine: finish_enter()
 	elif is_my_turn and is_moving and area.get_parent() is Car: crash()
 

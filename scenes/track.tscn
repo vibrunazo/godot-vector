@@ -1,13 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://w6iwx5e6l5ba"]
+[gd_scene load_steps=5 format=3 uid="uid://w6iwx5e6l5ba"]
 
 [ext_resource type="TileSet" uid="uid://mlhkepjudbb5" path="res://res/tileset.tres" id="1_8l6on"]
 [ext_resource type="Script" path="res://scenes/track.gd" id="1_jkb2p"]
 [ext_resource type="PackedScene" uid="uid://cmx8l0cwr0xd5" path="res://scenes/finish_line.tscn" id="2_7indv"]
-[ext_resource type="PackedScene" uid="uid://dkoyua62nkeqr" path="res://scenes/ai_hint.tscn" id="3_pksdt"]
 
 [sub_resource type="Curve2D" id="Curve2D_uc50c"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 320, 0, 0, 0, 0, 0, 1248, 0, 0, 0, 0, 0, 1248, 640, 0, 0, 0, 0, 1888, 640, 0, 0, 0, 0, 1888, 0, 0, 0, 0, 0, 2848, 0, 0, 0, 0, 0, 2848, -320, 0, 0, 0, 0, 3808, -320, 0, 0, 0, 0, 3808, 320, 0, 0, 0, 0, 3168, 320, 0, 0, 0, 0, 3168, 960, 0, 0, 0, 0, 3808, 960, 0, 0, 0, 0, 3808, 1600, 0, 0, 0, 0, -352, 1600, 0, 0, 0, 0, -352, 0, 0, 0, 0, 0, 288, 0)
+"points": PackedVector2Array(0, 0, 0, 0, 1408, 800, 0, 0, 0, 0, 3328, 800, 0, 0, 0, 0, 3328, 2080, 0, 0, 0, 0, 4608, 2080, 0, 0, 0, 0, 4608, 800, 0, 0, 0, 0, 6528, 800, 0, 0, 0, 0, 6528, 160, 0, 0, 0, 0, 8448, 160, 0, 0, 0, 0, 8448, 1440, 0, 0, 0, 0, 7168, 1440, 0, 0, 0, 0, 7168, 2720, 0, 0, 0, 0, 8448, 2720, 0, 0, 0, 0, 8448, 4000, 0, 0, 0, 0, 128, 4000, 0, 0, 0, 0, 128, 800, 0, 0, 0, 0, 1344, 800)
 }
 point_count = 16
 
@@ -29,53 +28,8 @@ layer_1/z_index = 0
 layer_1/tile_data = PackedInt32Array(196612, 196609, 0, 196613, 196609, 0, 196615, 196609, 0)
 
 [node name="FinishLine" parent="." instance=ExtResource("2_7indv")]
-position = Vector2(1152, 800)
+position = Vector2(2240, 1600)
 scale = Vector2(2, 2)
-
-[node name="AIHints" type="Node2D" parent="."]
-visible = false
-
-[node name="AIHint" parent="AIHints" instance=ExtResource("3_pksdt")]
-position = Vector2(1040, 400)
-
-[node name="AIHint2" parent="AIHints" instance=ExtResource("3_pksdt")]
-position = Vector2(1040, 720)
-
-[node name="AIHint3" parent="AIHints" instance=ExtResource("3_pksdt")]
-position = Vector2(1360, 720)
-
-[node name="AIHint4" parent="AIHints" instance=ExtResource("3_pksdt")]
-position = Vector2(1360, 400)
-
-[node name="AIHint5" parent="AIHints" instance=ExtResource("3_pksdt")]
-position = Vector2(1840, 400)
-
-[node name="AIHint6" parent="AIHints" instance=ExtResource("3_pksdt")]
-position = Vector2(1840, 240)
-
-[node name="AIHint7" parent="AIHints" instance=ExtResource("3_pksdt")]
-position = Vector2(2320, 240)
-
-[node name="AIHint8" parent="AIHints" instance=ExtResource("3_pksdt")]
-position = Vector2(2320, 560)
-
-[node name="AIHint9" parent="AIHints" instance=ExtResource("3_pksdt")]
-position = Vector2(2000, 560)
-
-[node name="AIHint10" parent="AIHints" instance=ExtResource("3_pksdt")]
-position = Vector2(2000, 880)
-
-[node name="AIHint11" parent="AIHints" instance=ExtResource("3_pksdt")]
-position = Vector2(2320, 880)
-
-[node name="AIHint12" parent="AIHints" instance=ExtResource("3_pksdt")]
-position = Vector2(2320, 1200)
-
-[node name="AIHint13" parent="AIHints" instance=ExtResource("3_pksdt")]
-position = Vector2(240, 1200)
-
-[node name="AIHint14" parent="AIHints" instance=ExtResource("3_pksdt")]
-position = Vector2(240, 400)
 
 [node name="Path2D" type="Path2D" parent="."]
 position = Vector2(832, 800)

@@ -52,9 +52,9 @@ func draw_arrows():
 				continue
 			k = 1
 			ok = 1
-			w = 6
-			h = 28
-			d = 10
+			w = 10
+			h = 48
+			d = 16
 		else:
 			c.s = c.s * (k + 0.1)
 			c.v = c.v * (k - 0)
@@ -79,7 +79,7 @@ func draw_arrow(from: Vector2, to: Vector2, c: Color, oc: Color, width: float, h
 	var line = from + v - tip# Vector2(20, 20)
 	var line2 = from + v - tip2
 	
-	draw_dot(to, d + 4, acolor * 0.6, ocolor)
+	draw_dot(to, d + 8, acolor * 0.6, ocolor)
 	if head_size > 0:
 		var h1 = v
 		h1 = - h1.normalized().rotated(head_angle) * head_size
@@ -89,10 +89,10 @@ func draw_arrow(from: Vector2, to: Vector2, c: Color, oc: Color, width: float, h
 		var e2 = to + h2
 		var arrow_head = [to, e1, e2, to]
 		draw_colored_polygon(arrow_head, acolor)
-		draw_polyline(arrow_head, ocolor, 0.8, true)
+		draw_polyline(arrow_head, ocolor, 1.6, true)
 	draw_line(Vector2(from.x, from.y + 2), Vector2(line.x, line.y + 2), ocolor * 0.1, width + 8, true)
 	draw_line(Vector2(from.x, from.y + 2), Vector2(line.x, line.y + 2), ocolor * 0.1, width + 14, true)
-	draw_line(from, line, ocolor, width + 4, true)
+	draw_line(from, line, ocolor, width + 8, true)
 	draw_line(from, line2, acolor, width, true)
 	draw_dot(from, d, acolor, ocolor)
 
@@ -121,7 +121,7 @@ func show_dots():
 
 func draw_dot(p: Vector2, size: float, acolor: Color, ocolor: Color):
 	draw_circle(p, size, ocolor)
-	draw_circle(p, size - 2, acolor)
+	draw_circle(p, size - 4, acolor)
 
 ## shows target dot animating to highlight to the user where he's going to
 ## called when user just moved and car starts moving towards target
