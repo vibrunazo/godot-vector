@@ -66,6 +66,12 @@ texture = ExtResource("2_iwf7x")
 unique_name_in_owner = true
 texture = ExtResource("2_iwf7x")
 
+[node name="PointLight2D" type="PointLight2D" parent="."]
+color = Color(0.9, 0.786, 0.54, 1)
+energy = 0.15
+texture = ExtResource("2_iwf7x")
+texture_scale = 24.0
+
 [node name="CarSprite" type="Sprite2D" parent="."]
 unique_name_in_owner = true
 scale = Vector2(0.6, 0.6)
