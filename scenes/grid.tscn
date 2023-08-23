@@ -21,3 +21,4 @@ offset_bottom = 6400.0
 texture = ExtResource("2_iven8")
 expand_mode = 1
 stretch_mode = 1
+flip_v = true

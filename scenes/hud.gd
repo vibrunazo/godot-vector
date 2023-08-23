@@ -25,6 +25,10 @@ func build_score_labels():
 		var settings: LabelSettings = new_label.label_settings.duplicate()
 		new_label.label_settings = settings
 		settings.font_color = car.color
+		settings.font_color.v *= 1.1
+		settings.outline_color = car.color
+		settings.outline_color.v = 0.1
+		settings.outline_color.a = 0.8
 		update_car_score(i)
 	label.queue_free()
 
