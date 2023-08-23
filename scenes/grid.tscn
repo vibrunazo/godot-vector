@@ -13,7 +13,7 @@ script = ExtResource("1_qwgko")
 width = 200
 
 [node name="TextureRect" type="TextureRect" parent="."]
-modulate = Color(1, 1, 1, 0.392157)
+modulate = Color(1, 1, 1, 0.313726)
 custom_minimum_size = Vector2(11520, 6400)
 layout_mode = 1
 offset_right = 11520.0

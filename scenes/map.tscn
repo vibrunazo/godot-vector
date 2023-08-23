@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://dkaofok36yybe"]
+[gd_scene load_steps=11 format=3 uid="uid://dkaofok36yybe"]
 
 [ext_resource type="PackedScene" uid="uid://n8vt2c5n8ys6" path="res://scenes/race_game.tscn" id="1_dbwcq"]
 [ext_resource type="PackedScene" uid="uid://c1gm6pyvbylwx" path="res://scenes/car.tscn" id="1_muxmf"]
 [ext_resource type="PackedScene" uid="uid://d08o10r7su4q0" path="res://scenes/grid.tscn" id="1_pm8pa"]
 [ext_resource type="PackedScene" uid="uid://62je7a634151" path="res://scenes/race_cam.tscn" id="3_gu565"]
 [ext_resource type="PackedScene" uid="uid://w6iwx5e6l5ba" path="res://scenes/track.tscn" id="3_vb833"]
+[ext_resource type="Texture2D" uid="uid://cwt2m6bkuudux" path="res://assets/tex/bg-radial.png" id="4_mpmcc"]
 [ext_resource type="Script" path="res://res/bot_driver.gd" id="6_rcnfp"]
 [ext_resource type="PackedScene" uid="uid://ct5sd0l3k7rws" path="res://scenes/hud.tscn" id="7_tcvel"]
 
@@ -37,6 +38,17 @@ position = Vector2(580, 360)
 car = NodePath("../Cars/Car")
 
 [node name="Track" parent="." instance=ExtResource("3_vb833")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
+self_modulate = Color(0.0352941, 0.0352941, 0.0509804, 0.431373)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_mpmcc")
 
 [node name="Grid" parent="." instance=ExtResource("1_pm8pa")]
 layout_mode = 1

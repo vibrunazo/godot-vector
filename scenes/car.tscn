@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://c1gm6pyvbylwx"]
+[gd_scene load_steps=14 format=3 uid="uid://c1gm6pyvbylwx"]
 
 [ext_resource type="Texture2D" uid="uid://c1qejx7gxg0pv" path="res://assets/tex/ball.png" id="1_hm1ie"]
 [ext_resource type="Script" path="res://scenes/car.gd" id="1_ohgs5"]
@@ -6,7 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://c6t7mdi1xsovl" path="res://scenes/car_history.tscn" id="3_frcae"]
 [ext_resource type="AudioStream" uid="uid://crhc0kx6wdbpq" path="res://assets/audio/guitar01.ogg" id="5_0n1mc"]
 [ext_resource type="AudioStream" uid="uid://dbcx1gemqyx4u" path="res://assets/audio/kick05.ogg" id="6_03tkh"]
-[ext_resource type="AudioStream" uid="uid://dvtevh2wwxbu1" path="res://assets/audio/min_kick_01_C.ogg" id="6_pswx3"]
+[ext_resource type="AudioStream" uid="uid://cw6qaj3hnvn6d" path="res://assets/audio/[DH] Perc (14).ogg" id="6_v540w"]
+[ext_resource type="AudioStream" uid="uid://bjrmo6d1o8sso" path="res://assets/audio/[DH] Tom (13).ogg" id="7_b8cxs"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l0p7b"]
 size = Vector2(4, 4)
@@ -97,11 +98,15 @@ collide_with_areas = true
 
 [node name="AudioVroom" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("5_0n1mc")
-volume_db = -6.0
+volume_db = -9.0
 
 [node name="AudioVroom2" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("6_pswx3")
+stream = ExtResource("6_v540w")
 volume_db = -3.0
+
+[node name="AudioVroom3" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_b8cxs")
+volume_db = 6.0
 
 [node name="AudioBoom" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("6_03tkh")

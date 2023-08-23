@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bjrmo6d1o8sso"
+path="res://.godot/imported/[DH] Tom (13).ogg-dd4b2cdad77b7e85fe99208a1528216e.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/audio/[DH] Tom (13).ogg"
+dest_files=["res://.godot/imported/[DH] Tom (13).ogg-dd4b2cdad77b7e85fe99208a1528216e.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
