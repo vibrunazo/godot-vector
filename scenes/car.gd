@@ -96,11 +96,13 @@ func turn_begin():
 #	apply_terrain_mod()
 
 func apply_terrain_mod():
-	var terrain = get_terrain_here()
+	var terrain: int = get_terrain_here()
 	if terrain == 1:
 		svector.x = 0
 		svector.y = 0
 
+# the type of terrain the car is currently standing on
+# returns 1 for grass, 0 for road
 func get_terrain_here() -> int:
 	var tilemap: TileMap
 	tilemap = track.tilemap
@@ -108,11 +110,20 @@ func get_terrain_here() -> int:
 	var local_pos := global_position - tilemap.global_position
 	var cell = tilemap.local_to_map(local_pos)
 	var data := tilemap.get_cell_tile_data(0, cell)
-#	print('cell: %s terrain: %s' % [cell, data.terrain])
-	return data.terrain
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(_delta):
-#	pass
+	var is_inside: bool = false
+	var count := data.get_collision_polygons_count(0)
+	if count == 0: return 0
+	for i in range(0, count):
+		var poly := data.get_collision_polygon_points(0, i)
+		var cell_pos := tilemap.map_to_local(cell) + tilemap.global_position
+		var car_r_pos := global_position - cell_pos
+		if poly.size() > 2:
+			is_inside = Geometry2D.is_point_in_polygon(car_r_pos, poly)
+#		print('car %s, i: %d of %d, pos: %s, car_r_pos: %s poly: %s, in: %s' % [name, i, count, cell_pos, car_r_pos, poly, is_inside])
+	#	print('cell: %s terrain: %s' % [cell, data.terrain])
+		if is_inside: return 1
+	return 0
+#	return data.terrain
 	
 func input_move(v: Vector2i) -> bool:
 	if is_moving: return false
@@ -232,9 +243,13 @@ func pix2grid(p: Vector2) -> Vector2i:
 	return Vector2(round(p.x / cell_size), round(p.y / cell_size))
 
 
-func _on_area_2d_body_entered(_body):
-	crash()
+# collision with terrain TileMap
+func _on_area_2d_body_entered(body):
+	print('entered body %s' % [body])
+#	return
+#	crash()
 
+# collision with area2d: another car or the finish line
 func _on_area_2d_area_entered(area):
 #	print('%s area entered: %s, ismyturn: %s, ismoving: %s' % [name, area.get_parent().name, is_my_turn, is_moving])
 	if area.get_parent() is FinishLine: finish_enter()

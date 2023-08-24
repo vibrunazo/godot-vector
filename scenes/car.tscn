@@ -10,7 +10,7 @@
 [ext_resource type="AudioStream" uid="uid://bjrmo6d1o8sso" path="res://assets/audio/[DH] Tom (13).ogg" id="7_b8cxs"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l0p7b"]
-size = Vector2(4, 4)
+size = Vector2(8, 8)
 
 [sub_resource type="Animation" id="Animation_m1vha"]
 length = 0.001

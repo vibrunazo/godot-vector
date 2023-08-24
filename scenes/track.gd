@@ -8,14 +8,15 @@ var length: float = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	var size = path.curve.get_point_count()
-	print('track size %s' % size)
-	for i in size:
-		if i == 0: continue
-		if i == size - 1: break
-		var point = Game.pix2grid(path.curve.get_point_position(i) + path.global_position)
-		var next = Game.pix2grid(sample_point_ahead(i, 1))
-		print('point %d: %s, next: %s' % [i, point, next])
+	length = path.curve.get_baked_length() * 10
+#	var size = path.curve.get_point_count()
+#	print('track size %s' % size)
+#	for i in size:
+#		if i == 0: continue
+#		if i == size - 1: break
+#		var point = Game.pix2grid(path.curve.get_point_position(i) + path.global_position)
+#		var next = Game.pix2grid(sample_point_ahead(i, 1))
+#		print('point %d: %s, next: %s' % [i, point, next])
 
 ## returns the index of the next point in the path curve after where
 ## the car is. Used by AI to know where to aim next.
@@ -52,5 +53,6 @@ func sample_point_ahead(i: int, ahead: float) -> Vector2:
 
 func calculate_car_score(car: Car) -> float:
 	var lap_offset: = path.curve.get_closest_offset(car.global_position - path.global_position)
-	return lap_offset + car.laps * length
+	var score := lap_offset + car.laps * length
+	return score
 #	return length - calculate_car_distance_left(car) + max(car.laps, 0) * length
