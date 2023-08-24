@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://ct5sd0l3k7rws"]
+[gd_scene load_steps=6 format=3 uid="uid://ct5sd0l3k7rws"]
 
 [ext_resource type="Script" path="res://scenes/hud.gd" id="1_3cqiv"]
 [ext_resource type="Theme" uid="uid://cjawlepta8ffg" path="res://res/theme/my_theme.tres" id="2_hjswm"]
+[ext_resource type="PackedScene" uid="uid://cd2l2na6fyo67" path="res://scenes/debug_ui.tscn" id="3_q165j"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_fs0k2"]
 resource_local_to_scene = true
@@ -55,8 +56,8 @@ layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 theme = ExtResource("2_hjswm")
-theme_override_constants/margin_left = 32
-theme_override_constants/margin_top = 32
+theme_override_constants/margin_left = 64
+theme_override_constants/margin_top = 64
 
 [node name="GridContainer" type="GridContainer" parent="CamControl"]
 layout_mode = 2
@@ -123,6 +124,9 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(72, 72)
 layout_mode = 2
 text = "⇓"
+
+[node name="DebugUI" parent="." instance=ExtResource("3_q165j")]
+layout_mode = 1
 
 [connection signal="pressed" from="CamControl/GridContainer/ButtonZp" to="." method="_on_button_zp_pressed"]
 [connection signal="pressed" from="CamControl/GridContainer/ButtonUp" to="." method="_on_button_up_pressed"]
