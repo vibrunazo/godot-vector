@@ -247,12 +247,13 @@ func pix2grid(p: Vector2) -> Vector2i:
 func _on_area_2d_body_entered(body):
 	print('entered body %s' % [body])
 #	return
-#	crash()
+	crash()
 
 # collision with area2d: another car or the finish line
 func _on_area_2d_area_entered(area):
-#	print('%s area entered: %s, ismyturn: %s, ismoving: %s' % [name, area.get_parent().name, is_my_turn, is_moving])
+	print('%s area entered: %s, ismyturn: %s, ismoving: %s' % [name, area.get_parent().name, is_my_turn, is_moving])
 	if area.get_parent() is FinishLine: finish_enter()
+	elif area.has_meta("collision"): crash()
 	elif is_my_turn and is_moving and area.get_parent() is Car: crash()
 
 func _on_area_2d_area_exited(area):

@@ -33,8 +33,7 @@ grid = NodePath("../Grid")
 cars = [NodePath("../Cars/Car"), NodePath("../Cars/Car2"), NodePath("../Cars/Car3"), NodePath("../Cars/Car4")]
 
 [node name="RaceCam" parent="." node_paths=PackedStringArray("car") instance=ExtResource("3_gu565")]
-visible = false
-position = Vector2(580, 360)
+position = Vector2(1792, 1536)
 car = NodePath("../Cars/Car")
 
 [node name="Track" parent="." instance=ExtResource("3_vb833")]
