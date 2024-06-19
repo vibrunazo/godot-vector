@@ -1,8 +1,15 @@
-[gd_scene load_steps=6 format=3 uid="uid://ct5sd0l3k7rws"]
+[gd_scene load_steps=13 format=3 uid="uid://ct5sd0l3k7rws"]
 
 [ext_resource type="Script" path="res://scenes/hud.gd" id="1_3cqiv"]
 [ext_resource type="Theme" uid="uid://cjawlepta8ffg" path="res://res/theme/my_theme.tres" id="2_hjswm"]
+[ext_resource type="Texture2D" uid="uid://mfhx1wl1m76p" path="res://assets/tex/ui/zoom+.png" id="3_0g2mn"]
+[ext_resource type="Texture2D" uid="uid://clcvt0uk18roo" path="res://assets/tex/ui/arrow-up.png" id="3_mawvc"]
 [ext_resource type="PackedScene" uid="uid://cd2l2na6fyo67" path="res://scenes/debug_ui.tscn" id="3_q165j"]
+[ext_resource type="Texture2D" uid="uid://77fn5hhpawwf" path="res://assets/tex/ui/arrow-left.png" id="4_tr7uv"]
+[ext_resource type="Texture2D" uid="uid://c5i2g4pwyi074" path="res://assets/tex/ui/zoom-.png" id="5_1o4ca"]
+[ext_resource type="Texture2D" uid="uid://d21op5ain0cea" path="res://assets/tex/ui/arrow-right.png" id="5_58e4m"]
+[ext_resource type="Texture2D" uid="uid://clw3hv3aahbyt" path="res://assets/tex/ui/arrow-down.png" id="6_gkts2"]
+[ext_resource type="Texture2D" uid="uid://ba2bq30r4xfqy" path="res://assets/tex/ui/camera-icon.png" id="7_na7mk"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_fs0k2"]
 resource_local_to_scene = true
@@ -69,7 +76,9 @@ columns = 3
 unique_name_in_owner = true
 custom_minimum_size = Vector2(72, 72)
 layout_mode = 2
-text = "🔍"
+icon = ExtResource("3_0g2mn")
+icon_alignment = 1
+expand_icon = true
 
 [node name="Label" type="Label" parent="CamControl/GridContainer/ButtonZp"]
 layout_mode = 0
@@ -82,13 +91,17 @@ label_settings = SubResource("LabelSettings_pfhio")
 unique_name_in_owner = true
 custom_minimum_size = Vector2(72, 72)
 layout_mode = 2
-text = "⇑"
+icon = ExtResource("3_mawvc")
+icon_alignment = 1
+expand_icon = true
 
 [node name="ButtonZm" type="Button" parent="CamControl/GridContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(72, 72)
 layout_mode = 2
-text = "🔎︎"
+icon = ExtResource("5_1o4ca")
+icon_alignment = 1
+expand_icon = true
 
 [node name="Label" type="Label" parent="CamControl/GridContainer/ButtonZm"]
 layout_mode = 0
@@ -101,19 +114,24 @@ label_settings = SubResource("LabelSettings_pfhio")
 unique_name_in_owner = true
 custom_minimum_size = Vector2(72, 72)
 layout_mode = 2
-text = "⇐"
+icon = ExtResource("4_tr7uv")
+icon_alignment = 1
+expand_icon = true
 
 [node name="ButtonCenter" type="Button" parent="CamControl/GridContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(72, 72)
 layout_mode = 2
-text = "🎥"
+icon = ExtResource("7_na7mk")
+expand_icon = true
 
 [node name="ButtonRight" type="Button" parent="CamControl/GridContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(72, 72)
 layout_mode = 2
-text = "⇒"
+icon = ExtResource("5_58e4m")
+icon_alignment = 1
+expand_icon = true
 
 [node name="Control" type="Control" parent="CamControl/GridContainer"]
 custom_minimum_size = Vector2(36, 36)
@@ -123,10 +141,13 @@ layout_mode = 2
 unique_name_in_owner = true
 custom_minimum_size = Vector2(72, 72)
 layout_mode = 2
-text = "⇓"
+icon = ExtResource("6_gkts2")
+icon_alignment = 1
+expand_icon = true
 
 [node name="DebugUI" parent="." instance=ExtResource("3_q165j")]
 layout_mode = 1
+metadata/_edit_lock_ = true
 
 [connection signal="pressed" from="CamControl/GridContainer/ButtonZp" to="." method="_on_button_zp_pressed"]
 [connection signal="pressed" from="CamControl/GridContainer/ButtonUp" to="." method="_on_button_up_pressed"]
