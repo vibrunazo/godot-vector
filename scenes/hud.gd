@@ -68,7 +68,10 @@ func _on_button_zm_pressed():
 
 func _on_button_center_pressed():
 	if not cam: return
-	cam.zoom_reset()
+	if cam.is_following:
+		cam.is_following = false
+	else:
+		cam.zoom_reset()
 	update_follow_indicator()
 	
 
