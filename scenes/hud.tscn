@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://ct5sd0l3k7rws"]
+[gd_scene load_steps=14 format=3 uid="uid://ct5sd0l3k7rws"]
 
 [ext_resource type="Script" path="res://scenes/hud.gd" id="1_3cqiv"]
 [ext_resource type="Theme" uid="uid://cjawlepta8ffg" path="res://res/theme/my_theme.tres" id="2_hjswm"]
@@ -20,6 +20,21 @@ outline_color = Color(0, 0, 0, 0.913725)
 
 [sub_resource type="LabelSettings" id="LabelSettings_pfhio"]
 font_size = 32
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ph4p0"]
+draw_center = false
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.86, 0.86, 0.0602, 1)
+border_blend = true
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+shadow_color = Color(0.858824, 0.858824, 0.0588235, 1)
+shadow_size = 4
 
 [node name="HUD" type="Control"]
 texture_filter = 2
@@ -124,6 +139,16 @@ custom_minimum_size = Vector2(72, 72)
 layout_mode = 2
 icon = ExtResource("7_na7mk")
 expand_icon = true
+
+[node name="PanelFollowing" type="Panel" parent="CamControl/GridContainer/ButtonCenter"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ph4p0")
 
 [node name="ButtonRight" type="Button" parent="CamControl/GridContainer"]
 unique_name_in_owner = true

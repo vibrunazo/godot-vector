@@ -1,6 +1,6 @@
+class_name RaceGame
 extends Node
 
-class_name RaceGame
 
 signal update_ui
 

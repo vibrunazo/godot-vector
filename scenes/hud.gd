@@ -2,6 +2,10 @@ extends Control
 
 @export var game: RaceGame
 @export var cam: RaceCam
+
+@onready var button_center = %ButtonCenter
+
+
 var score_labels: Array[Label]
 
 # Called when the node enters the scene tree for the first time.
@@ -31,6 +35,10 @@ func build_score_labels():
 		settings.outline_color.a = 0.8
 		update_car_score(i)
 	label.queue_free()
+@onready var panel_following = %PanelFollowing
+
+func update_follow_indicator():
+	panel_following.visible = cam.is_following
 
 func on_ui_update_requested():
 	for i in game.cars.size():
@@ -51,27 +59,35 @@ func update_car_score(i: int):
 func _on_button_zp_pressed():
 	if not cam: return
 	cam.zoom_in()
+	update_follow_indicator()
 
 func _on_button_zm_pressed():
 	if not cam: return
 	cam.zoom_out()
+	update_follow_indicator()
 
 func _on_button_center_pressed():
 	if not cam: return
 	cam.zoom_reset()
+	update_follow_indicator()
+	
 
 func _on_button_right_pressed():
 	var cell_size := game.grid.cell_size
 	cam.pan(Vector2(cell_size * 5, 0))
+	update_follow_indicator()
 
 func _on_button_left_pressed():
 	var cell_size := game.grid.cell_size
 	cam.pan(Vector2(-cell_size * 5, 0))
+	update_follow_indicator()
 
 func _on_button_up_pressed():
 	var cell_size := game.grid.cell_size
 	cam.pan(Vector2(0, -cell_size * 5))
+	update_follow_indicator()
 
 func _on_button_down_pressed():
 	var cell_size := game.grid.cell_size
 	cam.pan(Vector2(0, cell_size * 5))
+	update_follow_indicator()
