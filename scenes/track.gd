@@ -30,8 +30,8 @@ func find_next_hint(car: Car, ahead: float = 0.0) -> int:
 	for i in path.curve.get_point_count():
 		if i == 0: continue
 		if i == path.curve.get_point_count() - 1: break
-		var point = path.curve.get_point_position(i)
-		var off = path.curve.get_closest_offset(point)
+		var point := path.curve.get_point_position(i)
+		var off := path.curve.get_closest_offset(point)
 #		print('i: %d, point: %s, off: %s' % [i, point, off])
 		if off > lap_offset:
 			next_i = i

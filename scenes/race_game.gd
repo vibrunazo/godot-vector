@@ -41,7 +41,7 @@ func handle_click_input(cell: Vector2i):
 	var target: Vector2i = car.grid_pos + car.svector
 	var is_click_on_target: bool = is_cell_near(cell, target)
 	if is_cell_near(cell, car.grid_pos) or is_click_on_target:
-		if cam.is_focused and is_click_on_target:
+		if is_click_on_target and (cam.is_focused or not Config.auto_focus):
 			var input := cell - target 
 			print('clicked focused input %s' % input)
 			input = input.clamp(Vector2i(-1, -1), Vector2i(1, 1))
@@ -155,10 +155,6 @@ func new_turn():
 #			await await get_tree().create_timer(0.3).timeout
 		var input = await car.ai.play_turn()
 		input_move(input)
-	elif car.control_type == car.Controller.LOCAL:
-		if cam.is_following:
-			await cam.finished_pos_tween
-		cam.focus_player()
 
 ## returns the car who plays in this turn
 func get_car_this_turn() -> Car:

@@ -1,9 +1,10 @@
+## Game autoload with global values and functions
 extends Node
 
 var cell_size := 64
 
 # Called when the node enters the scene tree for the first time.
-func _ready():
+func _ready() -> void:
 	print('ini game.gd')
 
 func grid2pix(g: Vector2) -> Vector2:

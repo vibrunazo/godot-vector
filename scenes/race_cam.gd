@@ -6,6 +6,7 @@ class_name RaceCam
 @export var ZOOM_RESET: float = 0.5
 @export var ZOOM_FOCUS: float = 1.0
 
+
 signal finished_pos_tween
 
 var zoom_target: float = 1.0
@@ -29,6 +30,10 @@ func change_car(newcar: Car):
 	car = newcar
 	is_focused = false
 	if is_following: start_pos_tween()
+	if car.control_type == car.Controller.LOCAL and Config.auto_focus:
+		if is_following:
+			await finished_pos_tween
+		focus_player()
 #	if cam_modified: return
 #	await get_tree().create_timer(1.0).timeout
 #	if car.is_moving or cam_modified: return
@@ -48,7 +53,6 @@ func on_car_started_move():
 	#if cam_modified: return
 #	zoom_tween = create_tween()
 #	zoom_tween.tween_property(self, "zoom", Vector2(1, 1), 0.3)
-
 
 ## Focus camera on player car by zooming in to appropriate level to receive click input
 ## A car can only receive click inputs if it's focused, else it will force focus when clicked
