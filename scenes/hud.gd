@@ -38,7 +38,7 @@ func build_score_labels():
 @onready var panel_following = %PanelFollowing
 
 func update_follow_indicator():
-	panel_following.visible = cam.is_following
+	panel_following.visible = Config.follow_mode != Config.FOLLOW.NONE
 
 func on_ui_update_requested():
 	for i in game.cars.size():
@@ -68,10 +68,10 @@ func _on_button_zm_pressed():
 
 func _on_button_center_pressed():
 	if not cam: return
-	if cam.is_following:
-		cam.is_following = false
-	else:
-		cam.zoom_reset()
+	#if Config.follow_mode:
+		#cam.is_following = false
+	#else:
+	cam.zoom_reset()
 	update_follow_indicator()
 	
 

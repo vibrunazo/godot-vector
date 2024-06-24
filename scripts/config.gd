@@ -3,7 +3,7 @@
 extends Node
 
 ## Whether cam should center on cars at the start of each turn
-var follow_mode: FOLLOW = FOLLOW.NONE
+var follow_mode: FOLLOW = FOLLOW.LOCAL
 ## If cam should auto focus on local controlled cars at the start of each turn. 
 ## When true it is also required to have focus to be able to click to input
 var auto_focus: bool = false

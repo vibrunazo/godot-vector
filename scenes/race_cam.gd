@@ -13,7 +13,7 @@ var zoom_target: float = 1.0
 var cam_modified: bool = false
 var zoom_tween: Tween
 var pos_tween: Tween
-var is_following: bool = true
+#var is_following: bool = true
 var is_focused: bool = false
 
 
@@ -29,7 +29,10 @@ func _ready():
 func change_car(newcar: Car):
 	car = newcar
 	is_focused = false
-	if is_following: start_pos_tween()
+	var is_following := (Config.follow_mode == Config.FOLLOW.ALL) \
+	or (Config.follow_mode == Config.FOLLOW.LOCAL and car.control_type == car.Controller.LOCAL)
+	if is_following:
+		start_pos_tween()
 	if car.control_type == car.Controller.LOCAL and Config.auto_focus:
 		if is_following:
 			await finished_pos_tween
@@ -73,25 +76,25 @@ func focus_out():
 	
 func zoom_in():
 	cam_modified = true
-	is_following = false
+	#is_following = false
 	is_focused = false
 	var z: = minf(zoom.x + 0.2, 1)
 	zoom = Vector2(z, z)
 
 func zoom_out():
 	cam_modified = true
-	is_following = false
+	#is_following = false
 	is_focused = false
 	var z: = maxf(zoom.x - 0.2, 0.2)
 	zoom = Vector2(z, z)
 
 func zoom_reset():
-	is_following = true
+	#is_following = true
 	is_focused = false
 	cam_modified = false
 	start_pos_tween()
 	zoom = Vector2(ZOOM_RESET, ZOOM_RESET)
 
 func pan(v: Vector2):
-	is_following = false
+	#is_following = false
 	position += v
