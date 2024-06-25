@@ -94,3 +94,9 @@ func _on_button_down_pressed():
 	var cell_size := game.grid.cell_size
 	cam.pan(Vector2(0, cell_size * 5))
 	update_follow_indicator()
+
+func _on_button_follow_pressed() -> void:
+	if Config.follow_mode == Config.FOLLOW.ALL:
+		Config.follow_mode = Config.FOLLOW.NONE
+	else:
+		Config.follow_mode += 1

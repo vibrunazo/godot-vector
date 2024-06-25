@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://ct5sd0l3k7rws"]
+[gd_scene load_steps=15 format=3 uid="uid://ct5sd0l3k7rws"]
 
 [ext_resource type="Script" path="res://scenes/hud.gd" id="1_3cqiv"]
 [ext_resource type="Theme" uid="uid://cjawlepta8ffg" path="res://res/theme/my_theme.tres" id="2_hjswm"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://d21op5ain0cea" path="res://assets/tex/ui/arrow-right.png" id="5_58e4m"]
 [ext_resource type="Texture2D" uid="uid://clw3hv3aahbyt" path="res://assets/tex/ui/arrow-down.png" id="6_gkts2"]
 [ext_resource type="Texture2D" uid="uid://ba2bq30r4xfqy" path="res://assets/tex/ui/camera-icon.png" id="7_na7mk"]
+[ext_resource type="Texture2D" uid="uid://yomalxb2e5nr" path="res://assets/tex/ui/cam-follow-all.png" id="9_dt0b8"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_fs0k2"]
 resource_local_to_scene = true
@@ -159,9 +160,13 @@ icon = ExtResource("5_58e4m")
 icon_alignment = 1
 expand_icon = true
 
-[node name="Control" type="Control" parent="CamControl/GridContainer"]
-custom_minimum_size = Vector2(36, 36)
+[node name="ButtonFollow" type="Button" parent="CamControl/GridContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(72, 72)
 layout_mode = 2
+icon = ExtResource("9_dt0b8")
+icon_alignment = 1
+expand_icon = true
 
 [node name="ButtonDown" type="Button" parent="CamControl/GridContainer"]
 unique_name_in_owner = true
@@ -181,4 +186,5 @@ metadata/_edit_lock_ = true
 [connection signal="pressed" from="CamControl/GridContainer/ButtonLeft" to="." method="_on_button_left_pressed"]
 [connection signal="pressed" from="CamControl/GridContainer/ButtonCenter" to="." method="_on_button_center_pressed"]
 [connection signal="pressed" from="CamControl/GridContainer/ButtonRight" to="." method="_on_button_right_pressed"]
+[connection signal="pressed" from="CamControl/GridContainer/ButtonFollow" to="." method="_on_button_follow_pressed"]
 [connection signal="pressed" from="CamControl/GridContainer/ButtonDown" to="." method="_on_button_down_pressed"]
