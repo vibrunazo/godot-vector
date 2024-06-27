@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://ct5sd0l3k7rws"]
+[gd_scene load_steps=34 format=3 uid="uid://ct5sd0l3k7rws"]
 
 [ext_resource type="Script" path="res://scenes/hud.gd" id="1_3cqiv"]
 [ext_resource type="Theme" uid="uid://cjawlepta8ffg" path="res://res/theme/my_theme.tres" id="2_hjswm"]
@@ -22,8 +22,50 @@ font_color = Color(0.952941, 0.211765, 0.235294, 1)
 outline_size = 12
 outline_color = Color(0, 0, 0, 0.913725)
 
+[sub_resource type="InputEventAction" id="InputEventAction_7s653"]
+action = &"cam_zp"
+
+[sub_resource type="Shortcut" id="Shortcut_hd7di"]
+events = [SubResource("InputEventAction_7s653")]
+
 [sub_resource type="LabelSettings" id="LabelSettings_pfhio"]
 font_size = 32
+
+[sub_resource type="InputEventAction" id="InputEventAction_u0x2r"]
+action = &"cam_up"
+
+[sub_resource type="Shortcut" id="Shortcut_m1f3o"]
+events = [SubResource("InputEventAction_u0x2r")]
+
+[sub_resource type="InputEventAction" id="InputEventAction_fy1pk"]
+action = &"cam_zm"
+
+[sub_resource type="Shortcut" id="Shortcut_0bppl"]
+events = [SubResource("InputEventAction_fy1pk")]
+
+[sub_resource type="InputEventAction" id="InputEventAction_20sjk"]
+action = &"cam_left"
+
+[sub_resource type="Shortcut" id="Shortcut_6d00e"]
+events = [SubResource("InputEventAction_20sjk")]
+
+[sub_resource type="InputEventAction" id="InputEventAction_0ijqn"]
+action = &"cam_center"
+
+[sub_resource type="Shortcut" id="Shortcut_5lnco"]
+events = [SubResource("InputEventAction_0ijqn")]
+
+[sub_resource type="InputEventAction" id="InputEventAction_w73g2"]
+action = &"cam_right"
+
+[sub_resource type="Shortcut" id="Shortcut_72o45"]
+events = [SubResource("InputEventAction_w73g2")]
+
+[sub_resource type="InputEventAction" id="InputEventAction_28u7v"]
+action = &"cam_autofocus"
+
+[sub_resource type="Shortcut" id="Shortcut_gaib6"]
+events = [SubResource("InputEventAction_28u7v")]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ph4p0"]
 draw_center = false
@@ -39,6 +81,12 @@ corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 shadow_color = Color(0.858824, 0.858824, 0.0588235, 1)
 shadow_size = 4
+
+[sub_resource type="InputEventAction" id="InputEventAction_aopnq"]
+action = &"cam_down"
+
+[sub_resource type="Shortcut" id="Shortcut_03sin"]
+events = [SubResource("InputEventAction_aopnq")]
 
 [node name="HUD" type="Control"]
 texture_filter = 2
@@ -95,6 +143,7 @@ columns = 3
 unique_name_in_owner = true
 custom_minimum_size = Vector2(72, 72)
 layout_mode = 2
+shortcut = SubResource("Shortcut_hd7di")
 icon = ExtResource("3_0g2mn")
 icon_alignment = 1
 expand_icon = true
@@ -110,6 +159,7 @@ label_settings = SubResource("LabelSettings_pfhio")
 unique_name_in_owner = true
 custom_minimum_size = Vector2(72, 72)
 layout_mode = 2
+shortcut = SubResource("Shortcut_m1f3o")
 icon = ExtResource("3_mawvc")
 icon_alignment = 1
 expand_icon = true
@@ -118,6 +168,7 @@ expand_icon = true
 unique_name_in_owner = true
 custom_minimum_size = Vector2(72, 72)
 layout_mode = 2
+shortcut = SubResource("Shortcut_0bppl")
 icon = ExtResource("5_1o4ca")
 icon_alignment = 1
 expand_icon = true
@@ -133,6 +184,7 @@ label_settings = SubResource("LabelSettings_pfhio")
 unique_name_in_owner = true
 custom_minimum_size = Vector2(72, 72)
 layout_mode = 2
+shortcut = SubResource("Shortcut_6d00e")
 icon = ExtResource("4_tr7uv")
 icon_alignment = 1
 expand_icon = true
@@ -141,6 +193,7 @@ expand_icon = true
 unique_name_in_owner = true
 custom_minimum_size = Vector2(72, 72)
 layout_mode = 2
+shortcut = SubResource("Shortcut_5lnco")
 icon = ExtResource("7_na7mk")
 expand_icon = true
 
@@ -148,6 +201,7 @@ expand_icon = true
 unique_name_in_owner = true
 custom_minimum_size = Vector2(72, 72)
 layout_mode = 2
+shortcut = SubResource("Shortcut_72o45")
 icon = ExtResource("5_58e4m")
 icon_alignment = 1
 expand_icon = true
@@ -156,6 +210,7 @@ expand_icon = true
 unique_name_in_owner = true
 custom_minimum_size = Vector2(72, 72)
 layout_mode = 2
+shortcut = SubResource("Shortcut_gaib6")
 icon = ExtResource("11_6k4b3")
 icon_alignment = 1
 expand_icon = true
@@ -178,6 +233,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_ph4p0")
 unique_name_in_owner = true
 custom_minimum_size = Vector2(72, 72)
 layout_mode = 2
+shortcut = SubResource("Shortcut_03sin")
 icon = ExtResource("6_gkts2")
 icon_alignment = 1
 expand_icon = true
