@@ -144,17 +144,6 @@ layout_mode = 2
 icon = ExtResource("7_na7mk")
 expand_icon = true
 
-[node name="PanelFollowing" type="Panel" parent="CamControl/GridContainer/ButtonCenter"]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_ph4p0")
-
 [node name="ButtonRight" type="Button" parent="CamControl/GridContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(72, 72)
@@ -173,6 +162,17 @@ expand_icon = true
 script = ExtResource("10_s4155")
 icons = Array[Texture2D]([ExtResource("11_6k4b3"), ExtResource("9_i8ciq"), ExtResource("9_dt0b8")])
 tooltips = Array[String](["Fixed camera. Don't follow any cars.", "Camera follows player controlled cars.", "Camera follows all cars."])
+
+[node name="PanelFollowing" type="Panel" parent="CamControl/GridContainer/ButtonFollow"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ph4p0")
 
 [node name="ButtonDown" type="Button" parent="CamControl/GridContainer"]
 unique_name_in_owner = true

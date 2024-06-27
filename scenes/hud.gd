@@ -99,10 +99,5 @@ func _on_button_down_pressed():
 	update_follow_indicator()
 
 func _on_button_follow_pressed() -> void:
-	print('follow button pressed')
 	Config.follow_mode = button_follow.state as Config.FOLLOW
-	#if Config.follow_mode == Config.FOLLOW.ALL:
-		#Config.follow_mode = Config.FOLLOW.NONE
-	#else:
-		#@warning_ignore("int_as_enum_without_cast")
-		#Config.follow_mode += 1
+	update_follow_indicator()
