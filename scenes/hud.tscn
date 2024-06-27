@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://ct5sd0l3k7rws"]
+[gd_scene load_steps=18 format=3 uid="uid://ct5sd0l3k7rws"]
 
 [ext_resource type="Script" path="res://scenes/hud.gd" id="1_3cqiv"]
 [ext_resource type="Theme" uid="uid://cjawlepta8ffg" path="res://res/theme/my_theme.tres" id="2_hjswm"]
@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://yomalxb2e5nr" path="res://assets/tex/ui/cam-follow-all.png" id="9_dt0b8"]
 [ext_resource type="Texture2D" uid="uid://co6nunc1fbuy2" path="res://assets/tex/ui/cam-follow.png" id="9_i8ciq"]
 [ext_resource type="Script" path="res://scenes/button_switch.gd" id="10_s4155"]
+[ext_resource type="Texture2D" uid="uid://c7tufhv5ixlid" path="res://assets/tex/ui/cam-fixed.png" id="11_6k4b3"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_fs0k2"]
 resource_local_to_scene = true
@@ -166,11 +167,12 @@ expand_icon = true
 unique_name_in_owner = true
 custom_minimum_size = Vector2(72, 72)
 layout_mode = 2
-icon = ExtResource("9_dt0b8")
+icon = ExtResource("11_6k4b3")
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("10_s4155")
-icons = Array[Texture2D]([ExtResource("7_na7mk"), ExtResource("9_i8ciq"), ExtResource("9_dt0b8")])
+icons = Array[Texture2D]([ExtResource("11_6k4b3"), ExtResource("9_i8ciq"), ExtResource("9_dt0b8")])
+tooltips = Array[String](["Fixed camera. Don't follow any cars.", "Camera follows player controlled cars.", "Camera follows all cars."])
 
 [node name="ButtonDown" type="Button" parent="CamControl/GridContainer"]
 unique_name_in_owner = true

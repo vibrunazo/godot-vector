@@ -6,3 +6,4 @@
 default_font = ExtResource("1_tyjfg")
 Button/font_sizes/font_size = 46
 Label/fonts/font = ExtResource("1_tyjfg")
+TooltipLabel/font_sizes/font_size = 50
