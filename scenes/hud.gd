@@ -4,6 +4,7 @@ extends Control
 @export var cam: RaceCam
 
 @onready var button_center = %ButtonCenter
+@onready var button_follow: ButtonSwitch = %ButtonFollow
 
 
 var score_labels: Array[Label]
@@ -12,8 +13,10 @@ var score_labels: Array[Label]
 func _ready():
 	register_signals()
 	build_score_labels()
+	button_follow.update_state(Config.follow_mode)
 
 func register_signals():
+	button_follow.pressed.connect(_on_button_follow_pressed)
 	if game:
 		game.update_ui.connect(on_ui_update_requested)
 
@@ -96,7 +99,10 @@ func _on_button_down_pressed():
 	update_follow_indicator()
 
 func _on_button_follow_pressed() -> void:
-	if Config.follow_mode == Config.FOLLOW.ALL:
-		Config.follow_mode = Config.FOLLOW.NONE
-	else:
-		Config.follow_mode += 1
+	print('follow button pressed')
+	Config.follow_mode = button_follow.state as Config.FOLLOW
+	#if Config.follow_mode == Config.FOLLOW.ALL:
+		#Config.follow_mode = Config.FOLLOW.NONE
+	#else:
+		#@warning_ignore("int_as_enum_without_cast")
+		#Config.follow_mode += 1
