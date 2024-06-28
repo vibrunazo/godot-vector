@@ -21,4 +21,4 @@ func toggle_debug_speed():
 	if Engine.time_scale > 1:
 		Engine.time_scale = 1
 	else:
-		Engine.time_scale = 5
+		Engine.time_scale = 10
