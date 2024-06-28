@@ -2,6 +2,8 @@ extends Node2D
 
 class_name Track
 
+@export var max_laps: int = 2
+
 @onready var tilemap: TileMap = %TileMap
 var length: float = 0
 @onready var path: Path2D = $Path2D

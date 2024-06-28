@@ -31,6 +31,7 @@ var is_moving: = false
 var is_my_turn: = false
 var is_registered: = false
 var is_crashed: = false
+var is_finished: = false
 var tween_move: Tween
 var laps: int = -1
 # how far I've travelled, to calculate who is ahead
@@ -219,12 +220,13 @@ func crash():
 
 ## enters the finish line
 func finish_enter():
+	## TODO should work on both directions, needs to correct direction from the finish line
 	if svector.x > 0:
 		laps += 1
+		finished.emit()
 	else:
 		pass
 #	print('%s finished, laps: %d' % [name, laps])
-	finished.emit()
 
 ## exits finish line
 func finish_exit():
@@ -233,7 +235,7 @@ func finish_exit():
 	else:
 		laps -= 1
 #	print('%s finish exited, laps: %d' % [name, laps])
-	finished.emit()
+	#finished.emit()
 
 #TODO should be a global or something idk
 func grid2pix(g: Vector2) -> Vector2:

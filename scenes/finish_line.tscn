@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://scenes/finish_line.gd" id="1_xyi7d"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ct3hn"]
-size = Vector2(64, 640)
+size = Vector2(64, 384)
 
 [node name="FinishLine" type="Node2D"]
 script = ExtResource("1_xyi7d")

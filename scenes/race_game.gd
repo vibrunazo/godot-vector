@@ -19,7 +19,7 @@ func _ready():
 func register_cars():
 	for car in cars:
 		if car:
-			car.finished.connect(on_car_finished)
+			car.finished.connect(on_car_finished.bind(car))
 			car.game = self
 			car.track = track
 			car.grid = grid
@@ -141,7 +141,7 @@ func next_turn():
 
 func new_turn():
 	var car = get_car_this_turn()
-	if not car:
+	if not car or car.is_finished:
 		next_turn()
 		return
 	if not car.is_registered:
@@ -185,9 +185,12 @@ func is_car_ahead_of_player(ai_car: Car) -> bool:
 	return false
 
 # some car crossed the finish line
-func on_car_finished():
-#	request_update_ui()
-	pass
+func on_car_finished(car: Car):
+	print('car %s finished with %s laps' % [car, car.laps])
+	if car.laps >= track.max_laps:
+		car.is_finished = true
+		Engine.time_scale = 4
+		print('win')
 	
 func request_update_ui():
 	update_ui.emit()
