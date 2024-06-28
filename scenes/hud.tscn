@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://c5i2g4pwyi074" path="res://assets/tex/ui/zoom-.png" id="5_1o4ca"]
 [ext_resource type="Texture2D" uid="uid://d21op5ain0cea" path="res://assets/tex/ui/arrow-right.png" id="5_58e4m"]
 [ext_resource type="Texture2D" uid="uid://clw3hv3aahbyt" path="res://assets/tex/ui/arrow-down.png" id="6_gkts2"]
-[ext_resource type="Texture2D" uid="uid://ba2bq30r4xfqy" path="res://assets/tex/ui/camera-icon.png" id="7_na7mk"]
+[ext_resource type="Texture2D" uid="uid://b5sdkwwb13g4y" path="res://assets/tex/ui/cam-center.png" id="7_rg48p"]
 [ext_resource type="Texture2D" uid="uid://yomalxb2e5nr" path="res://assets/tex/ui/cam-follow-all.png" id="9_dt0b8"]
 [ext_resource type="Texture2D" uid="uid://co6nunc1fbuy2" path="res://assets/tex/ui/cam-follow.png" id="9_i8ciq"]
 [ext_resource type="Script" path="res://scenes/button_switch.gd" id="10_s4155"]
@@ -194,7 +194,7 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(72, 72)
 layout_mode = 2
 shortcut = SubResource("Shortcut_5lnco")
-icon = ExtResource("7_na7mk")
+icon = ExtResource("7_rg48p")
 expand_icon = true
 
 [node name="ButtonRight" type="Button" parent="CamControl/GridContainer"]
