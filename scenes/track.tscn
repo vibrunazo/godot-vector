@@ -35,6 +35,7 @@ script = ExtResource("1_jkb2p")
 
 [node name="TileMap" type="TileMap" parent="."]
 unique_name_in_owner = true
+light_mask = 33
 tile_set = ExtResource("1_8l6on")
 format = 2
 layer_0/name = "terrain"

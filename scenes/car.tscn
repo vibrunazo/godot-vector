@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://c1gm6pyvbylwx"]
+[gd_scene load_steps=15 format=3 uid="uid://c1gm6pyvbylwx"]
 
 [ext_resource type="Texture2D" uid="uid://c1qejx7gxg0pv" path="res://assets/tex/ball.png" id="1_hm1ie"]
 [ext_resource type="Script" path="res://scenes/car.gd" id="1_ohgs5"]
@@ -8,6 +8,9 @@
 [ext_resource type="AudioStream" uid="uid://dbcx1gemqyx4u" path="res://assets/audio/kick05.ogg" id="6_03tkh"]
 [ext_resource type="AudioStream" uid="uid://cw6qaj3hnvn6d" path="res://assets/audio/[DH] Perc (14).ogg" id="6_v540w"]
 [ext_resource type="AudioStream" uid="uid://bjrmo6d1o8sso" path="res://assets/audio/[DH] Tom (13).ogg" id="7_b8cxs"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_8ihgf"]
+blend_mode = 1
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l0p7b"]
 size = Vector2(8, 8)
@@ -53,7 +56,18 @@ _data = {
 size = Vector2(4, 4)
 
 [node name="Car" type="Node2D"]
+z_index = 100
 script = ExtResource("1_ohgs5")
+
+[node name="LightSprite" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+modulate = Color(0.05, 0.05, 0.014, 1)
+z_index = 10
+z_as_relative = false
+material = SubResource("CanvasItemMaterial_8ihgf")
+position = Vector2(0, 1)
+scale = Vector2(15, 15)
+texture = ExtResource("2_iwf7x")
 
 [node name="ShadowSprite" type="Sprite2D" parent="."]
 unique_name_in_owner = true
@@ -67,8 +81,10 @@ unique_name_in_owner = true
 texture = ExtResource("2_iwf7x")
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
+visible = false
 color = Color(0.9, 0.786, 0.54, 1)
 energy = 0.08
+range_item_cull_mask = 32
 texture = ExtResource("2_iwf7x")
 texture_scale = 48.0
 
