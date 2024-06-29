@@ -63,7 +63,7 @@ func play_turn() -> Vector2i:
 
 func calc_e_difficulty():
 	effective_difficulty = difficulty
-	if car.is_ahead_of_player() || car.is_first():
+	if GameState.is_car_ahead_of_player(car) || car.is_first():
 		turns_ahead += 1
 		turns_behind = 0
 		if turns_ahead >= 8:

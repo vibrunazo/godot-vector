@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 Game="*res://scripts/game.gd"
 Config="*res://scripts/config.gd"
+GameState="*res://scripts/game_state.gd"
 
 [debug]
 

@@ -21,9 +21,9 @@ func register_cars():
 	for car in cars:
 		if car:
 			car.finished.connect(on_car_finished.bind(car))
-			car.game = self
 			car.track = track
 			car.grid = grid
+	GameState.cars = cars
 
 func start_game():
 	new_turn()
@@ -43,7 +43,7 @@ func handle_click_input(cell: Vector2i):
 	var is_click_on_target: bool = is_cell_near(cell, target)
 	if is_cell_near(cell, car.grid_pos) or is_click_on_target:
 		if is_click_on_target and (cam.is_focused or not Config.auto_focus):
-			var input := cell - target 
+			var input := cell - target
 			print('clicked focused input %s' % input)
 			input = input.clamp(Vector2i(-1, -1), Vector2i(1, 1))
 			input_move(input)
@@ -66,7 +66,7 @@ func get_position_inside_tile(tilemap: TileMap, tile_pos: Vector2i, world_pos: V
 	var data: TileData = tilemap.get_cell_tile_data(0, tile_pos)
 	var tile_size := tilemap.tile_set.tile_size
 	var p: Vector2 = world_pos - v + Vector2(tile_size)/2
-	var x: int = floor(p.x / (tile_size.x / 3.0)) 
+	var x: int = floor(p.x / (tile_size.x / 3.0))
 	var y: int = floor(p.y / (tile_size.y / 3.0))
 	var dir: int = get_dir_from_relativepos(x, y)
 	var bit: int = data.get_terrain_peering_bit(dir)
@@ -130,8 +130,9 @@ func input_move(v: Vector2i):
 	var car: Car = get_car_this_turn()
 	var r = car.input_move(v)
 	if r:
+		car.play_move_audio(turn)
 		cam.on_car_started_move()
-		await car.turn_end 
+		await car.turn_end
 		next_turn()
 #	await get_tree().create_timer(1.0).timeout
 
@@ -178,14 +179,6 @@ func calculate_car_positions():
 ## returns which position this car is in the race
 func find_car_position(car: Car) -> int:
 	return car.race_pos
-
-## returns whether this car is ahead of a player controlled car
-## used by the AI to know whether it should take it easy on the noob
-func is_car_ahead_of_player(ai_car: Car) -> bool:
-	for car in cars:
-		if car.control_type != car.Controller.AI and car.race_pos > ai_car.race_pos:
-			return true
-	return false
 
 # some car crossed the finish line
 func on_car_finished(car: Car):

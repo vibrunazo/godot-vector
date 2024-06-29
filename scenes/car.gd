@@ -15,7 +15,6 @@ enum Controller {LOCAL, AI}
 @onready var car_sprite: Sprite2D = %CarSprite
 @onready var selection_sprite: Sprite2D = %SelectionSprite
 var anim_speed = 0.5
-var game: RaceGame
 var track: Track
 var grid: Grid
 var grid_pos := Vector2i(0, 0)
@@ -135,15 +134,17 @@ func input_move(v: Vector2i) -> bool:
 
 func move():
 	svector += next_move
-	$AudioVroom.pitch_scale = 0.8 + svector.length() * 0.05
-	$AudioVroom.play()
-	if game.turn % 2: $AudioVroom2.play()
-	else: $AudioVroom3.play()
 	
 	move_to(grid_pos + svector)
 #	move_to(Vector2i(20,10))
 	car_history.show_target_at(grid_pos + svector)
 	car_history.hide_dots()
+
+func play_move_audio(turn: int):
+	$AudioVroom.pitch_scale = 0.8 + svector.length() * 0.05
+	$AudioVroom.play()
+	if turn % 2: $AudioVroom2.play()
+	else: $AudioVroom3.play()
 
 func move_to(new_pos: Vector2i):
 	is_moving = true
@@ -184,8 +185,8 @@ func end_turn():
 func update_grid_from_pos():
 	grid_pos = pix2grid(global_position)
 
-func is_ahead_of_player() -> bool:
-	return game.is_car_ahead_of_player(self)
+#func is_ahead_of_player() -> bool:
+	#return game.is_car_ahead_of_player(self)
 
 ## Returns whether this Car is placed first in the race
 func is_first() -> bool:
@@ -193,7 +194,7 @@ func is_first() -> bool:
 
 ## Returns whether this Car is placed last in the race
 func is_last() -> bool:
-	return race_pos == game.cars.size()
+	return race_pos == GameState.cars.size()
 
 ## Returns true if using given input this turn would crash.
 ## false otherwise
