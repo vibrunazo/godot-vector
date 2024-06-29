@@ -11,7 +11,7 @@ enum Controller {LOCAL, AI}
 
 @export var color: Color = Color(0.9, 0.2, 0.2)
 @export var control_type: Controller = Controller.LOCAL
-@export var ai: BotDriver
+@export var ai: Resource
 @onready var car_sprite: Sprite2D = %CarSprite
 @onready var selection_sprite: Sprite2D = %SelectionSprite
 var anim_speed = 0.5
@@ -24,8 +24,8 @@ var next_move := Vector2i(0, 0)
 ## current speed vector
 var svector := Vector2i(0, 0)
 var history: Array[Vector2i]
-var car_history: CarHistory
-var car_shadows: CarHistory
+var car_history: Node
+var car_shadows: Node
 var is_moving: = false
 var is_my_turn: = false
 var is_registered: = false
@@ -50,7 +50,7 @@ func _ready():
 	register_car_history()
 	update_pos_from_grid()
 	update_draw()
-	calculate_distance_score()
+	#calculate_distance_score()
 	setup_ai()
 	$ShapeCast2D.add_exception($Area2D)
 	is_registered = true
@@ -158,16 +158,13 @@ func update_pos_from_grid():
 	position = grid2pix(grid_pos)
 #	car_history.update_vectors()
 
-func calculate_distance_score():
-	distance_score = track.calculate_car_score(self)
-
 func on_move_end():
 	await get_tree().create_timer(0.05).timeout
 #	car_history.update_vectors()
 	if is_crashed:
 		return
 	grid_pos += svector
-	calculate_distance_score()
+	#calculate_distance_score()
 	history.append(svector)
 	apply_terrain_mod()
 	
@@ -185,16 +182,14 @@ func end_turn():
 func update_grid_from_pos():
 	grid_pos = pix2grid(global_position)
 
-#func is_ahead_of_player() -> bool:
-	#return game.is_car_ahead_of_player(self)
-
 ## Returns whether this Car is placed first in the race
 func is_first() -> bool:
 	return race_pos == 1
 
 ## Returns whether this Car is placed last in the race
 func is_last() -> bool:
-	return race_pos == GameState.cars.size()
+	#return race_pos == GameState.cars.size()
+	return false
 
 ## Returns true if using given input this turn would crash.
 ## false otherwise

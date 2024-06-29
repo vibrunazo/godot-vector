@@ -1,6 +1,6 @@
+class_name Track
 extends Node2D
 
-class_name Track
 
 @export var max_laps: int = 2
 
@@ -23,7 +23,7 @@ func _ready():
 ## returns the index of the next point in the path curve after where
 ## the car is. Used by AI to know where to aim next.
 ## ahead: how far ahead from where I actually am should I find the next point from
-func find_next_hint(car: Car, ahead: float = 0.0) -> int:
+func find_next_hint(car: Node2D, ahead: float = 0.0) -> int:
 	var lap_offset: = path.curve.get_closest_offset(car.global_position - path.global_position)
 	lap_offset += ahead
 #	var v = path.curve.get_point_position(1) + path.global_position
@@ -52,9 +52,4 @@ func get_loc_of_hint(i: int) -> Vector2:
 func sample_point_ahead(i: int, ahead: float) -> Vector2:
 	return path.curve.sample(i, ahead) + path.global_position
 	
-
-func calculate_car_score(car: Car) -> float:
-	var lap_offset: = path.curve.get_closest_offset(car.global_position - path.global_position)
-	var score := lap_offset + car.laps * length
-	return score
 #	return length - calculate_car_distance_left(car) + max(car.laps, 0) * length

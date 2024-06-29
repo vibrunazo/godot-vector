@@ -26,6 +26,8 @@ func register_cars():
 	GameState.cars = cars
 
 func start_game():
+	for car in cars:
+		car.distance_score = Game.calculate_car_score(car, track)
 	new_turn()
 
 func clicked():
@@ -133,6 +135,7 @@ func input_move(v: Vector2i):
 		car.play_move_audio(turn)
 		cam.on_car_started_move()
 		await car.turn_end
+		car.distance_score = Game.calculate_car_score(car, track)
 		next_turn()
 #	await get_tree().create_timer(1.0).timeout
 

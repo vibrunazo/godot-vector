@@ -22,3 +22,10 @@ func toggle_debug_speed():
 		Engine.time_scale = 1
 	else:
 		Engine.time_scale = 10
+
+## Calculates score of given car on given track. Score is used to tell which car is head
+func calculate_car_score(car: Car, track: Track) -> float:
+	var path := track.path
+	var lap_offset: = path.curve.get_closest_offset(car.global_position - path.global_position)
+	var score: float = lap_offset + car.laps * track.length
+	return score
