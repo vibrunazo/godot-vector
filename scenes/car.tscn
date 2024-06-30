@@ -111,12 +111,21 @@ libraries = {
 "": SubResource("AnimationLibrary_mspr8")
 }
 
-[node name="ShapeCast2D" type="ShapeCast2D" parent="."]
+[node name="CrashCast" type="ShapeCast2D" parent="."]
 visible = false
 enabled = false
 shape = SubResource("RectangleShape2D_hernn")
 target_position = Vector2(50, 0)
 collide_with_areas = true
+
+[node name="FinishLineCast" type="ShapeCast2D" parent="."]
+visible = false
+enabled = false
+shape = SubResource("RectangleShape2D_hernn")
+target_position = Vector2(50, 0)
+collision_mask = 2
+collide_with_areas = true
+collide_with_bodies = false
 
 [node name="AudioVroom" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("5_0n1mc")

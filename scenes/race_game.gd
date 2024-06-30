@@ -9,7 +9,6 @@ signal update_ui
 @export var grid: Grid
 @export var cars: Array[Car]
 var turn = 0
-var is_ready: bool = true
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -140,13 +139,13 @@ func input_move(v: Vector2i):
 #	await get_tree().create_timer(1.0).timeout
 
 func next_turn():
-	if not is_ready: return
+	if not GameState.is_ready: return
 	turn += 1
 #	await get_tree().create_timer(0.1).timeout
 	new_turn.call_deferred()
 
 func new_turn():
-	if not is_ready: return
+	if not GameState.is_ready: return
 	var car = get_car_this_turn()
 	if not car or car.is_finished:
 		next_turn()
@@ -188,15 +187,18 @@ func on_car_finished(car: Car):
 	print('car %s finished with %s laps' % [car, car.laps])
 	if car.laps >= track.max_laps:
 		car.is_finished = true
-		Engine.time_scale = 10
+		Engine.time_scale = 5
 		check_for_ending()
+		GameState.is_sped_up = true
+		Config.follow_mode = Config.FOLLOW.NONE
 		print('win')
 
 ## Checks if all cars are finished, if so ends the game
 func check_for_ending():
 	for car: Car in cars:
 		if not car.is_finished: return
-	is_ready = false
+	GameState.is_ready = false
+	request_update_ui()
 	print('game is over, everyone is finished')
 
 func request_update_ui():

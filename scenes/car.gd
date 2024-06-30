@@ -14,7 +14,7 @@ enum Controller {LOCAL, AI}
 @export var ai: Resource
 @onready var car_sprite: Sprite2D = %CarSprite
 @onready var selection_sprite: Sprite2D = %SelectionSprite
-var anim_speed = 0.5
+var anim_speed := 0.5
 var track: Track
 var grid: Grid
 var grid_pos := Vector2i(0, 0)
@@ -52,7 +52,8 @@ func _ready():
 	update_draw()
 	#calculate_distance_score()
 	setup_ai()
-	$ShapeCast2D.add_exception($Area2D)
+	$CrashCast.add_exception($Area2D)
+	$FinishLineCast.add_exception($Area2D)
 	is_registered = true
 	registered.emit()
 
@@ -141,6 +142,7 @@ func move():
 	car_history.hide_dots()
 
 func play_move_audio(turn: int):
+	if GameState.is_sped_up: return
 	$AudioVroom.pitch_scale = 0.8 + svector.length() * 0.05
 	$AudioVroom.play()
 	if turn % 2: $AudioVroom2.play()
@@ -150,6 +152,14 @@ func move_to(new_pos: Vector2i):
 	is_moving = true
 	started_move.emit()
 	%SelectionSprite.visible = false
+	var tween_speed := anim_speed
+	#predict_finish(next_move)
+	#if GameState.is_sped_up:
+		#tween_speed = anim_speed * 0.5
+		# TODO predict crash
+		#position = grid2pix(new_pos)
+		#on_move_end()
+	#else:
 	tween_move = create_tween()
 	tween_move.tween_property(self, "position", grid2pix(new_pos), anim_speed)
 	tween_move.tween_callback(on_move_end)
@@ -167,7 +177,6 @@ func on_move_end():
 	#calculate_distance_score()
 	history.append(svector)
 	apply_terrain_mod()
-	
 	end_turn()
 	
 
@@ -191,16 +200,30 @@ func is_last() -> bool:
 	#return race_pos == GameState.cars.size()
 	return false
 
+
+## Returns true if using given input this turn would cross finish line.
+## false otherwise
+func predict_finish(input: Vector2i) -> bool:
+	print('predicting finish')
+	var next := svector + input
+	$FinishLineCast.target_position = grid2pix(next)
+	$FinishLineCast.force_shapecast_update()
+	if $FinishLineCast.is_colliding():
+		var col = $FinishLineCast.get_collider(0)
+		print('col: %s' % [col.get_parent()])
+	return $FinishLineCast.is_colliding()
+	
 ## Returns true if using given input this turn would crash.
 ## false otherwise
 func predict_crash(input: Vector2i) -> bool:
 	var next := svector + input
-	$ShapeCast2D.target_position = grid2pix(next)
-	$ShapeCast2D.force_shapecast_update()
-	if $ShapeCast2D.is_colliding():
-		var col = $ShapeCast2D.get_collider(0)
+	$CrashCast.target_position = grid2pix(next)
+	$CrashCast.force_shapecast_update()
+	if $CrashCast.is_colliding():
+		var col = $CrashCast.get_collider(0)
 		print('col: %s' % [col.get_parent()])
-	return $ShapeCast2D.is_colliding()
+	return $CrashCast.is_colliding()
+
 
 func crash():
 	print('%s crashed' % [name])

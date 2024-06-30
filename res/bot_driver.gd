@@ -23,7 +23,8 @@ func setup(car_ref: Car):
 
 
 func play_turn() -> Vector2i:
-	await car.get_tree().create_timer(0.25).timeout
+	if not GameState.is_sped_up:
+		await car.get_tree().create_timer(0.25).timeout
 	calc_e_difficulty()
 	var ahead: float = calc_ahead()
 	var next_i: int = track.find_next_hint(car, ahead)
